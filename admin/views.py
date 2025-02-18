@@ -10,7 +10,7 @@ from human_resources.models import Company
 from .serializers import CompanySerializer
 
 class CompanyCreateView(APIView):
-    permission_classes = [IsAdminUser]  
+    # permission_classes = [IsAdminUser]  
 
     def post(self, request):
         serializer = CompanySerializer(data=request.data)

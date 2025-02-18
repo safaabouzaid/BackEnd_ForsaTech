@@ -3,4 +3,11 @@ from . import views
 
 urlpatterns = [
     path('HR/Login', views.loginHumanResource, name='login'),
+    path('HR/createOpportunity', views.createOpportunity, name='opportunity'),
+    path('HR/deleteOpportunity/<int:pk>', views.deleteOpportunity, name='opportunity'),
+    path('HR/getByIdOpportunity/<int:pk>', views.getByIdOpportunity, name='opportunity'),
+    path('HR/updataOpportunity/<int:pk>', views.updataOppotunity, name='opportunity'),
+
+
+
 ]

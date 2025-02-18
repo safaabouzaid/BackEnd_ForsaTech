@@ -1,10 +1,14 @@
-from django.shortcuts import render
-from rest_framework.decorators import api_view
+from django.forms import model_to_dict
+from django.shortcuts import get_object_or_404, render
+from rest_framework.decorators import api_view,permission_classes
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
-from human_resources.serializer import HumanResourcesSerializer
+from human_resources.models import Company, Opportunity
+from human_resources.serializer import HumanResourcesSerializer, OpportunitySerializer
+from rest_framework.permissions import IsAuthenticated
+from django.views.decorators.csrf import csrf_exempt
 
 
 @api_view(['POST'])
@@ -37,3 +41,85 @@ def loginHumanResource(request):
 
 
 
+
+
+@api_view(['POST'])
+# @permission_classes([IsAuthenticated])
+def createOpportunity(request):
+    data=request.data
+    company_id=data.pop('company',None)
+    
+    try:
+        company=Company.objects.get(id=company_id)
+    except Company.DoesNotExist:
+       return Response({"error": "Invalid company ID"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+    serializer=OpportunitySerializer(data=data)
+
+    if serializer.is_valid():
+        opportunity=Opportunity.objects.create(company=company, **serializer.validated_data)
+        result=OpportunitySerializer(opportunity,many=False)
+        return Response({"opportunity":result.data},status=status.HTTP_201_CREATED)
+    else:  
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+    
+
+
+
+
+@api_view(["DELETE"])
+# @permission_classes([IsAuthenticated])
+def deleteOpportunity(request,pk):
+    opportunity=get_object_or_404(Opportunity,id=pk)
+    opportunity.delete()
+    return Response({'Details':"Delete action is done"},status=status.HTTP_200_OK)
+
+
+
+
+@csrf_exempt
+@api_view(['PUT'])
+# @permission_classes([IsAuthenticated])
+def updataOppotunity(request,pk):
+    opportunity=get_object_or_404(Opportunity,id=pk)
+
+    # if opportunity.user !=request.user:
+    #    return Response({"errors":"sorry you can not updata this opportunity "}
+    #                    ,status=status.HTTP_403_FORBIDDEN)
+
+    
+    opportunity_dict = model_to_dict(opportunity)
+
+    opportunity_dict.update(request.data)
+
+    
+    for key, value in opportunity_dict.items():
+        if key == "company":  
+            try:
+                company_instance = Company.objects.get(id=value)
+                setattr(opportunity, key, company_instance)
+            except Company.DoesNotExist:
+                return Response({"error": "Company with given ID not found."}, status=400)
+        else:
+            setattr(opportunity, key, value)
+
+    opportunity.save()
+    serializer = OpportunitySerializer(opportunity, many=False)
+    
+    return Response({"opportunity": serializer.data})
+
+
+
+
+
+
+
+
+@api_view(['Get'])
+# @permission_classes([IsAuthenticated])
+def getByIdOpportunity(requst,pk):
+    opportunity=get_object_or_404(Opportunity,id=pk)
+    serializer=OpportunitySerializer(opportunity,many=False)
+    print(opportunity)
+    return Response({'Opportunity':serializer.data})
