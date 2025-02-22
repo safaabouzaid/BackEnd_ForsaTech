@@ -78,36 +78,34 @@ def deleteOpportunity(request,pk):
 
 
 
+
+
+
 @csrf_exempt
 @api_view(['PUT'])
 # @permission_classes([IsAuthenticated])
-def updataOppotunity(request,pk):
+def updateOpportunity(request,pk):
     opportunity=get_object_or_404(Opportunity,id=pk)
 
-    # if opportunity.user !=request.user:
-    #    return Response({"errors":"sorry you can not updata this opportunity "}
-    #                    ,status=status.HTTP_403_FORBIDDEN)
 
+    # if opportunity.request!=request.user:
+    #     return Response({"errors": "sorry, you cannot update this opportunity"}, status=status.HTTP_403_FORBIDDEN)4
+
+    if "Opportunity" in request.data:
+        data = request.data["Opportunity"]
+    else:
+        data = request.data 
+
+    serializer=OpportunitySerializer(opportunity,data=data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response ({"Update opportunity":serializer.data})
     
-    opportunity_dict = model_to_dict(opportunity)
 
-    opportunity_dict.update(request.data)
+    return Response({"Serializer.error ":serializer.errors},status=status.HTTP_400_BAD_REQUEST)
 
-    
-    for key, value in opportunity_dict.items():
-        if key == "company":  
-            try:
-                company_instance = Company.objects.get(id=value)
-                setattr(opportunity, key, company_instance)
-            except Company.DoesNotExist:
-                return Response({"error": "Company with given ID not found."}, status=400)
-        else:
-            setattr(opportunity, key, value)
 
-    opportunity.save()
-    serializer = OpportunitySerializer(opportunity, many=False)
-    
-    return Response({"opportunity": serializer.data})
+
 
 
 
