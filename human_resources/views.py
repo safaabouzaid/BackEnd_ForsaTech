@@ -44,7 +44,7 @@ def loginHumanResource(request):
 
 
 @api_view(['POST'])
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def createOpportunity(request):
     data=request.data
     company_id=data.pop('company',None)
@@ -69,7 +69,7 @@ def createOpportunity(request):
 
 
 @api_view(["DELETE"])
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def deleteOpportunity(request,pk):
     opportunity=get_object_or_404(Opportunity,id=pk)
     opportunity.delete()
@@ -83,7 +83,7 @@ def deleteOpportunity(request,pk):
 
 @csrf_exempt
 @api_view(['PUT'])
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def updateOpportunity(request,pk):
     opportunity=get_object_or_404(Opportunity,id=pk)
 
@@ -102,7 +102,7 @@ def updateOpportunity(request,pk):
         return Response ({"Update opportunity":serializer.data})
     
 
-    return Response({"Serializer.error ":serializer.errors},status=status.HTTP_400_BAD_REQUEST)
+    return Response({"error ":serializer.errors},status=status.HTTP_400_BAD_REQUEST)
 
 
 
@@ -115,9 +115,21 @@ def updateOpportunity(request,pk):
 
 
 @api_view(['Get'])
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def getByIdOpportunity(requst,pk):
     opportunity=get_object_or_404(Opportunity,id=pk)
+    serializer=OpportunitySerializer(opportunity,many=False)
+    print(opportunity)
+    return Response({'Opportunity':serializer.data})
+
+
+
+
+
+@api_view(['Get'])
+@permission_classes([IsAuthenticated])
+def getAllOpportunity(requst):
+    opportunity=get_object_or_404(Opportunity)
     serializer=OpportunitySerializer(opportunity,many=False)
     print(opportunity)
     return Response({'Opportunity':serializer.data})
