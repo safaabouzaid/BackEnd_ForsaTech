@@ -7,7 +7,7 @@ urlpatterns = [
     path('HR/deleteOpportunity/<int:pk>', views.deleteOpportunity, name='opportunity'),
     path('HR/getByIdOpportunity/<int:pk>', views.getByIdOpportunity, name='opportunity'),
     path('HR/updateOpportunity/<int:pk>', views.updateOpportunity, name='opportunity'),
-    path('HR/getAllOpportunity/', views.getAllOpportunity, name='opportunity'),
+#    path('HR/getAllOpportunity/', views.getAllOpportunity, name='opportunity'),
 
 
 
