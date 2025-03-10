@@ -24,6 +24,10 @@ class Company(models.Model):
     def __str__(self):
         return self.name if self.name else "Unnamed Company"
 
+
+
+
+
 class Opportunity(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)

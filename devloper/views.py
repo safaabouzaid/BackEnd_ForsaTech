@@ -44,23 +44,32 @@ def login(request):
     serializer = LoginSerializer(data=request.data)
 
     if serializer.is_valid():
-        email = serializer.validated_data.get('email')
+        email = serializer.validated_data.get('email',None)
+        username = serializer.validated_data.get('username',None)
         password = serializer.validated_data.get('password')
 
-        try:
-            user = User.objects.get(email=email)
-            authenticated_user = authenticate(username=user.username, password=password)
+      
+        user = None
+        if email:
+            user = User.objects.filter(email=email).first()
+        elif username:
+            user = User.objects.filter(username=username).first()
 
+        if user and user.check_password(password):  
+            authenticated_user = authenticate(username=user.username, password=password)
             if authenticated_user:
                 refresh = RefreshToken.for_user(authenticated_user)
                 return Response({
+                    'username': user.username,
+                    'email': user.email,
                     'refresh': str(refresh),
-                    'access': str(refresh.access_token)
+                    'access': str(refresh.access_token),
                 }, status=status.HTTP_200_OK)
             else:
-                return Response({'error': 'Invalid email or password'}, status=status.HTTP_401_UNAUTHORIZED)
-
-        except User.DoesNotExist:
-            return Response({'error': 'User with this email does not exist'}, status=status.HTTP_404_NOT_FOUND)
+                return Response({'error': 'Invalid username/email or password'}, status=status.HTTP_401_UNAUTHORIZED)
+        else:
+            return Response({'error': 'User does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    
