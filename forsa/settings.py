@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'human_resources.apps.HumanResourcesConfig',
     'corsheaders',
     'rest_framework',
+    'django_filters',
 
 
     

@@ -6,7 +6,7 @@ from rest_framework import status
 from rest_framework.permissions import IsAdminUser
 from human_resources.models import Company
 from .serializers import CompanySerializer
-
+from human_resources.filters import CompaniesFilter
 
 @api_view(['POST'])
 @permission_classes([IsAdminUser])
@@ -21,8 +21,11 @@ def createCompany(request):
 @api_view(['GET'])
 @permission_classes([IsAdminUser])
 def listCompanies(request):
-    companies = Company.objects.all()
-    serializer = CompanySerializer(companies, many=True)
+    #companies = Company.objects.all()
+    filterset =CompaniesFilter(request.GET,queryset=Company.objects.all().order_by('id'))
+    #serializer = CompanySerializer(companies, many=True)
+    serializer = CompanySerializer(filterset.qs, many=True)
+
     return Response({"message": "Companies retrieved successfully", "data": serializer.data}, status=status.HTTP_200_OK)
 
 
