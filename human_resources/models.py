@@ -19,6 +19,10 @@ class Company(models.Model):
     logo = models.URLField(null=True, blank=True,max_length=1000)
     website = models.URLField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
+    email = models.EmailField(null=True, blank=True)
+    address = models.CharField(max_length=255, null=True, blank=True)
+    employees = models.PositiveIntegerField(null=True, blank=True)
+
 
     
     def __str__(self):
