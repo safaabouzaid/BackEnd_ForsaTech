@@ -7,3 +7,4 @@ class CompaniesFilter(django_filters.FilterSet):
         model = Company
         #fields = ['name','keyword']
         fields = ('name','keyword')
+

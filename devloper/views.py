@@ -24,8 +24,6 @@ def register(request):
         
         if User.objects.filter(email=email).exists():
             return Response({'error': 'This email already exists!'}, status=status.HTTP_400_BAD_REQUEST)
-
-       
         user = User.objects.create(
             email=email,
             username=username,

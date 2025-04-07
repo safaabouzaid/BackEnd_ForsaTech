@@ -37,7 +37,8 @@ def updateCompany(request, pk):
     if serializer.is_valid():
         serializer.save()
         return Response({"message": "Company updated successfully", "data": serializer.data})
-    return Response({"error": "Invalid data", "details": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+    return Response({"error": "Invalid data", "details": serializer.errors},
+     status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['DELETE'])
