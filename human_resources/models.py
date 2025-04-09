@@ -56,3 +56,15 @@ class Opportunity(models.Model):
     def __str__(self):
         return self.title
     
+
+
+
+class GenerateQuestion(models.Model):
+    opportunity = models.ForeignKey(Opportunity, on_delete=models.CASCADE, related_name="questions")
+    questions = models.JSONField(default=list)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def str(self):
+        return f"Questions for {self.opportunity}"
+    
+
