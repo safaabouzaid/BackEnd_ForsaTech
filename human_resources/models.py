@@ -16,7 +16,7 @@ class humanResources(models.Model):
 
 class Company(models.Model):
     name = models.CharField(max_length=255, null=True, blank=True)
-    logo = models.URLField(null=True, blank=True,max_length=1000)
+    logo = models.ImageField(upload_to="company_logos/", blank=True, null=True)
     website = models.URLField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     email = models.EmailField(null=True, blank=True)
