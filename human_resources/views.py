@@ -121,3 +121,17 @@ def getByIdOpportunity(requst,pk):
     serializer=OpportunitySerializer(opportunity,many=False)
     print(opportunity)
     return Response({'Opportunity':serializer.data})
+
+#####
+### JobCard 
+@api_view(['Get'])
+def getJobCard(request):
+    opportunities = Opportunity.objects.all()
+    serializer = OpportunitySerializer(opportunities, many=True)
+    return Response(serializer.data)
+    
+    
+    
+
+
+
