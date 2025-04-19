@@ -9,7 +9,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/',include("devloper.urls")),
-    path('auth/',include("human_resources.urls")),
+    path('',include("human_resources.urls")),
     path('api/admin/login/', TokenObtainPairView.as_view(), name='admin_login'),
     path('admin-dash/', include('admin.urls')),
 ]
