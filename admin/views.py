@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 from django.forms import model_to_dict
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAdminUser
@@ -8,7 +8,7 @@ from human_resources.models import Company,CompanyAd
 from .serializers import CompanySerializer ,CompanyAdSerializer
 from human_resources.filters import CompaniesFilter
 from rest_framework.views import APIView
- 
+
 @api_view(['POST'])
 @permission_classes([IsAdminUser])
 def createCompany(request):
@@ -50,11 +50,8 @@ def deleteCompany(request, pk):
     return Response({"message": "Company deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
 
 
-
-
-#### Ads #####
-@api_view(['GET', 'POST'])
-@permission_classes([IsAdminUser])
+@api_view(['GET', 'POST'])   
+@permission_classes([])       
 def list_create_ads(request):
     if request.method == 'GET':
         ads = CompanyAd.objects.all()
@@ -62,14 +59,16 @@ def list_create_ads(request):
         return Response({"message": "Company ads retrieved successfully", "data": serializer.data}, status=status.HTTP_200_OK)
 
     elif request.method == 'POST':
+             
+        if not request.user.is_authenticated or not request.user.is_staff:
+            return Response({"error": "You do not have permission to perform this action."},
+                            status=status.HTTP_403_FORBIDDEN)
+
         serializer = CompanyAdSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response({"message": "Company ad created successfully", "data": serializer.data}, status=status.HTTP_201_CREATED)
         return Response({"error": "Failed to create company ad", "details": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
-
-    
-    
 
 
 @api_view(['DELETE'])
