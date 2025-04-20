@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 from django.forms import model_to_dict
-from rest_framework.decorators import api_view, permission_classes, authentication_classes
+from rest_framework.decorators import api_view, permission_classes, authentication_classes, parser_classes
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAdminUser
@@ -8,6 +8,8 @@ from human_resources.models import Company,CompanyAd
 from .serializers import CompanySerializer ,CompanyAdSerializer ,CompanyDetailSerializer
 from human_resources.filters import CompaniesFilter
 from rest_framework.views import APIView
+from rest_framework.parsers import MultiPartParser, FormParser
+
 
 @api_view(['POST'])
 @permission_classes([IsAdminUser])
@@ -31,6 +33,7 @@ def listCompanies(request):
 
 
 @api_view(['PUT'])
+@parser_classes([MultiPartParser, FormParser])
 @permission_classes([IsAdminUser])
 def updateCompany(request, pk):
     company = get_object_or_404(Company, pk=pk)
@@ -40,6 +43,10 @@ def updateCompany(request, pk):
         return Response({"message": "Company updated successfully", "data": serializer.data})
     return Response({"error": "Invalid data", "details": serializer.errors},
      status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
 
 
 @api_view(['DELETE'])
