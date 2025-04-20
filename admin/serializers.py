@@ -27,3 +27,18 @@ class CompanyAdSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(f"Company with name '{company_name}' does not exist.")
         validated_data['company'] = company
         return super().create(validated_data)
+
+
+
+
+class CompanyDetailSerializer(serializers.ModelSerializer):
+    opportunity_count = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Company
+        fields = ['id', 'name', 'logo', 'description', 'website', 'address', 'employees', 'opportunity_count']
+
+    def get_opportunity_count(self, obj):
+        return obj.opportunity_set.count()
+
+

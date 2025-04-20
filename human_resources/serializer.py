@@ -11,9 +11,6 @@ class HumanResourcesSerializer(serializers.ModelSerializer):
         }
 
 
-
-
-
 class OpportunitySerializer(serializers.ModelSerializer):
     class Meta:
         model=Opportunity

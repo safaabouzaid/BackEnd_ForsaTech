@@ -107,13 +107,6 @@ def updateOpportunity(request,pk):
 
 
 
-
-
-
-
-
-
-
 @api_view(['Get'])
 @permission_classes([IsAuthenticated])
 def getByIdOpportunity(requst,pk):

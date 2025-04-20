@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAdminUser
 from human_resources.models import Company,CompanyAd
-from .serializers import CompanySerializer ,CompanyAdSerializer
+from .serializers import CompanySerializer ,CompanyAdSerializer ,CompanyDetailSerializer
 from human_resources.filters import CompaniesFilter
 from rest_framework.views import APIView
 
@@ -50,6 +50,8 @@ def deleteCompany(request, pk):
     return Response({"message": "Company deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
 
 
+###########    Company Ads    ###########
+
 @api_view(['GET', 'POST'])   
 @permission_classes([])       
 def list_create_ads(request):
@@ -77,3 +79,12 @@ def delete_ad(request, ad_id):
     ad = get_object_or_404(CompanyAd, pk=ad_id)
     ad.delete()
     return Response({"message": "Company ad deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
+
+
+####    Company Details    #####
+
+@api_view(['GET'])
+def get_company_profile(request, pk):
+    company = get_object_or_404(Company, pk=pk)
+    serializer = CompanyDetailSerializer(company)
+    return Response({'company': serializer.data}, status=status.HTTP_200_OK)
