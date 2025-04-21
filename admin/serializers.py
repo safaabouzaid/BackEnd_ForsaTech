@@ -42,3 +42,15 @@ class CompanyDetailSerializer(serializers.ModelSerializer):
         return obj.opportunity_set.count()
 
 
+
+
+
+
+
+class DashboardStatsSerializer(serializers.Serializer):
+    num_companies = serializers.IntegerField()
+    most_hiring_company = serializers.CharField()
+    most_demanded_jobs = serializers.ListField(child=serializers.CharField())
+    highest_paying_job = serializers.DictField()
+    line_chart_data = serializers.ListField(child=serializers.DictField())
+    pie_chart_data = serializers.ListField(child=serializers.DictField())

@@ -9,6 +9,7 @@ urlpatterns = [
     path('ads/', views.list_create_ads, name='company-ads'),
     path('ads/<int:ad_id>/', views.delete_ad, name='delete_ad'), 
     path('company/<int:pk>/profile/', views.get_company_profile, name='company-profile'),
+    path('dashboard/stats/', views.dashboard_stats, name='dashboard-stats'),
 
 ]
 
