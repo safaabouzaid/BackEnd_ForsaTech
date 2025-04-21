@@ -31,6 +31,7 @@ class OpportunitySerializer(serializers.ModelSerializer):
             'experience_level',   # job level
             'years_of_experience',# experience
             'location',
+            'posting_date' ,
             'company_name',
         ]      
         
