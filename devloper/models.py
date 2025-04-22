@@ -13,9 +13,8 @@ from django.core.validators import EmailValidator # type: ignore
 #    def __str__(self):
 #        return self.email
     
+
     
-
-
 class User(AbstractUser):
     username = models.CharField(max_length=255,unique=False, default='')
     email = models.EmailField(unique=True)
