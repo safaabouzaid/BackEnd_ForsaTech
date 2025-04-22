@@ -65,12 +65,23 @@ class Opportunity(models.Model):
     application_deadline = models.DateTimeField(blank=True, null=True)
     status = models.CharField(max_length=50)
     benefits = models.CharField(max_length=50,blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
         return self.title
     
 
 
+class JobApplication(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    opportunity = models.ForeignKey(Opportunity, on_delete=models.CASCADE)
+    applied_at = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=50, choices=[('pending', 'Pending'), ('accepted', 'Accepted'), ('rejected', 'Rejected')])
+
+    def __str__(self):
+        return f"{self.user} applied for {self.opportunity.title}"
+
+        
 
 class GenerateQuestion(models.Model):
     opportunity = models.ForeignKey(Opportunity, on_delete=models.CASCADE, related_name="questions")
