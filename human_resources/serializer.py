@@ -15,5 +15,3 @@ class OpportunitySerializer(serializers.ModelSerializer):
     class Meta:
         model=Opportunity
         exclude = ['company']
-
-
