@@ -25,7 +25,7 @@ def createCompany(request):
 
 
 @api_view(['GET'])
-@permission_classes([IsAdminUser])
+#@permission_classes([IsAdminUser])
 def listCompanies(request):
     #companies = Company.objects.all()
     filterset =CompaniesFilter(request.GET,queryset=Company.objects.all().order_by('id'))
