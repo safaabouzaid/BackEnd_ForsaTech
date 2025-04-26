@@ -2,9 +2,8 @@ from django.shortcuts import get_object_or_404
 from django.forms import model_to_dict
 from rest_framework.decorators import api_view, permission_classes, authentication_classes, parser_classes
 from rest_framework.response import Response
-from rest_framework import status
 from rest_framework.permissions import IsAdminUser
-from human_resources.models import Company,CompanyAd, Opportunity,JobApplication
+from human_resources.models import Company,CompanyAd, Opportunity,JobApplication,Complaint
 from .serializers import CompanySerializer ,CompanyAdSerializer ,CompanyDetailSerializer,DashboardStatsSerializer
 from human_resources.filters import CompaniesFilter
 from rest_framework.views import APIView
@@ -12,7 +11,8 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from django.db.models import Count
 from datetime import datetime
 from django.db.models.functions import TruncMonth
-
+from .serializers import ComplaintSerializer
+from rest_framework import status
 
 @api_view(['POST'])
 @permission_classes([IsAdminUser])
@@ -103,7 +103,7 @@ def get_company_profile(request, pk):
 
 
 
-#==================================== dashboard_stats =============================#
+#==================================== dashboard stats. =============================#
 
 @api_view(['GET'])
 def dashboard_stats(request):
@@ -181,3 +181,38 @@ def dashboard_stats(request):
 
     serializer = DashboardStatsSerializer(data)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+
+#========================== complaints ===========================##
+
+
+
+
+# GET ALL
+@api_view(['GET'])
+@permission_classes([IsAdminUser])   
+def get_all_complaints(request):
+    complaints = Complaint.objects.all()    
+    serializer = ComplaintSerializer(complaints, many=True)
+    return Response({'complaints': serializer.data}, status=status.HTTP_200_OK)
+
+#Update status
+
+@api_view(['PATCH'])
+@permission_classes([IsAdminUser])
+def update_complaint_status(request, complaint_id):
+    complaint = get_object_or_404(Complaint, pk=complaint_id)
+    status_value = request.data.get('status')  
+
+    if not status_value:
+        return Response({"message": "Status is required."}, status=status.HTTP_400_BAD_REQUEST)
+
+    if status_value not in ['new',  'resolved']:
+        return Response({"message": "Invalid status."}, status=status.HTTP_400_BAD_REQUEST)
+
+    complaint.status = status_value
+    complaint.save()
+
+    serializer = ComplaintSerializer(complaint)
+    return Response({"message": "Complaint status updated", 'complaint': serializer.data}, status=status.HTTP_200_OK)

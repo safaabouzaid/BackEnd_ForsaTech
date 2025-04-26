@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from human_resources.models import Company ,CompanyAd
+from human_resources.models import Company ,CompanyAd,Complaint
+from devloper.models import User
 
 
 class CompanySerializer(serializers.ModelSerializer):
@@ -54,3 +55,26 @@ class DashboardStatsSerializer(serializers.Serializer):
     highest_paying_job = serializers.DictField()
     line_chart_data = serializers.ListField(child=serializers.DictField())
     pie_chart_data = serializers.ListField(child=serializers.DictField())
+
+
+
+
+
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['email']    
+
+class ComplaintSerializer(serializers.ModelSerializer):
+        
+    user = UserSerializer()
+
+    class Meta:
+        model = Complaint
+        fields = ['id', 'user', 'title', 'description', 'status', 'created_at']
+        read_only_fields = ['user', 'created_at']
+
+
+

@@ -92,3 +92,19 @@ class GenerateQuestion(models.Model):
         return f"Questions for {self.opportunity}"
     
 
+
+
+class Complaint(models.Model):
+    STATUS_CHOICES = [
+        ('new', 'New'),
+        ('resolved', 'Resolved'),
+    ]
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='new')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Complaint from {self.user.email} - {self.title}"

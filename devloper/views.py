@@ -7,7 +7,8 @@ from rest_framework import status
 from .serializer import LoginSerializer, SingUpSerializer
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
-
+from human_resources.models import Complaint
+from admin.serializers import ComplaintSerializer
 User = get_user_model()  
 
 @api_view(['POST'])
@@ -71,3 +72,30 @@ def login(request):
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+##############complaint################
+
+
+@api_view(['POST'])
+def add_complaint(request):
+    
+    if request.method == 'POST':
+        serializer = ComplaintSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(user=request.user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
