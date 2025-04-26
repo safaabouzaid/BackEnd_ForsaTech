@@ -44,10 +44,15 @@ class CompanyAd(models.Model):
         return f"{self.company.name} - {self.title}"
 
 
+class OpportunityName(models.Model):
+    name = models.CharField(max_length=255,blank=True)
+    
+    def __str__(self):
+        return self.name
 
 
 class Opportunity(models.Model):
-    title = models.CharField(max_length=255)
+    opportunity_name = models.ForeignKey(OpportunityName, on_delete=models.CASCADE,default=1 , related_name="opportunities")
     description = models.TextField(null=True, blank=True)
     employment_type = models.CharField(max_length=50,null=True, blank=True)
     location = models.CharField(max_length=100,null=True, blank=True)
@@ -68,7 +73,7 @@ class Opportunity(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
-        return self.title
+         return f"{self.opportunity_name.name} at {self.company.name}"
     
 
 

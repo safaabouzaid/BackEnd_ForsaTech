@@ -106,6 +106,7 @@ def get_company_profile(request, pk):
 #==================================== dashboard stats. =============================#
 
 @api_view(['GET'])
+@permission_classes([IsAdminUser]) 
 def dashboard_stats(request):
 
 #Number of Companies
@@ -121,29 +122,34 @@ def dashboard_stats(request):
     )
     most_hiring_name = most_hiring_company.name if most_hiring_company else "N/A"
 
-#Most Demanded Jobs
 
+
+    # Most Demanded Jobs
     most_demanded_jobs = (
-    JobApplication.objects.values('opportunity__title')
-    .annotate(count=Count('id'))
-    .order_by('-count')[:3]
-)
-    most_demanded_titles = [job['opportunity__title'] for job in most_demanded_jobs]
+        JobApplication.objects.values('opportunity__opportunity_name__name')  
+        .annotate(count=Count('id'))
+        .order_by('-count')[:3]
+    )
+    most_demanded_titles = [job['opportunity__opportunity_name__name'] for job in most_demanded_jobs]
 
-##Highest Paying Jobs
 
+
+
+
+    # Highest Paying Jobs
     def extract_max_salary(opportunity):
         try:
             return int(opportunity.salary_range.split('-')[-1])
         except:
             return 0
-
+    
     opportunities = Opportunity.objects.exclude(salary_range__isnull=True)
     highest_salary_opportunity = max(opportunities, key=extract_max_salary, default=None)
     highest_paying_job = {
-        "title": highest_salary_opportunity.title,
-        "salary": highest_salary_opportunity.salary_range
-    } if highest_salary_opportunity else {"title": "N/A", "salary": "N/A"}
+        "title": highest_salary_opportunity.opportunity_name.name if highest_salary_opportunity else "N/A",  
+        "salary": highest_salary_opportunity.salary_range if highest_salary_opportunity else "N/A"
+    }
+
 
 
 ####Job Demand Change Over Months
@@ -159,16 +165,18 @@ def dashboard_stats(request):
         for item in jobs_by_month
     ]
 
-#Job Distribution by Specialization
+
+    # Job Distribution by Specialization
     jobs_by_title = (
-        Opportunity.objects.values('title')
+        Opportunity.objects.values('opportunity_name__name')  
         .annotate(count=Count('id'))
         .order_by('-count')
     )
     pie_chart_data = [
-        {"name": item["title"], "value": item["count"]}
+        {"name": item["opportunity_name__name"], "value": item["count"]}   
         for item in jobs_by_title
     ]
+
 
     data = {
         "num_companies": num_companies,
