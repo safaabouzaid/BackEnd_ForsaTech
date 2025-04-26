@@ -35,51 +35,30 @@ def register(request):
     
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-
-
 @api_view(['POST'])
 def login(request):
     serializer = LoginSerializer(data=request.data)
-
+    
     if serializer.is_valid():
-        email = serializer.validated_data.get('email',None)
-        username = serializer.validated_data.get('username',None)
-        password = serializer.validated_data.get('password')
+        email = serializer.validated_data['email']
+        password = serializer.validated_data['password']
 
-      
-        user = None
-        if email:
-            user = User.objects.filter(email=email).first()
-        elif username:
-            user = User.objects.filter(username=username).first()
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            return Response({'error': 'Invalid email or password'}, status=status.HTTP_401_UNAUTHORIZED)
 
-        if user and user.check_password(password):  
-            authenticated_user = authenticate(username=user.username, password=password)
-            if authenticated_user:
-                refresh = RefreshToken.for_user(authenticated_user)
-                return Response({
-                    'username': user.username,
-                    'email': user.email,
-                    'refresh': str(refresh),
-                    'access': str(refresh.access_token),
-                }, status=status.HTTP_200_OK)
-            else:
-                return Response({'error': 'Invalid username/email or password'}, status=status.HTTP_401_UNAUTHORIZED)
-        else:
-            return Response({'error': 'User does not exist'}, status=status.HTTP_404_NOT_FOUND)
+        if not user.check_password(password):  
+            return Response({'error': 'Invalid email or password'}, status=status.HTTP_401_UNAUTHORIZED)
+
+        refresh = RefreshToken.for_user(user)
+
+        return Response({
+            'refresh': str(refresh),
+            'access': str(refresh.access_token),
+        }, status=status.HTTP_200_OK)
 
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    
-
-
-
-
-
-
-
-
 
 
 
@@ -89,13 +68,22 @@ def login(request):
 
 ##############complaint################
 
-
 @api_view(['POST'])
 def add_complaint(request):
-    
     if request.method == 'POST':
         serializer = ComplaintSerializer(data=request.data)
+        
+
         if serializer.is_valid():
-            serializer.save(user=request.user)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+            user = request.user
+
+
+            if user.is_authenticated:
+
+                serializer.save(user=user)
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            else:
+                return Response({"error": "User is not authenticated."}, status=status.HTTP_401_UNAUTHORIZED)
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -45,9 +45,6 @@ class CompanyDetailSerializer(serializers.ModelSerializer):
 
 
 
-
-
-
 class DashboardStatsSerializer(serializers.Serializer):
     num_companies = serializers.IntegerField()
     most_hiring_company = serializers.CharField()
@@ -57,24 +54,18 @@ class DashboardStatsSerializer(serializers.Serializer):
     pie_chart_data = serializers.ListField(child=serializers.DictField())
 
 
-
-
-
-
-
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['email']    
 
 class ComplaintSerializer(serializers.ModelSerializer):
-        
-    user = UserSerializer()
+    user = UserSerializer(read_only=True) 
+
 
     class Meta:
         model = Complaint
         fields = ['id', 'user', 'title', 'description', 'status', 'created_at']
         read_only_fields = ['user', 'created_at']
-
 
 
