@@ -24,7 +24,6 @@ def generate_password(length=8):
     return ''.join(random.choices(characters, k=length))
 
 
-
 @api_view(['POST'])
 @permission_classes([IsAdminUser])
 def createCompany(request):
@@ -44,39 +43,39 @@ def createCompany(request):
             password=password
         )
 
+
         humanResources.objects.create(
             user=hr_user,
-            company_name=company.name,
-            location=company.address,  
+            company=company,
+            location=company.address
         )
 
-        subject = "Your company account has been created on the Forsa-tech platform " 
+        subject = "Your company account has been created on the Forsa-tech platform"
 
         message = f"""
         Hello {company.name} 🌟,
 
-        Your company has been successfully created on the Forsaak platform.
-        
+        Your company has been successfully created on the Forsa-Tech platform.
+
         You can log in using the following information:
         Email: {email}
         Password: {password}
-        
+
         Please change your password after your first login.
-        
+
         Regards,
-        The Forsaak Team
+         Forsa-Tech Team
         """
         send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [email])
 
         return Response({
-    "message": "Company and HR account created successfully",
-    "data": serializer.data,
-    "hr_credentials": {
-        "email": email,
-        "password": password
-    }
-}, status=status.HTTP_201_CREATED)
-
+            "message": "Company and HR account created successfully",
+            "data": serializer.data,
+            "hr_credentials": {
+                "email": email,
+                "password": password
+            }
+        }, status=status.HTTP_201_CREATED)
 
     return Response({"error": "Invalid data", "details": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
