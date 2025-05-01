@@ -12,7 +12,6 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import User  
 
 
-
 @api_view(['POST'])
 def loginHumanResource(request):
     if request.method == 'GET':
