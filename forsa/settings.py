@@ -108,6 +108,7 @@ CORS_ALLOWED_ORIGINS = [
      'http://localhost:3001',
      'http://localhost:5173',
      'https://f4d8-149-36-51-14.ngrok-free.app',
+     'https://34bb-149-102-239-226.ngrok-free.app',
      'https://forsa-tech-admin-dashboard.netlify.app',
      
 
