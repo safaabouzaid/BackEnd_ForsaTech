@@ -2,16 +2,26 @@ from django.shortcuts import get_object_or_404
 from django.forms import model_to_dict
 from rest_framework.decorators import api_view, permission_classes, authentication_classes, parser_classes
 from rest_framework.response import Response
-from rest_framework import status
 from rest_framework.permissions import IsAdminUser
-from human_resources.models import Company,CompanyAd, Opportunity,JobApplication
+from human_resources.models import Company,CompanyAd, Opportunity,JobApplication,Complaint,humanResources
 from .serializers import CompanySerializer ,CompanyAdSerializer ,CompanyDetailSerializer,DashboardStatsSerializer
 from human_resources.filters import CompaniesFilter
 from rest_framework.views import APIView
 from rest_framework.parsers import MultiPartParser, FormParser
-from django.db.models import Count
+from django.db.models import Count,Avg, Sum
 from datetime import datetime
 from django.db.models.functions import TruncMonth
+from .serializers import ComplaintSerializer
+from rest_framework import status
+from devloper.models import User
+from django.core.mail import send_mail
+from django.conf import settings
+import random
+import string
+
+def generate_password(length=8):
+    characters = string.ascii_letters + string.digits
+    return ''.join(random.choices(characters, k=length))
 
 
 @api_view(['POST'])
@@ -19,13 +29,60 @@ from django.db.models.functions import TruncMonth
 def createCompany(request):
     serializer = CompanySerializer(data=request.data)
     if serializer.is_valid():
-        serializer.save()
-        return Response({"message": "Company created successfully", "data": serializer.data}, status=status.HTTP_201_CREATED)
+        company = serializer.save()
+
+        email = request.data.get('email')
+        password = generate_password()
+
+        if User.objects.filter(email=email).exists():
+            return Response({"error": "Email already in use"}, status=status.HTTP_400_BAD_REQUEST)
+
+        hr_user = User.objects.create_user(
+            username=email,
+            email=email,
+            password=password
+        )
+
+
+        humanResources.objects.create(
+            user=hr_user,
+            company=company,
+            location=company.address
+        )
+
+        subject = "Your company account has been created on the Forsa-tech platform"
+
+        message = f"""
+        Hello {company.name} 🌟,
+
+        Your company has been successfully created on the Forsa-Tech platform.
+
+        You can log in using the following information:
+        Email: {email}
+        Password: {password}
+
+        Please change your password after your first login.
+
+        Regards,
+         Forsa-Tech Team
+        """
+        send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [email])
+
+        return Response({
+            "message": "Company and HR account created successfully",
+            "data": serializer.data,
+            "hr_credentials": {
+                "email": email,
+                "password": password
+            }
+        }, status=status.HTTP_201_CREATED)
+
     return Response({"error": "Invalid data", "details": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
+#=========================== ALL COmpany========================#
 
 @api_view(['GET'])
-@permission_classes([IsAdminUser])
+#@permission_classes([IsAdminUser])
 def listCompanies(request):
     #companies = Company.objects.all()
     filterset =CompaniesFilter(request.GET,queryset=Company.objects.all().order_by('id'))
@@ -46,8 +103,6 @@ def updateCompany(request, pk):
         return Response({"message": "Company updated successfully", "data": serializer.data})
     return Response({"error": "Invalid data", "details": serializer.errors},
      status=status.HTTP_400_BAD_REQUEST)
-
-
 
 
 
@@ -99,13 +154,10 @@ def get_company_profile(request, pk):
     serializer = CompanyDetailSerializer(company)
     return Response({'company': serializer.data}, status=status.HTTP_200_OK)
 
-
-
-
-
-#==================================== dashboard_stats =============================#
+#==================================== dashboard stats. =============================#
 
 @api_view(['GET'])
+@permission_classes([IsAdminUser]) 
 def dashboard_stats(request):
 
 #Number of Companies
@@ -115,35 +167,38 @@ def dashboard_stats(request):
 #Most Hiring Companies
 
     most_hiring_company = (
-        Company.objects.annotate(num_jobs=Count('opportunity'))
-        .order_by('-num_jobs')
-        .first()
-    )
-    most_hiring_name = most_hiring_company.name if most_hiring_company else "N/A"
-
-#Most Demanded Jobs
-
-    most_demanded_jobs = (
-    JobApplication.objects.values('opportunity__title')
-    .annotate(count=Count('id'))
-    .order_by('-count')[:3]
+    Company.objects.annotate(num_jobs=Count('opportunity'))
+    .filter(num_jobs__gt=0)
+    .order_by('-num_jobs')
+    .first()  
 )
-    most_demanded_titles = [job['opportunity__title'] for job in most_demanded_jobs]
 
-##Highest Paying Jobs
+    most_hiring_name = most_hiring_company.name if most_hiring_company else "N/A"
+    most_hiring_count = most_hiring_company.num_jobs if most_hiring_company else 0
 
+
+    # Most Demanded Jobs
+    most_demanded_jobs = (
+        JobApplication.objects.values('opportunity__opportunity_name__name')  
+        .annotate(count=Count('id'))
+        .order_by('-count')[:3]
+    )
+    most_demanded_titles = [job['opportunity__opportunity_name__name'] for job in most_demanded_jobs]
+
+    # Highest Paying Jobs
     def extract_max_salary(opportunity):
         try:
             return int(opportunity.salary_range.split('-')[-1])
         except:
             return 0
-
+    
     opportunities = Opportunity.objects.exclude(salary_range__isnull=True)
-    highest_salary_opportunity = max(opportunities, key=extract_max_salary, default=None)
+    highest_salary_opportunity = Opportunity.objects.exclude(salary_range__isnull=True).order_by('-salary_range').first()
     highest_paying_job = {
-        "title": highest_salary_opportunity.title,
-        "salary": highest_salary_opportunity.salary_range
-    } if highest_salary_opportunity else {"title": "N/A", "salary": "N/A"}
+        "title": highest_salary_opportunity.opportunity_name.name if highest_salary_opportunity else "N/A",  
+        "salary": highest_salary_opportunity.salary_range if highest_salary_opportunity else "N/A"
+    }
+
 
 
 ####Job Demand Change Over Months
@@ -159,25 +214,80 @@ def dashboard_stats(request):
         for item in jobs_by_month
     ]
 
-#Job Distribution by Specialization
+
+    # Job Distribution by Specialization
     jobs_by_title = (
-        Opportunity.objects.values('title')
+        Opportunity.objects.values('opportunity_name__name')  
         .annotate(count=Count('id'))
         .order_by('-count')
     )
     pie_chart_data = [
-        {"name": item["title"], "value": item["count"]}
+        {"name": item["opportunity_name__name"], "value": item["count"]}   
         for item in jobs_by_title
     ]
+
+    # Active Jobs
+    active_jobs = Opportunity.objects.filter(
+        application_deadline__gte=datetime.now()
+    ).count()
+    
+
+    avg_company_size = Company.objects.aggregate(
+        avg_size=Avg('employees')
+    )
+    
+    new_companies = Company.objects.filter(
+        created_at__month=datetime.now().month
+    ).count()
+
 
     data = {
         "num_companies": num_companies,
         "most_hiring_company": most_hiring_name,
+        "most_hiring_company_count": most_hiring_count,
         "most_demanded_jobs": most_demanded_titles,
         "highest_paying_job": highest_paying_job,
         "line_chart_data": line_chart_data,
         "pie_chart_data": pie_chart_data,
+        "active_jobs": active_jobs,
+        "avg_company_size": avg_company_size['avg_size'] or 0,
+        "new_companies": new_companies
     }
 
     serializer = DashboardStatsSerializer(data)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+
+#========================== complaints ===========================##
+
+
+
+
+# GET ALL
+@api_view(['GET'])
+@permission_classes([IsAdminUser])   
+def get_all_complaints(request):
+    complaints = Complaint.objects.all()    
+    serializer = ComplaintSerializer(complaints, many=True)
+    return Response({'complaints': serializer.data}, status=status.HTTP_200_OK)
+
+#Update status
+
+@api_view(['PATCH'])
+@permission_classes([IsAdminUser])
+def update_complaint_status(request, complaint_id):
+    complaint = get_object_or_404(Complaint, pk=complaint_id)
+    status_value = request.data.get('status')  
+
+    if not status_value:
+        return Response({"message": "Status is required."}, status=status.HTTP_400_BAD_REQUEST)
+
+    if status_value not in ['new',  'resolved']:
+        return Response({"message": "Invalid status."}, status=status.HTTP_400_BAD_REQUEST)
+
+    complaint.status = status_value
+    complaint.save()
+
+    serializer = ComplaintSerializer(complaint)
+    return Response({"message": "Complaint status updated", 'complaint': serializer.data}, status=status.HTTP_200_OK)

@@ -1,14 +1,6 @@
 from django.db import models
 from devloper.models import User
 
-class humanResources(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    company_name = models.CharField(max_length=100, blank=True, null=True)
-    location = models.CharField(max_length=40, blank=True, null=True)
-
-    def __str__(self):
-        return str(self.user)
-    
     
     
     
@@ -31,6 +23,14 @@ class Company(models.Model):
 
 
 
+class humanResources(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, null=True, blank=True)
+    location = models.CharField(max_length=40, blank=True, null=True)
+
+    def __str__(self):
+        return str(self.user)
+    
 
 
 class CompanyAd(models.Model):
@@ -44,10 +44,15 @@ class CompanyAd(models.Model):
         return f"{self.company.name} - {self.title}"
 
 
+class OpportunityName(models.Model):
+    name = models.CharField(max_length=255,blank=True)
+    
+    def __str__(self):
+        return self.name
 
 
 class Opportunity(models.Model):
-    title = models.CharField(max_length=255)
+    opportunity_name = models.ForeignKey(OpportunityName, on_delete=models.CASCADE,default=1 , related_name="opportunities")
     description = models.TextField(null=True, blank=True)
     employment_type = models.CharField(max_length=50,null=True, blank=True)
     location = models.CharField(max_length=100,null=True, blank=True)
@@ -68,7 +73,7 @@ class Opportunity(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
-        return self.title
+         return f"{self.opportunity_name.name} at {self.company.name}"
     
 
 
@@ -92,3 +97,19 @@ class GenerateQuestion(models.Model):
         return f"Questions for {self.opportunity}"
     
 
+
+
+class Complaint(models.Model):
+    STATUS_CHOICES = [
+        ('new', 'New'),
+        ('resolved', 'Resolved'),
+    ]
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='new')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Complaint from {self.user.email} - {self.title}"

@@ -9,10 +9,6 @@ from rest_framework import status
 from .serializer import LoginSerializer, SingUpSerializer
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.decorators import api_view, permission_classes, authentication_classes
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.authentication import TokenAuthentication
 
 User = get_user_model()  
 
@@ -65,92 +61,4 @@ def login(request):
 
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-
-
-
-
-
-##############complaint################
-
-@api_view(['POST'])
-def add_complaint(request):
-    if request.method == 'POST':
-        serializer = ComplaintSerializer(data=request.data)
-        
-
-        if serializer.is_valid():
-
-            user = request.user
-
-
-            if user.is_authenticated:
-
-                serializer.save(user=user)
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
-            else:
-                return Response({"error": "User is not authenticated."}, status=status.HTTP_401_UNAUTHORIZED)
-
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    
-   #### apply opp 
-   ##
-@api_view(['POST'])
-@permission_classes([IsAuthenticated])
-def apply_for_opportunity(request, opportunity_id):
-    user = request.user
-
-   
-    try:
-        opportunity = Opportunity.objects.get(id=opportunity_id)
-    except Opportunity.DoesNotExist:
-        return Response({"error": "Opportunity not found."}, status=status.HTTP_404_NOT_FOUND)
-
-    # Check if the user has a resume
-    try:
-        resume = Resume.objects.get(user=user)
-    except Resume.DoesNotExist:
-        return Response({
-            "error": "missing_resume",
-            "title": "Please create a resume first."
-        }, status=status.HTTP_400_BAD_REQUEST)
-
-    # Check if the user has experience or education
-    has_experience = resume.experiences.exists()
-    has_education = resume.education.exists()
-
-    # Check if any of the required information is missing
-    if not has_experience and not has_education:
-        return Response({
-            "error": "missing_info",
-            "title": "Please complete the following information",
-            "missing_experience": True,
-            "missing_education": True
-        }, status=status.HTTP_400_BAD_REQUEST)
-
-    if not has_experience:
-        return Response({
-            "error": "missing_experience",
-            "title": "Please complete the experience section."
-        }, status=status.HTTP_400_BAD_REQUEST)
-
-    if not has_education:
-        return Response({
-            "error": "missing_education",
-            "title": "Please complete the education section."
-        }, status=status.HTTP_400_BAD_REQUEST)
-
-    # Check if the user has already applied for this opportunity
-    if JobApplication.objects.filter(user=user, opportunity=opportunity).exists():
-        return Response({
-            "error": "already_applied",
-            "message": "You have already applied for this job."
-        }, status=status.HTTP_400_BAD_REQUEST)
-
-    # Create the job application
-    JobApplication.objects.create(user=user, opportunity=opportunity, status="pending")
-    return Response({
-        "message": "Application submitted successfully."
-    }, status=status.HTTP_201_CREATED)
     

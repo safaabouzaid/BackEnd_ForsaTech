@@ -9,6 +9,7 @@ from human_resources.models import Company, Opportunity
 from human_resources.serializer import *
 from rest_framework.permissions import IsAuthenticated
 from django.views.decorators.csrf import csrf_exempt
+from .models import User  
 
 
 @api_view(['POST'])
@@ -31,16 +32,16 @@ def loginHumanResource(request):
     if not user.is_active:
         return Response({'error': 'Account is disabled'}, status=status.HTTP_403_FORBIDDEN)
 
+    
+    if not hasattr(user, 'humanresources'):
+        return Response({'error': 'This account is not authorized to access this endpoint'}, status=status.HTTP_403_FORBIDDEN)
+
     refresh = RefreshToken.for_user(user)
 
     return Response({
         'refresh': str(refresh),
         'access': str(refresh.access_token)
     }, status=status.HTTP_200_OK)
-
-
-
-
 
 
 @api_view(['POST'])

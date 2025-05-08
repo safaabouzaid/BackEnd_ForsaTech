@@ -10,6 +10,9 @@ urlpatterns = [
     path('ads/<int:ad_id>/', views.delete_ad, name='delete_ad'), 
     path('company/<int:pk>/profile/', views.get_company_profile, name='company-profile'),
     path('dashboard/stats/', views.dashboard_stats, name='dashboard-stats'),
+    path('complaints/', views.get_all_complaints, name='get_all_complaints'),
+    path('complaints/<int:complaint_id>/update/', views.update_complaint_status, name='update_complaint_status'),
+
 
 ]
 
