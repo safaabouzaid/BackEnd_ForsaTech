@@ -9,6 +9,8 @@ urlpatterns = [
     path('HR/getByIdOpportunity/<int:pk>', views.getByIdOpportunity, name='opportunity'),
     path('HR/updateOpportunity/<int:pk>', views.updateOpportunity, name='opportunity'),
     path('opportunities/',views.getJobCard, name='opportunityCard'),
+     path('opportunityById/<int:pk>/',views.opportunityById, name='opportunityCard'),
+    path('Forsa/', views.opportunity_list, name='opportunity-list'),
 #    path('HR/getAllOpportunity/', views.getAllOpportunity, name='opportunity'),
 
 

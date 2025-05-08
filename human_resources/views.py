@@ -6,7 +6,7 @@ from rest_framework import status
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 from human_resources.models import Company, Opportunity
-from human_resources.serializer import HumanResourcesSerializer, OpportunitySerializer
+from human_resources.serializer import *
 from rest_framework.permissions import IsAuthenticated
 from django.views.decorators.csrf import csrf_exempt
 
@@ -121,6 +121,25 @@ def getByIdOpportunity(requst,pk):
 def getJobCard(request):
     opportunities = Opportunity.objects.all()
     serializer = OpportunitySerializer(opportunities, many=True)
+    return Response(serializer.data)
+
+
+###Forsazforfile  
+
+@api_view(['GET'])
+def opportunity_list(request):
+    opportunities = Opportunity.objects.all()
+    serializer = OpportunitySerializer1(opportunities, many=True)
+    return Response(serializer.data)
+
+
+
+###forsa by id 
+##
+@api_view(['GET'])
+def opportunityById(request,pk ):
+    opportunities = Opportunity.objects.get(pk=pk)
+    serializer = OpportunitySerializer(opportunities)
     return Response(serializer.data)
     
     

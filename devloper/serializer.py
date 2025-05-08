@@ -16,11 +16,6 @@ class LoginSerializer(serializers.ModelSerializer) :
     class Meta:
         model = User
         fields = ('username', 'password', 'email')
-        extra_kwargs = {
-            'username': {'required': False },
-             'email': {'required': False },
-            'password': {'required': True}
-        }
-
+      
 
 
