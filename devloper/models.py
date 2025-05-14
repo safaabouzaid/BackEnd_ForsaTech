@@ -43,6 +43,8 @@ class Skill(models.Model):
     resume = models.ForeignKey(Resume, on_delete=models.CASCADE, related_name="skills")
     skill = models.CharField(max_length=255)
     level = models.CharField(max_length=50, blank=True, null=True)
+    is_inferred = models.BooleanField(default=False,null=True)
+    source_skill = models.CharField(max_length=255, blank=True, null=True)   #في حال ماكانت الاصلية يلي عندي 
 
     def __str__(self):
         return f"{self.skill} - {self.resume.user.username}"

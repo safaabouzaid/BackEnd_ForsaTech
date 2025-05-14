@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'devloper',
+    'devloper.apps.DevloperConfig',
     'human_resources.apps.HumanResourcesConfig',
     'corsheaders',
     'rest_framework',
@@ -110,6 +110,7 @@ CORS_ALLOWED_ORIGINS = [
      'https://f4d8-149-36-51-14.ngrok-free.app',
      'https://34bb-149-102-239-226.ngrok-free.app',
      'https://forsa-tech-admin-dashboard.netlify.app',
+     'https://21a2-212-8-250-217.ngrok-free.app',
      
 
 ]

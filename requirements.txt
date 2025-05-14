@@ -10,3 +10,4 @@ rest-framework-simplejwt==0.0.2
 sqlparse==0.5.3
 tzdata==2025.1
 python-decouple
+google-generativeai
