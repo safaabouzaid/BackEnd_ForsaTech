@@ -36,6 +36,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -52,6 +53,12 @@ INSTALLED_APPS = [
     
 
 ]
+
+JAZZMIN_SETTINGS = {
+    "site_title": " Dashboard",
+    "site_header": " Forsa Tech",
+    "site_brand": "Forsa Tech",    
+}
 
 
 #############Email settings 

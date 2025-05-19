@@ -1,11 +1,6 @@
 from django.db import models
 from devloper.models import User
 
-    
-    
-    
-    
-
 class Company(models.Model):
     name = models.CharField(max_length=255, null=True, blank=True)
     logo = models.ImageField(upload_to="company_logos/", blank=True, null=True)
