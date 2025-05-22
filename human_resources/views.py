@@ -10,6 +10,7 @@ from human_resources.serializer import HumanResourcesSerializer, OpportunitySeri
 from rest_framework.permissions import IsAuthenticated
 from django.views.decorators.csrf import csrf_exempt
 from .models import User  
+from django.utils import timezone
 
 
 @api_view(['POST'])
@@ -54,8 +55,25 @@ def createOpportunity(request):
         company=Company.objects.get(id=company_id)
     except Company.DoesNotExist:
        return Response({"error": "Invalid company ID"}, status=status.HTTP_400_BAD_REQUEST)
+    
+# بدنا نتأكد بالاول شو خطة الشركة
+    subscription_plan = company.subscription_plan  
+    job_post_limit = subscription_plan.job_post_limit
 
+    current_month = timezone.now().month
+    current_year = timezone.now().year
 
+    current_jobs_count = Opportunity.objects.filter(
+        company=company,
+        created_at__year=current_year,
+        created_at__month=current_month
+    ).count()
+
+    if job_post_limit is not None and current_jobs_count >= job_post_limit:
+        return Response(
+            {"error": "Job posting limit reached for this month."},
+            status=status.HTTP_403_FORBIDDEN
+        )
     serializer=OpportunitySerializer(data=data)
 
     if serializer.is_valid():

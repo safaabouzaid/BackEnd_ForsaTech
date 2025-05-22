@@ -119,7 +119,8 @@ CORS_ALLOWED_ORIGINS = [
      'https://forsa-tech-admin-dashboard.netlify.app',
      'https://21a2-212-8-250-217.ngrok-free.app',
      'https://d134-37-19-221-246.ngrok-free.app',
-     'https://9ca3-212-8-243-133.ngrok-free.app'
+     'https://9ca3-212-8-243-133.ngrok-free.app',
+     'https://1042-212-8-252-183.ngrok-free.app',
      
 
 ]

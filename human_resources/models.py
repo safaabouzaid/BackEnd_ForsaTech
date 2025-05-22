@@ -10,11 +10,14 @@ class SubscriptionPlan(models.Model):
     job_post_limit = models.IntegerField(null=True, blank=True)  
     can_generate_tests = models.BooleanField(default=False)
     can_schedule_interviews = models.BooleanField(default=False)
+    
     candidate_suggestions = models.CharField(
         max_length=50,
         choices=[('none', 'No suggestions'), ('once', 'One time'), ('always', 'Always')],
         default='none'
     )
+    price = models.DecimalField(max_digits=8, decimal_places=2, null=True, blank=True)  
+
 
     def __str__(self):
         return self.get_name_display()

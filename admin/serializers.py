@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from human_resources.models import Company ,CompanyAd,Complaint
+from human_resources.models import Company ,CompanyAd,Complaint,SubscriptionPlan
 from devloper.models import User
 
 
@@ -29,15 +29,20 @@ class CompanyAdSerializer(serializers.ModelSerializer):
         validated_data['company'] = company
         return super().create(validated_data)
 
+class SubscriptionPlanSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SubscriptionPlan
+        fields = ['name'] 
 
 
 
 class CompanyDetailSerializer(serializers.ModelSerializer):
     opportunity_count = serializers.SerializerMethodField()
-
+    subscription_plan = SubscriptionPlanSerializer()
+     
     class Meta:
         model = Company
-        fields = ['id', 'name','email', 'logo', 'description', 'website', 'address', 'employees', 'opportunity_count']
+        fields = ['id', 'name','email', 'logo', 'description', 'website', 'address', 'employees', 'opportunity_count','subscription_plan']
 
     def get_opportunity_count(self, obj):
         return obj.opportunity_set.count()
