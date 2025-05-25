@@ -3,7 +3,7 @@ from django.forms import model_to_dict
 from rest_framework.decorators import api_view, permission_classes, authentication_classes, parser_classes
 from rest_framework.response import Response
 from rest_framework.permissions import IsAdminUser
-from human_resources.models import Company,CompanyAd, Opportunity,JobApplication,Complaint,humanResources
+from human_resources.models import Company,CompanyAd, Opportunity,JobApplication,Complaint,humanResources,SubscriptionPlan
 from .serializers import CompanySerializer ,CompanyAdSerializer ,CompanyDetailSerializer,DashboardStatsSerializer
 from human_resources.filters import CompaniesFilter
 from rest_framework.views import APIView
@@ -27,9 +27,14 @@ def generate_password(length=8):
 @api_view(['POST'])
 @permission_classes([IsAdminUser])
 def createCompany(request):
+    try:
+        free_plan = SubscriptionPlan.objects.get(name='free')
+    except SubscriptionPlan.DoesNotExist:
+        return Response({"error": "Free plan not found. Please create it first."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
     serializer = CompanySerializer(data=request.data)
     if serializer.is_valid():
-        company = serializer.save()
+        company = serializer.save(subscription_plan=free_plan)
 
         email = request.data.get('email')
         password = generate_password()
@@ -79,7 +84,7 @@ def createCompany(request):
 
     return Response({"error": "Invalid data", "details": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
-#=========================== ALL COmpany========================#
+#====================================== ALL COmpany  ================================#
 
 @api_view(['GET'])
 #@permission_classes([IsAdminUser])
@@ -115,7 +120,7 @@ def deleteCompany(request, pk):
     return Response({"message": "Company deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
 
 
-#================================   Company Ads    ==================================#
+#================================   Company Ads  ====================================#
 
 @api_view(['GET', 'POST'])   
 @permission_classes([])       
@@ -154,7 +159,7 @@ def get_company_profile(request, pk):
     serializer = CompanyDetailSerializer(company)
     return Response({'company': serializer.data}, status=status.HTTP_200_OK)
 
-#==================================== dashboard stats. =============================#
+#====================================== dashboard stats. ===============================#
 
 @api_view(['GET'])
 @permission_classes([IsAdminUser]) 
@@ -259,12 +264,11 @@ def dashboard_stats(request):
 
 
 
-#========================== complaints ===========================##
+#===================================== complaints ==============================##
 
 
 
 
-# GET ALL
 @api_view(['GET'])
 @permission_classes([IsAdminUser])   
 def get_all_complaints(request):
@@ -272,7 +276,7 @@ def get_all_complaints(request):
     serializer = ComplaintSerializer(complaints, many=True)
     return Response({'complaints': serializer.data}, status=status.HTTP_200_OK)
 
-#Update status
+#=========================================Update status=============================#
 
 @api_view(['PATCH'])
 @permission_classes([IsAdminUser])
