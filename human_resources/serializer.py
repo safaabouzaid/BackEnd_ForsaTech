@@ -14,7 +14,6 @@ class HumanResourcesSerializer(serializers.ModelSerializer):
 class OpportunitySerializer(serializers.ModelSerializer):
     class Meta:
         model=Opportunity
-<<<<<<< HEAD
         exclude = ['company']
         
         
@@ -54,6 +53,3 @@ class OpportunitySerializer(serializers.ModelSerializer):
         
         
         
-=======
-        exclude = ['company']
->>>>>>> 791cbf3cd573cd588591bcc0c1dbb4b8748675b9

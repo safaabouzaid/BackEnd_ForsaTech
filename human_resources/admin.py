@@ -16,8 +16,5 @@ admin.site.register(SubscriptionPlan)
 
 
 
-<<<<<<< HEAD
-admin.site.register(Opportunity)
-admin.site.register(Company)
-=======
->>>>>>> 85c9391aa3f104f2da0d6d1d020f4ea32bd7c2d4
+# admin.site.register(Opportunity)
+# admin.site.register(Company)
