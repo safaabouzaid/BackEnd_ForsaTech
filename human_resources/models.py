@@ -103,7 +103,7 @@ class JobApplication(models.Model):
     status = models.CharField(max_length=50, choices=[('pending', 'Pending'), ('accepted', 'Accepted'), ('rejected', 'Rejected')])
 
     def __str__(self):
-        return f"{self.user} applied for {self.opportunity.title}"
+        return f"{self.user} applied for {self.opportunity.opportunity_name}"
 
         
 

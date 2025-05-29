@@ -5,11 +5,11 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
-from human_resources.models import Company, Opportunity
-from human_resources.serializer import HumanResourcesSerializer, OpportunitySerializer
+from .models import Company, Opportunity,JobApplication
+from .serializer import HumanResourcesSerializer, OpportunitySerializer,ApplicantSerializer
 from rest_framework.permissions import IsAuthenticated
 from django.views.decorators.csrf import csrf_exempt
-from .models import User  
+from .models import User  ,humanResources
 from django.utils import timezone
 
 
@@ -43,22 +43,21 @@ def loginHumanResource(request):
         'refresh': str(refresh),
         'access': str(refresh.access_token)
     }, status=status.HTTP_200_OK)
-
-
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def createOpportunity(request):
-    data=request.data
-    company_id=data.pop('company',None)
-    
+    user = request.user
+
     try:
-        company=Company.objects.get(id=company_id)
+        hr = humanResources.objects.get(user=user)
+        company = hr.company
+    except humanResources.DoesNotExist:
+        return Response({"error": "User is not registered as HR"}, status=status.HTTP_403_FORBIDDEN)
     except Company.DoesNotExist:
-       return Response({"error": "Invalid company ID"}, status=status.HTTP_400_BAD_REQUEST)
-    
-# بدنا نتأكد بالاول شو خطة الشركة
+        return Response({"error": "HR is not associated with any company"}, status=status.HTTP_400_BAD_REQUEST)
+
     subscription_plan = company.subscription_plan  
-    job_post_limit = subscription_plan.job_post_limit
+    job_post_limit = subscription_plan.job_post_limit if subscription_plan else None
 
     current_month = timezone.now().month
     current_year = timezone.now().year
@@ -74,15 +73,18 @@ def createOpportunity(request):
             {"error": "Job posting limit reached for this month."},
             status=status.HTTP_403_FORBIDDEN
         )
-    serializer=OpportunitySerializer(data=data)
+
+    data = request.data.copy()
+    data.pop('company', None)
+
+    serializer = OpportunitySerializer(data=data)
 
     if serializer.is_valid():
-        opportunity=Opportunity.objects.create(company=company, **serializer.validated_data)
-        result=OpportunitySerializer(opportunity,many=False)
-        return Response({"opportunity":result.data},status=status.HTTP_201_CREATED)
-    else:  
-        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
-    
+        opportunity = Opportunity.objects.create(company=company, **serializer.validated_data)
+        result = OpportunitySerializer(opportunity, many=False)
+        return Response({"opportunity": result.data}, status=status.HTTP_201_CREATED)
+    else:
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 
@@ -144,6 +146,30 @@ def getJobCard(request):
     
     
     
+#
+
+@api_view(['GET'])
+def opportunity_details_view(request):
+    opportunity_id = request.headers.get('opportunity-id')
+
+    if not opportunity_id:
+        return Response({"error": "Missing opportunity-id in headers"}, status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+        opportunity = Opportunity.objects.get(id=opportunity_id)
+    except Opportunity.DoesNotExist:
+        return Response({"error": "Opportunity not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    # get applicants for  opportunity
+    applications = JobApplication.objects.filter(opportunity=opportunity)
+    users = [app.user for app in applications]
+    applicants_data = ApplicantSerializer(users, many=True).data
+
+    return Response({
+        "id": opportunity.id,
+        "description": opportunity.description,
+        "applicants": applicants_data
+    }, status=status.HTTP_200_OK)
 
 
 

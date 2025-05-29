@@ -2,3 +2,10 @@ venv
 __pycache__/
 **/__pycache__/
 .env
+Recommendation/glove.6B.100d.txt
+Recommendation/fasttext_loader.py
+Recommendation/models
+Recommendation
+*.bin
+*.bin.gz
+models/cc.en.300.bin

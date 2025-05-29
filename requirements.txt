@@ -12,4 +12,10 @@ tzdata==2025.1
 python-decouple
 google-generativeai
 django-jazzmin
-
+python-dotenv
+Pillow
+numpy
+nltk
+scikit-learn
+gensim>=4.3.0
+fasttext-wheel

@@ -6,3 +6,4 @@ class DevloperConfig(AppConfig):
 
     def ready(self):
         import devloper.signals  
+

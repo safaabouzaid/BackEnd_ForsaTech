@@ -9,6 +9,8 @@ urlpatterns = [
     path('HR/getByIdOpportunity/<int:pk>', views.getByIdOpportunity, name='opportunity'),
     path('HR/updateOpportunity/<int:pk>', views.updateOpportunity, name='opportunity'),
     path('opportunities/',views.getJobCard, name='opportunityCard'),
+    path('opportunity-details/', views.opportunity_details_view, name='opportunity-details'),
+
 #    path('HR/getAllOpportunity/', views.getAllOpportunity, name='opportunity'),
 
 
