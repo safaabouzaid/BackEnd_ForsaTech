@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from devloper.models import User
-from .models import Opportunity,JobApplication
+from .models import Opportunity,JobApplication,CompanyAd
+
 class HumanResourcesSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -33,3 +34,11 @@ class OpportunityDetailsSerializer(serializers.ModelSerializer):
         applications = JobApplication.objects.filter(opportunity=obj)
         users = [app.user for app in applications]
         return ApplicantSerializer(users, many=True).data
+
+
+
+class CompanyAdSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CompanyAd
+        fields = ['id', 'title', 'description', 'created_at']
+        read_only_fields = ['id', 'created_at']

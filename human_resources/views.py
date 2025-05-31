@@ -5,12 +5,14 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
-from .models import Company, Opportunity,JobApplication
-from .serializer import HumanResourcesSerializer, OpportunitySerializer,ApplicantSerializer
+from .models import Company, Opportunity,JobApplication,CompanyAd, humanResources
+from .serializer import HumanResourcesSerializer, OpportunitySerializer,ApplicantSerializer,CompanyAdSerializer
 from rest_framework.permissions import IsAuthenticated
 from django.views.decorators.csrf import csrf_exempt
 from .models import User  ,humanResources
 from django.utils import timezone
+from devloper.models import User, Resume
+from devloper.serializer import ResumeSerializer
 
 
 @api_view(['POST'])
@@ -173,3 +175,31 @@ def opportunity_details_view(request):
 
 
 
+###### resume details for developer
+
+
+@api_view(['GET'])
+def user_resume(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    resumes = Resume.objects.filter(user=user)
+    serializer = ResumeSerializer(resumes, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+##create ad
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def create_company_ad(request):
+    try:
+        hr = humanResources.objects.get(user=request.user)
+        company = hr.company
+        if not company:
+            return Response({"detail": "This user does not belong to any company."}, status=status.HTTP_400_BAD_REQUEST)
+    except humanResources.DoesNotExist:
+        return Response({"detail": "  user is not  HR."}, status=status.HTTP_403_FORBIDDEN)
+
+    serializer = CompanyAdSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save(company=company)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

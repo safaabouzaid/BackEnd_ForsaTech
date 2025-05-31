@@ -10,6 +10,10 @@ urlpatterns = [
     path('HR/updateOpportunity/<int:pk>', views.updateOpportunity, name='opportunity'),
     path('opportunities/',views.getJobCard, name='opportunityCard'),
     path('opportunity-details/', views.opportunity_details_view, name='opportunity-details'),
+    path('user-resume/<int:user_id>/', views.user_resume, name='user-resume'),
+    path('create-ad/', views.create_company_ad, name='create_company_ad'),
+
+
 
 #    path('HR/getAllOpportunity/', views.getAllOpportunity, name='opportunity'),
 

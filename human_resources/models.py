@@ -70,10 +70,23 @@ class OpportunityName(models.Model):
         return self.name
 
 
+
+
+
+
 class Opportunity(models.Model):
+    EMPLOYMENT_TYPE_CHOICES = [
+        ('remote', 'Remote'),
+        ('on-site', 'On-site'),
+        ('hybrid', 'Hybrid'),
+        ('freelance', 'Freelance'),
+        ('internship', 'Internship'),
+        ('part-time', 'Part-time'),
+        ('full-time', 'Full-time'),
+    ]
     opportunity_name = models.ForeignKey(OpportunityName, on_delete=models.CASCADE,default=1 , related_name="opportunities")
     description = models.TextField(null=True, blank=True)
-    employment_type = models.CharField(max_length=50,null=True, blank=True)
+    employment_type = models.CharField(max_length=50, choices=EMPLOYMENT_TYPE_CHOICES, null=True, blank=True)
     location = models.CharField(max_length=100,null=True, blank=True)
     salary_range = models.CharField(max_length=50,null=True, blank=True)
     currency = models.CharField(max_length=10,null=True, blank=True)
