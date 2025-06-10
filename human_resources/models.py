@@ -70,10 +70,6 @@ class OpportunityName(models.Model):
         return self.name
 
 
-
-
-
-
 class Opportunity(models.Model):
     EMPLOYMENT_TYPE_CHOICES = [
         ('remote', 'Remote'),
@@ -84,7 +80,7 @@ class Opportunity(models.Model):
         ('part-time', 'Part-time'),
         ('full-time', 'Full-time'),
     ]
-    opportunity_name = models.ForeignKey(OpportunityName, on_delete=models.CASCADE,default=1 , related_name="opportunities")
+    opportunity_name = models.CharField(max_length=255, blank=True)
     description = models.TextField(null=True, blank=True)
     employment_type = models.CharField(max_length=50, choices=EMPLOYMENT_TYPE_CHOICES, null=True, blank=True)
     location = models.CharField(max_length=100,null=True, blank=True)
@@ -105,7 +101,7 @@ class Opportunity(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
-         return f"{self.opportunity_name.name} at {self.company.name}"
+         return f"{self.opportunity_name} at {self.company.name}"
     
 
 
@@ -128,8 +124,6 @@ class GenerateQuestion(models.Model):
     def str(self):
         return f"Questions for {self.opportunity}"
     
-
-
 
 class Complaint(models.Model):
     STATUS_CHOICES = [

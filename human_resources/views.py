@@ -9,7 +9,7 @@ from .models import Company, Opportunity,JobApplication,CompanyAd, humanResource
 from .serializer import HumanResourcesSerializer, OpportunitySerializer,ApplicantSerializer,CompanyAdSerializer
 from rest_framework.permissions import IsAuthenticated
 from django.views.decorators.csrf import csrf_exempt
-from .models import User  ,humanResources
+from .models import User  ,humanResources,OpportunityName
 from django.utils import timezone
 from devloper.models import User, Resume
 from devloper.serializer import ResumeSerializer
@@ -40,11 +40,22 @@ def loginHumanResource(request):
         return Response({'error': 'This account is not authorized to access this endpoint'}, status=status.HTTP_403_FORBIDDEN)
 
     refresh = RefreshToken.for_user(user)
+    # جبت معلومات الشركة
+    hr_profile = user.humanresources
+    company = hr_profile.company
+    company_name = company.name if company else None
+    company_logo = request.build_absolute_uri(company.logo.url) if company and company.logo else None
+
+    print("Company Name:", company_name)
+    print("Company Logo URL:", company_logo)
 
     return Response({
         'refresh': str(refresh),
-        'access': str(refresh.access_token)
+        'access': str(refresh.access_token),
+        'company_name': company_name,
+        'company_logo': company_logo
     }, status=status.HTTP_200_OK)
+
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def createOpportunity(request):
@@ -203,3 +214,11 @@ def create_company_ad(request):
         serializer.save(company=company)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+#===============================    get_opportunity_names   =================================#
+
+@api_view(['GET'])
+def get_opportunity_names(request):
+    names = OpportunityName.objects.values_list('name', flat=True)
+    return Response(names)

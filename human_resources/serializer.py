@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from devloper.models import User
-from .models import Opportunity,JobApplication,CompanyAd
+from .models import Opportunity,JobApplication,CompanyAd,OpportunityName
 
 class HumanResourcesSerializer(serializers.ModelSerializer):
     class Meta:
@@ -13,8 +13,16 @@ class HumanResourcesSerializer(serializers.ModelSerializer):
 
 
 class OpportunitySerializer(serializers.ModelSerializer):
+    opportunity_name = serializers.ChoiceField(choices=[])
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # جبت أسماء الفرص من  OpportunityName
+        names = OpportunityName.objects.values_list('name', 'name')
+        self.fields['opportunity_name'].choices = names
+
     class Meta:
-        model=Opportunity
+        model = Opportunity
         exclude = ['company']
 
 
