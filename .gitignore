@@ -3,8 +3,7 @@ __pycache__/
 **/__pycache__/
 .env
 Recommendation/glove.6B.100d.txt
-Recommendation/fasttext_loader.py
-Recommendation/models
+Recommendation/wiki-news-300d-1M-subword.vec
 Recommendation
 *.bin
 *.bin.gz

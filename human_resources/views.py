@@ -55,7 +55,6 @@ def loginHumanResource(request):
         'company_name': company_name,
         'company_logo': company_logo
     }, status=status.HTTP_200_OK)
-
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def createOpportunity(request):
@@ -98,7 +97,6 @@ def createOpportunity(request):
         return Response({"opportunity": result.data}, status=status.HTTP_201_CREATED)
     else:
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 
 

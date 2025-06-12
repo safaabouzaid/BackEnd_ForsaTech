@@ -13,13 +13,26 @@ class HumanResourcesSerializer(serializers.ModelSerializer):
 
 
 class OpportunitySerializer(serializers.ModelSerializer):
-    opportunity_name = serializers.ChoiceField(choices=[])
+    opportunity_name_choice = serializers.ChoiceField(choices=[], required=False)
+    opportunity_name = serializers.CharField(required=False, allow_blank=True)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # جبت أسماء الفرص من  OpportunityName
         names = OpportunityName.objects.values_list('name', 'name')
-        self.fields['opportunity_name'].choices = names
+        self.fields['opportunity_name_choice'].choices = names
+
+    def validate(self, attrs):
+        name = attrs.get('opportunity_name')
+        choice = attrs.get('opportunity_name_choice')
+
+        if not name and not choice:
+            raise serializers.ValidationError("You must either enter a custom name or select from the list.")
+        
+        # لو اختار من الخيارات، نعيّن القيمة لمجال الاسم
+        if choice:
+            attrs['opportunity_name'] = choice
+
+        return attrs
 
     class Meta:
         model = Opportunity

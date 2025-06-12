@@ -136,13 +136,13 @@ WSGI_APPLICATION = 'forsa.wsgi.application'
 
 
 
+
 CACHES = {
-    "default": {
-        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
-        "LOCATION": "glove-cache"
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',
     }
 }
-
 
 
 # Database
