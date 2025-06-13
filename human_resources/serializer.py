@@ -55,13 +55,13 @@ class ApplicantSerializer(serializers.ModelSerializer):
         model = User
         fields = ['id','username', 'email','location','github_link','linkedin_link','phone']  
 
-
 class OpportunitySerializer(serializers.ModelSerializer):
     company = CompanySerializer()
+    applicants = serializers.SerializerMethodField()
 
     class Meta:
         model = Opportunity
-        fields = ['id', 'description', 'applicants']
+        fields = ['id', 'description', 'applicants', 'company']
 
     def get_applicants(self, obj):
         applications = JobApplication.objects.filter(opportunity=obj)
@@ -69,6 +69,11 @@ class OpportunitySerializer(serializers.ModelSerializer):
         return ApplicantSerializer(users, many=True).data
 
 
+class OpportunitySerializer1(serializers.ModelSerializer):
+
+    class Meta:
+        model = Opportunity
+        fields = ['id','opportunity_name','description']
 
 class CompanyAdSerializer(serializers.ModelSerializer):
     class Meta:

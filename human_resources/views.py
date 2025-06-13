@@ -256,3 +256,19 @@ def create_company_ad(request):
 def get_opportunity_names(request):
     names = OpportunityName.objects.values_list('name', flat=True)
     return Response(names)
+
+
+#================get mycomany opp.===========#
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_opportunities_for_hr_company(request):
+    user = request.user
+
+    if not hasattr(user, 'humanresources') or not user.humanresources.company:
+        return Response({'error': 'HR user or company not found'}, status=status.HTTP_403_FORBIDDEN)
+
+    company = user.humanresources.company
+    opportunities = Opportunity.objects.filter(company=company)
+    
+    serializer = OpportunitySerializer1(opportunities, many=True)
+    return Response({'opportunities': serializer.data}, status=status.HTTP_200_OK)

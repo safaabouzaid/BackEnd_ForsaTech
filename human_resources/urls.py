@@ -14,7 +14,7 @@ urlpatterns = [
     path('create-ad/', views.create_company_ad, name='create_company_ad'),
     path('getopportunitynames/', views.get_opportunity_names, name='get_opportunity_names'),
     path('Forsa/', views.opportunity_list, name='opportunity-list'),
-    #path('opportunities/my-company/', views.get_opportunities_for_hr_company, name='hr-company-opportunities'),
+    path('opportunities/my-company/', views.get_opportunities_for_hr_company, name='hr-company-opportunities'),
     path('opportunityById/<int:pk>/',views.opportunityById, name='opportunityCard'),
 
 
