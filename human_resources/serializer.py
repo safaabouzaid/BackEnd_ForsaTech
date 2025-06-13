@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from devloper.models import User
+from devloper.models import User,Resume
 from .models import Opportunity,JobApplication,CompanyAd,OpportunityName,Company
 
 class HumanResourcesSerializer(serializers.ModelSerializer):
@@ -10,7 +10,7 @@ class HumanResourcesSerializer(serializers.ModelSerializer):
             'username': {'required': True, 'allow_blank': False},
             'password': {'required': True, 'allow_blank': False, 'min_length': 8, 'write_only': True}
         }
-
+    
 
 class OpportunitySerializer(serializers.ModelSerializer):
     opportunity_name = serializers.ChoiceField(choices=[])
@@ -50,6 +50,12 @@ class CompanySerializer(serializers.ModelSerializer):
         model = Company
         fields = [ 'name', 'logo', 'website', 'description', 'email', 'address', 'employees']
 
+class ApplicantSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id','username', 'email','location','github_link','linkedin_link','phone']  
+
+
 class OpportunitySerializer(serializers.ModelSerializer):
     company = CompanySerializer()
 
@@ -69,3 +75,18 @@ class CompanyAdSerializer(serializers.ModelSerializer):
         model = CompanyAd
         fields = ['id', 'title', 'description', 'created_at']
         read_only_fields = ['id', 'created_at']
+
+
+
+
+
+
+
+
+from rest_framework import serializers
+from .models import SubscriptionPlan
+
+class SubscriptionPlanSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SubscriptionPlan
+        fields = '__all__'

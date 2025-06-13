@@ -27,3 +27,7 @@ class LanguageSerializer(serializers.ModelSerializer):
         
       
 
+class ResumeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Resume
+    
