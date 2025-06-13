@@ -94,6 +94,40 @@ class TrainingCourse(models.Model):
 
 
 
+class Language(models.Model):
+    LANGUAGE_CHOICES = [
+        ('Arabic', 'Arabic'),
+        ('English', 'English'),
+        ('Spanish', 'Spanish'),
+        ('German', 'German'),
+        ('Turkish', 'Turkish'),
+        ('Russian', 'Russian'),
+        ('French', 'French'),
+        ('Chinese', 'Chinese'),
+        ('Japanese', 'Japanese'),
+        ('Hindi', 'Hindi'),
+        ('Italian', 'Italian'),
+        ('Portuguese', 'Portuguese'),
+        ('Korean', 'Korean'),
+        ('Persian', 'Persian'),
+        ('Urdu', 'Urdu'),
+    ]
+
+    LEVEL_CHOICES = [
+        ('1', '1'),
+        ('2', '2'),
+        ('3', '3'),
+        ('4', '4'),
+        ('5', '5'),
+    ]
+
+    resume = models.ForeignKey(Resume, on_delete=models.CASCADE, related_name="languages")
+    name = models.CharField(max_length=50, choices=LANGUAGE_CHOICES)
+    level = models.CharField(max_length=6, choices=LEVEL_CHOICES)
+
+    def __str__(self):
+        return f"{self.get_name_display()} - {self.get_level_display()} ({self.resume.user.username})"
+
 
 
 

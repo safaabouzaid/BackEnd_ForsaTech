@@ -12,7 +12,7 @@ urlpatterns = [
     path('',include("human_resources.urls")),
     path('api/admin/login/', TokenObtainPairView.as_view(), name='admin_login'),
     path('admin-dash/', include('admin.urls')),
-    path('recommend/', include('Recommendation.urls')),
+    # path('recommend/', include('Recommendation.urls')),
 
 
 ]

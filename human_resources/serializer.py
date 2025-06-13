@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from devloper.models import User
-from .models import Opportunity,JobApplication,CompanyAd,OpportunityName,SubscriptionPlan
-
+from .models import Opportunity,JobApplication,CompanyAd,OpportunityName,Company
 
 class HumanResourcesSerializer(serializers.ModelSerializer):
     class Meta:
@@ -23,17 +22,36 @@ class OpportunitySerializer(serializers.ModelSerializer):
         self.fields['opportunity_name'].choices = names
 
     class Meta:
-        model = Opportunity
+        model=Opportunity
         exclude = ['company']
-
-
-class ApplicantSerializer(serializers.ModelSerializer):
+        
+        
+class OpportunitySerializer1(serializers.ModelSerializer):
+    company_name = serializers.CharField(source='company.name', read_only=True)
+    company_logo = serializers.ImageField(source='company.logo', read_only=True)  
     class Meta:
-        model = User
-        fields = ['id','username', 'email','location','github_link','linkedin_link','phone']  
+        model = Opportunity
+        fields = [
+            'id' ,
+            # 'title',
+            'company_logo',
+            'experience_level',   # job level
+            'years_of_experience',# experience
+            'location',
+            'employment_type' ,
+            'posting_date' ,
+            'company_name',
+        ]      
+        
+        
+        
+class CompanySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Company
+        fields = [ 'name', 'logo', 'website', 'description', 'email', 'address', 'employees']
 
-class OpportunityDetailsSerializer(serializers.ModelSerializer):
-    applicants = serializers.SerializerMethodField()
+class OpportunitySerializer(serializers.ModelSerializer):
+    company = CompanySerializer()
 
     class Meta:
         model = Opportunity
@@ -51,10 +69,3 @@ class CompanyAdSerializer(serializers.ModelSerializer):
         model = CompanyAd
         fields = ['id', 'title', 'description', 'created_at']
         read_only_fields = ['id', 'created_at']
-
-
-
-class SubscriptionPlanSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = SubscriptionPlan
-        fields = '__all__'

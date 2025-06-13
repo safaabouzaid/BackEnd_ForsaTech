@@ -13,11 +13,17 @@ urlpatterns = [
     path('user-resume/<int:user_id>/', views.user_resume, name='user-resume'),
     path('create-ad/', views.create_company_ad, name='create_company_ad'),
     path('getopportunitynames/', views.get_opportunity_names, name='get_opportunity_names'),
+    path('Forsa/', views.opportunity_list, name='opportunity-list'),
     path('opportunities/my-company/', views.get_opportunities_for_hr_company, name='hr-company-opportunities'),
+    path('opportunityById/<int:pk>/',views.opportunityById, name='opportunityCard'),
+
+
+
 
 
 
 #    path('HR/getAllOpportunity/', views.getAllOpportunity, name='opportunity'),
+    path('apply/<int:opportunity_id>/', views.apply_for_opportunity, name='apply-for-opportunity'),
 
 
 

@@ -1,14 +1,19 @@
 from django.shortcuts import render
+from devloper.models import Resume
+from human_resources.models import JobApplication, Opportunity
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
 from rest_framework import status
-from .serializer import LoginSerializer, SingUpSerializer
+from .serializer import *
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
-from human_resources.models import Complaint
-from admin.serializers import ComplaintSerializer
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework import status
+
 User = get_user_model()  
 
 @api_view(['POST'])
@@ -60,30 +65,43 @@ def login(request):
 
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    
+###
+# add lan
+
+# views.py
 
 
-
-
-
-
-##############complaint################
 
 @api_view(['POST'])
-def add_complaint(request):
-    if request.method == 'POST':
-        serializer = ComplaintSerializer(data=request.data)
-        
+@permission_classes([IsAuthenticated])
+def save_languages(request):
+    
+    resume = Resume.objects.filter(user=request.user).order_by('created_at').first()
 
+    if not resume:
+        return Response({"error": "No resume found for the user."}, status=status.HTTP_404_NOT_FOUND)
+
+    languages_data = request.data  
+
+    for item in languages_data:
+        serializer = LanguageSerializer(data=item)
         if serializer.is_valid():
+            name = serializer.validated_data['name']
+            level = serializer.validated_data['level']
 
-            user = request.user
+            language_obj, created = Language.objects.get_or_create(
+                resume=resume,
+                name=name,
+                defaults={'level': level}
+            )
 
+            if not created:
+                
+                language_obj.level = level
+                language_obj.save()
 
-            if user.is_authenticated:
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-                serializer.save(user=user)
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
-            else:
-                return Response({"error": "User is not authenticated."}, status=status.HTTP_401_UNAUTHORIZED)
-
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    return Response({"message": "Languages saved/updated successfully."}, status=status.HTTP_200_OK)

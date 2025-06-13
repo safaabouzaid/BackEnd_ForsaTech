@@ -16,3 +16,5 @@ admin.site.register(SubscriptionPlan)
 
 
 
+# admin.site.register(Opportunity)
+# admin.site.register(Company)

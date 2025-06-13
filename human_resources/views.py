@@ -5,15 +5,14 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
-from .models import Company, Opportunity,JobApplication,CompanyAd, humanResources
-from .serializer import HumanResourcesSerializer, OpportunitySerializer,ApplicantSerializer,CompanyAdSerializer
+from human_resources.models import Company, Opportunity
+from human_resources.serializer import *
 from rest_framework.permissions import IsAuthenticated
 from django.views.decorators.csrf import csrf_exempt
-from .models import User  ,humanResources,OpportunityName
+from .models import User  ,humanResources,OpportunityName,Opportunity, JobApplication
 from django.utils import timezone
-from devloper.models import User, Resume
+from devloper.models import User, Resume, Education, Experience, Language
 from devloper.serializer import ResumeSerializer
-
 
 
 @api_view(['POST'])
@@ -153,32 +152,70 @@ def getJobCard(request):
     opportunities = Opportunity.objects.all()
     serializer = OpportunitySerializer(opportunities, many=True)
     return Response(serializer.data)
-    
-    
-    
-#
+
+
+###Forsazforfile  
 
 @api_view(['GET'])
-def opportunity_details_view(request):
-    opportunity_id = request.headers.get('opportunity-id')
+def opportunity_list(request):
+    opportunities = Opportunity.objects.all()
+    serializer = OpportunitySerializer1(opportunities, many=True)
+    return Response(serializer.data)
 
-    if not opportunity_id:
-        return Response({"error": "Missing opportunity-id in headers"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+###forsa by id 
+##
+@api_view(['GET'])
+def opportunityById(request,pk ):
+    opportunities = Opportunity.objects.get(pk=pk)
+    serializer = OpportunitySerializer(opportunities)
+    return Response(serializer.data)
+    
+    
+    
+###    
+## apply forsa 
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def apply_for_opportunity(request, opportunity_id):
+    user = request.user
+
+    missing_sections = []
+
+    if not Education.objects.filter(resume__user=user).exists():
+        missing_sections.append("education")
+    if not Experience.objects.filter(resume__user=user).exists():
+        missing_sections.append("experience")
+    if not Language.objects.filter(resume__user=user).exists():
+        missing_sections.append("language")
+
+    if missing_sections:
+        return Response({
+            "error": "You must complete all required sections before applying.",
+            "missing_sections": missing_sections
+        }, status=status.HTTP_400_BAD_REQUEST)
 
     try:
         opportunity = Opportunity.objects.get(id=opportunity_id)
     except Opportunity.DoesNotExist:
-        return Response({"error": "Opportunity not found"}, status=status.HTTP_404_NOT_FOUND)
+        return Response({"error": "Opportunity not found."}, status=status.HTTP_404_NOT_FOUND)
 
-    # get applicants for  opportunity
-    applications = JobApplication.objects.filter(opportunity=opportunity)
-    users = [app.user for app in applications]
-    applicants_data = ApplicantSerializer(users, many=True).data
+    if JobApplication.objects.filter(user=user, opportunity=opportunity).exists():
+        return Response({"error": "You have already applied for this opportunity."},
+                        status=status.HTTP_400_BAD_REQUEST)
+
+    application = JobApplication.objects.create(
+        user=user,
+        opportunity=opportunity,
+        status='pending'
+    )
 
     return Response({
-        "id": opportunity.id,
-        "description": opportunity.description,
-        "applicants": applicants_data
+        "message": "Application submitted successfully.",
+        "application_id": application.id,
+        "status": application.status
     }, status=status.HTTP_200_OK)
 
 
@@ -219,20 +256,3 @@ def create_company_ad(request):
 def get_opportunity_names(request):
     names = OpportunityName.objects.values_list('name', flat=True)
     return Response(names)
-
-
-#=======================get my-company opp.======================#
-
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def get_opportunities_for_hr_company(request):
-    user = request.user
-
-    if not hasattr(user, 'humanresources') or not user.humanresources.company:
-        return Response({'error': 'HR user or company not found'}, status=status.HTTP_403_FORBIDDEN)
-
-    company = user.humanresources.company
-    opportunities = Opportunity.objects.filter(company=company)
-    
-    serializer = OpportunitySerializer(opportunities, many=True)
-    return Response({'opportunities': serializer.data}, status=status.HTTP_200_OK)
