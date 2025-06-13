@@ -12,7 +12,9 @@ urlpatterns = [
     path('dashboard/stats/', views.dashboard_stats, name='dashboard-stats'),
     path('complaints/', views.get_all_complaints, name='get_all_complaints'),
     path('complaints/<int:complaint_id>/update/', views.update_complaint_status, name='update_complaint_status'),
-
+    path('plans/', views.list_subscription_plans, name='plan-list'),
+    path('plans/create/', views.create_subscription_plan, name='plan-create'),
+    path('plans/update/<plan_id>/', views.update_subscription_plan, name='plan-create'),
 
 ]
 

@@ -18,6 +18,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 import random
 import string
+from human_resources.serializer import SubscriptionPlanSerializer
 
 def generate_password(length=8):
     characters = string.ascii_letters + string.digits
@@ -295,3 +296,35 @@ def update_complaint_status(request, complaint_id):
 
     serializer = ComplaintSerializer(complaint)
     return Response({"message": "Complaint status updated", 'complaint': serializer.data}, status=status.HTTP_200_OK)
+
+
+
+#================================== Plans ========================================#
+
+@api_view(['GET'])
+def list_subscription_plans(request):
+    plans = SubscriptionPlan.objects.all()
+    serializer = SubscriptionPlanSerializer(plans, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+@api_view(['POST'])
+@permission_classes([IsAdminUser])
+def create_subscription_plan(request):
+    serializer = SubscriptionPlanSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['PATCH'])
+@permission_classes([IsAdminUser])
+def update_subscription_plan(request, plan_id):
+    plan = get_object_or_404(SubscriptionPlan, pk=plan_id)
+    
+    serializer = SubscriptionPlanSerializer(plan, data=request.data, partial=True)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

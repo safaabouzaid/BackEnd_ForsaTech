@@ -15,6 +15,7 @@ from devloper.models import User, Resume
 from devloper.serializer import ResumeSerializer
 
 
+
 @api_view(['POST'])
 def loginHumanResource(request):
     if request.method == 'GET':
@@ -46,8 +47,6 @@ def loginHumanResource(request):
     company_name = company.name if company else None
     company_logo = request.build_absolute_uri(company.logo.url) if company and company.logo else None
 
-    print("Company Name:", company_name)
-    print("Company Logo URL:", company_logo)
 
     return Response({
         'refresh': str(refresh),
@@ -220,3 +219,20 @@ def create_company_ad(request):
 def get_opportunity_names(request):
     names = OpportunityName.objects.values_list('name', flat=True)
     return Response(names)
+
+
+#=======================get my-company opp.======================#
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_opportunities_for_hr_company(request):
+    user = request.user
+
+    if not hasattr(user, 'humanresources') or not user.humanresources.company:
+        return Response({'error': 'HR user or company not found'}, status=status.HTTP_403_FORBIDDEN)
+
+    company = user.humanresources.company
+    opportunities = Opportunity.objects.filter(company=company)
+    
+    serializer = OpportunitySerializer(opportunities, many=True)
+    return Response({'opportunities': serializer.data}, status=status.HTTP_200_OK)
