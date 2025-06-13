@@ -11,6 +11,8 @@ from rest_framework.permissions import IsAuthenticated
 from django.views.decorators.csrf import csrf_exempt
 from .models import User  
 from django.utils import timezone
+from .models import  Opportunity, JobApplication
+from devloper.models import Resume, Education, Experience, Language
 
 
 @api_view(['POST'])
@@ -163,6 +165,46 @@ def opportunityById(request,pk ):
     
     
     
+###    
+## apply forsa 
 
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def apply_for_opportunity(request, opportunity_id):
+    user = request.user
 
+    missing_sections = []
 
+    if not Education.objects.filter(resume__user=user).exists():
+        missing_sections.append("education")
+    if not Experience.objects.filter(resume__user=user).exists():
+        missing_sections.append("experience")
+    if not Language.objects.filter(resume__user=user).exists():
+        missing_sections.append("language")
+
+    if missing_sections:
+        return Response({
+            "error": "You must complete all required sections before applying.",
+            "missing_sections": missing_sections
+        }, status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+        opportunity = Opportunity.objects.get(id=opportunity_id)
+    except Opportunity.DoesNotExist:
+        return Response({"error": "Opportunity not found."}, status=status.HTTP_404_NOT_FOUND)
+
+    if JobApplication.objects.filter(user=user, opportunity=opportunity).exists():
+        return Response({"error": "You have already applied for this opportunity."},
+                        status=status.HTTP_400_BAD_REQUEST)
+
+    application = JobApplication.objects.create(
+        user=user,
+        opportunity=opportunity,
+        status='pending'
+    )
+
+    return Response({
+        "message": "Application submitted successfully.",
+        "application_id": application.id,
+        "status": application.status
+    }, status=status.HTTP_201_CREATED)

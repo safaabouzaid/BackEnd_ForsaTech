@@ -12,6 +12,7 @@ urlpatterns = [
      path('opportunityById/<int:pk>/',views.opportunityById, name='opportunityCard'),
     path('Forsa/', views.opportunity_list, name='opportunity-list'),
 #    path('HR/getAllOpportunity/', views.getAllOpportunity, name='opportunity'),
+    path('apply/<int:opportunity_id>/', views.apply_for_opportunity, name='apply-for-opportunity'),
 
 
 

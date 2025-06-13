@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User
+from .models import *
 
   
 class SingUpSerializer(serializers.Serializer):
@@ -18,5 +18,16 @@ class LoginSerializer(serializers.Serializer):
     class Meta:
         model = User
         fields = ('username', 'password', 'email')
+        
+        
+        
+# serializers.py
+
+
+class LanguageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Language
+        fields = ['name', 'level']
+        
       
 
