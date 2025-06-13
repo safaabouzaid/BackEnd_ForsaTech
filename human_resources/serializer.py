@@ -1,11 +1,6 @@
 from rest_framework import serializers
 from devloper.models import User
-<<<<<<< HEAD
 from .models import Opportunity , Company
-=======
-from .models import Opportunity,JobApplication,CompanyAd,OpportunityName
-
->>>>>>> 08f25b5669300c126e3f778ddc14c109b7d6a5d8
 class HumanResourcesSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -26,7 +21,6 @@ class OpportunitySerializer(serializers.ModelSerializer):
         self.fields['opportunity_name'].choices = names
 
     class Meta:
-<<<<<<< HEAD
         model=Opportunity
         exclude = ['company']
         
@@ -67,33 +61,3 @@ class OpportunitySerializer(serializers.ModelSerializer):
         
         
         
-=======
-        model = Opportunity
-        exclude = ['company']
-
-
-class ApplicantSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ['id','username', 'email','location','github_link','linkedin_link','phone']  
-
-class OpportunityDetailsSerializer(serializers.ModelSerializer):
-    applicants = serializers.SerializerMethodField()
-
-    class Meta:
-        model = Opportunity
-        fields = ['id', 'description', 'applicants']
-
-    def get_applicants(self, obj):
-        applications = JobApplication.objects.filter(opportunity=obj)
-        users = [app.user for app in applications]
-        return ApplicantSerializer(users, many=True).data
-
-
-
-class CompanyAdSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CompanyAd
-        fields = ['id', 'title', 'description', 'created_at']
-        read_only_fields = ['id', 'created_at']
->>>>>>> 08f25b5669300c126e3f778ddc14c109b7d6a5d8
