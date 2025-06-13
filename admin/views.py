@@ -184,11 +184,11 @@ def dashboard_stats(request):
 
     # Most Demanded Jobs
     most_demanded_jobs = (
-        JobApplication.objects.values('opportunity__opportunity_name__name')  
+        JobApplication.objects.values('opportunity__opportunity_name')  
         .annotate(count=Count('id'))
         .order_by('-count')[:3]
     )
-    most_demanded_titles = [job['opportunity__opportunity_name__name'] for job in most_demanded_jobs]
+    most_demanded_titles = [job['opportunity__opportunity_name'] for job in most_demanded_jobs]
 
     # Highest Paying Jobs
     def extract_max_salary(opportunity):
@@ -200,7 +200,7 @@ def dashboard_stats(request):
     opportunities = Opportunity.objects.exclude(salary_range__isnull=True)
     highest_salary_opportunity = Opportunity.objects.exclude(salary_range__isnull=True).order_by('-salary_range').first()
     highest_paying_job = {
-        "title": highest_salary_opportunity.opportunity_name.name if highest_salary_opportunity else "N/A",  
+        "title": highest_salary_opportunity.opportunity_name if highest_salary_opportunity else "N/A",  
         "salary": highest_salary_opportunity.salary_range if highest_salary_opportunity else "N/A"
     }
 
@@ -222,12 +222,12 @@ def dashboard_stats(request):
 
     # Job Distribution by Specialization
     jobs_by_title = (
-        Opportunity.objects.values('opportunity_name__name')  
+        Opportunity.objects.values('opportunity_name')  
         .annotate(count=Count('id'))
         .order_by('-count')
     )
     pie_chart_data = [
-        {"name": item["opportunity_name__name"], "value": item["count"]}   
+        {"name": item["opportunity_name"], "value": item["count"]}   
         for item in jobs_by_title
     ]
 

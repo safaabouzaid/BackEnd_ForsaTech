@@ -5,14 +5,24 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
+<<<<<<< HEAD
 from human_resources.models import Company, Opportunity
 from human_resources.serializer import *
+=======
+from .models import Company, Opportunity,JobApplication,CompanyAd, humanResources
+from .serializer import HumanResourcesSerializer, OpportunitySerializer,ApplicantSerializer,CompanyAdSerializer
+>>>>>>> 08f25b5669300c126e3f778ddc14c109b7d6a5d8
 from rest_framework.permissions import IsAuthenticated
 from django.views.decorators.csrf import csrf_exempt
-from .models import User  
+from .models import User  ,humanResources,OpportunityName
 from django.utils import timezone
+<<<<<<< HEAD
 from .models import  Opportunity, JobApplication
 from devloper.models import Resume, Education, Experience, Language
+=======
+from devloper.models import User, Resume
+from devloper.serializer import ResumeSerializer
+>>>>>>> 08f25b5669300c126e3f778ddc14c109b7d6a5d8
 
 
 @api_view(['POST'])
@@ -40,27 +50,36 @@ def loginHumanResource(request):
         return Response({'error': 'This account is not authorized to access this endpoint'}, status=status.HTTP_403_FORBIDDEN)
 
     refresh = RefreshToken.for_user(user)
+    # جبت معلومات الشركة
+    hr_profile = user.humanresources
+    company = hr_profile.company
+    company_name = company.name if company else None
+    company_logo = request.build_absolute_uri(company.logo.url) if company and company.logo else None
+
+    print("Company Name:", company_name)
+    print("Company Logo URL:", company_logo)
 
     return Response({
         'refresh': str(refresh),
-        'access': str(refresh.access_token)
+        'access': str(refresh.access_token),
+        'company_name': company_name,
+        'company_logo': company_logo
     }, status=status.HTTP_200_OK)
-
-
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def createOpportunity(request):
-    data=request.data
-    company_id=data.pop('company',None)
-    
+    user = request.user
+
     try:
-        company=Company.objects.get(id=company_id)
+        hr = humanResources.objects.get(user=user)
+        company = hr.company
+    except humanResources.DoesNotExist:
+        return Response({"error": "User is not registered as HR"}, status=status.HTTP_403_FORBIDDEN)
     except Company.DoesNotExist:
-       return Response({"error": "Invalid company ID"}, status=status.HTTP_400_BAD_REQUEST)
-    
-# بدنا نتأكد بالاول شو خطة الشركة
+        return Response({"error": "HR is not associated with any company"}, status=status.HTTP_400_BAD_REQUEST)
+
     subscription_plan = company.subscription_plan  
-    job_post_limit = subscription_plan.job_post_limit
+    job_post_limit = subscription_plan.job_post_limit if subscription_plan else None
 
     current_month = timezone.now().month
     current_year = timezone.now().year
@@ -76,16 +95,18 @@ def createOpportunity(request):
             {"error": "Job posting limit reached for this month."},
             status=status.HTTP_403_FORBIDDEN
         )
-    serializer=OpportunitySerializer(data=data)
+
+    data = request.data.copy()
+    data.pop('company', None)
+
+    serializer = OpportunitySerializer(data=data)
 
     if serializer.is_valid():
-        opportunity=Opportunity.objects.create(company=company, **serializer.validated_data)
-        result=OpportunitySerializer(opportunity,many=False)
-        return Response({"opportunity":result.data},status=status.HTTP_201_CREATED)
-    else:  
-        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
-    
-
+        opportunity = Opportunity.objects.create(company=company, **serializer.validated_data)
+        result = OpportunitySerializer(opportunity, many=False)
+        return Response({"opportunity": result.data}, status=status.HTTP_201_CREATED)
+    else:
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 
@@ -143,6 +164,7 @@ def getJobCard(request):
     opportunities = Opportunity.objects.all()
     serializer = OpportunitySerializer(opportunities, many=True)
     return Response(serializer.data)
+<<<<<<< HEAD
 
 
 ###Forsazforfile  
@@ -208,3 +230,71 @@ def apply_for_opportunity(request, opportunity_id):
         "application_id": application.id,
         "status": application.status
     }, status=status.HTTP_201_CREATED)
+=======
+    
+    
+    
+#
+
+@api_view(['GET'])
+def opportunity_details_view(request):
+    opportunity_id = request.headers.get('opportunity-id')
+
+    if not opportunity_id:
+        return Response({"error": "Missing opportunity-id in headers"}, status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+        opportunity = Opportunity.objects.get(id=opportunity_id)
+    except Opportunity.DoesNotExist:
+        return Response({"error": "Opportunity not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    # get applicants for  opportunity
+    applications = JobApplication.objects.filter(opportunity=opportunity)
+    users = [app.user for app in applications]
+    applicants_data = ApplicantSerializer(users, many=True).data
+
+    return Response({
+        "id": opportunity.id,
+        "description": opportunity.description,
+        "applicants": applicants_data
+    }, status=status.HTTP_200_OK)
+
+
+
+###### resume details for developer
+
+
+@api_view(['GET'])
+def user_resume(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    resumes = Resume.objects.filter(user=user)
+    serializer = ResumeSerializer(resumes, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+##create ad
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def create_company_ad(request):
+    try:
+        hr = humanResources.objects.get(user=request.user)
+        company = hr.company
+        if not company:
+            return Response({"detail": "This user does not belong to any company."}, status=status.HTTP_400_BAD_REQUEST)
+    except humanResources.DoesNotExist:
+        return Response({"detail": "  user is not  HR."}, status=status.HTTP_403_FORBIDDEN)
+
+    serializer = CompanyAdSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save(company=company)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+#===============================    get_opportunity_names   =================================#
+
+@api_view(['GET'])
+def get_opportunity_names(request):
+    names = OpportunityName.objects.values_list('name', flat=True)
+    return Response(names)
+>>>>>>> 08f25b5669300c126e3f778ddc14c109b7d6a5d8

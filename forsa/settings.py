@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'django_filters',
+    'Recommendation',
 
 
     
@@ -132,6 +133,16 @@ CORS_ALLOW_HEADERS = list(default_headers) + [
 
 
 WSGI_APPLICATION = 'forsa.wsgi.application'
+
+
+
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',
+    }
+}
 
 
 # Database
