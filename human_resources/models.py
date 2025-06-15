@@ -2,11 +2,8 @@ from django.db import models
 from devloper.models import User
 
 class SubscriptionPlan(models.Model):
-    PLAN_CHOICES = [
-        ('free', 'Free'),
-        ('paid', 'Paid'),
-    ]
-    name = models.CharField(max_length=100, choices=PLAN_CHOICES, unique=True)
+    
+    name = models.CharField(max_length=100,unique=True)
     job_post_limit = models.IntegerField(null=True, blank=True)  
     can_generate_tests = models.BooleanField(default=False)
     can_schedule_interviews = models.BooleanField(default=False)
@@ -139,3 +136,22 @@ class Complaint(models.Model):
 
     def __str__(self):
         return f"Complaint from {self.user.email} - {self.title}"
+
+
+
+
+
+class SubscriptionChangeRequest(models.Model):
+    STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('approved', 'Approved'),
+        ('rejected', 'Rejected'),
+    ]
+
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    requested_plan = models.ForeignKey(SubscriptionPlan, on_delete=models.CASCADE)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.company.name} - {self.requested_plan.name} ({self.status})"

@@ -15,6 +15,8 @@ urlpatterns = [
     path('plans/', views.list_subscription_plans, name='plan-list'),
     path('plans/create/', views.create_subscription_plan, name='plan-create'),
     path('plans/update/<plan_id>/', views.update_subscription_plan, name='plan-create'),
+    path('list-subscription/', views.list_subscription_requests, name='list_subscription'),
+    path('handle-subscription/', views.handle_subscription_request, name='handle_subscription'),
 
 ]
 

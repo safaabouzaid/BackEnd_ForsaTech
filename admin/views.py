@@ -3,7 +3,7 @@ from django.forms import model_to_dict
 from rest_framework.decorators import api_view, permission_classes, authentication_classes, parser_classes
 from rest_framework.response import Response
 from rest_framework.permissions import IsAdminUser
-from human_resources.models import Company,CompanyAd, Opportunity,JobApplication,Complaint,humanResources,SubscriptionPlan
+from human_resources.models import Company,CompanyAd, Opportunity,JobApplication,Complaint,humanResources,SubscriptionPlan,SubscriptionChangeRequest
 from .serializers import CompanySerializer ,CompanyAdSerializer ,CompanyDetailSerializer,DashboardStatsSerializer
 from human_resources.filters import CompaniesFilter
 from rest_framework.views import APIView
@@ -18,7 +18,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 import random
 import string
-from human_resources.serializer import SubscriptionPlanSerializer
+from human_resources.serializer import SubscriptionPlanSerializer,SubscriptionChangeRequestSerializer
 
 def generate_password(length=8):
     characters = string.ascii_letters + string.digits
@@ -328,3 +328,42 @@ def update_subscription_plan(request, plan_id):
         return Response(serializer.data, status=status.HTTP_200_OK)
     
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+@api_view(['GET'])
+@permission_classes([IsAdminUser]) 
+def list_subscription_requests(request):
+    requests = SubscriptionChangeRequest.objects.all().order_by('-created_at')
+    serializer = SubscriptionChangeRequestSerializer(requests, many=True)
+    return Response(serializer.data)
+
+
+
+@api_view(['POST'])
+@permission_classes([IsAdminUser])  
+def handle_subscription_request(request):
+    request_id = request.data.get('request_id')
+    action = request.data.get('action')  # "approve" or "reject"
+
+    if not request_id or action not in ['approve', 'reject']:
+        return Response({"error": "request_id and valid action required."}, status=400)
+
+    try:
+        sub_request = SubscriptionChangeRequest.objects.get(id=request_id)
+    except SubscriptionChangeRequest.DoesNotExist:
+        return Response({"error": "Request not found."}, status=404)
+
+    if sub_request.status != 'pending':
+        return Response({"error": "Request already processed."}, status=400)
+
+    if action == 'approve':
+        sub_request.company.subscription_plan = sub_request.requested_plan
+        sub_request.company.save()
+        sub_request.status = 'approved'
+    else:
+        sub_request.status = 'rejected'
+
+    sub_request.save()
+    return Response({"message": f"Request {action}d successfully."})
+

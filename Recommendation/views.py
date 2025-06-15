@@ -15,9 +15,7 @@ def recommend_opportunities_view(request):
     recommendations = recommend_opportunities(user)
     end_time = time.time()
 
-
-
-    filtered_recommendations = []
+    all_opportunity_data = []
 
     for item in recommendations:
         opportunity = item["opportunity"]
@@ -30,58 +28,84 @@ def recommend_opportunities_view(request):
             if not user_location or user_location != opportunity_location:
                 continue
 
-        filtered_recommendations.append({
+        recommended_users = recommend_users_for_opportunity(opportunity)
+        applied_user_ids = set(
+            JobApplication.objects.filter(opportunity=opportunity)
+            .values_list('user__id', flat=True)
+        )
+
+        filtered_users = [
+            {
+                "user_id": u["user"].id,
+                "username": u["user"].username,
+                "email": u["user"].email,
+                "similarity_score": round(u["ranking_score"], 3)
+            }
+            for u in recommended_users
+            if u["user"].id in applied_user_ids
+        ]
+
+        all_opportunity_data.append({
             "id": opportunity.id,
             "title": opportunity.opportunity_name,
             "description": opportunity.description,
-            "similarity_score": round(score, 3)
+            "similarity_score": round(score, 3),
+            "top_candidates": filtered_users
         })
 
-    return Response(filtered_recommendations)
+    return Response(all_opportunity_data)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def recommend_users_view(request, opportunity_id):
+def recommend_users_view(request):
     try:
         hr = humanResources.objects.get(user=request.user)
     except humanResources.DoesNotExist:
         return Response({"error": "You are not an HR user."}, status=403)
 
-    try:
-        opportunity = Opportunity.objects.get(id=opportunity_id, company=hr.company)
-    except Opportunity.DoesNotExist:
-        return Response({"error": "Opportunity not found or does not belong to your company."}, status=404)
+    opportunities = Opportunity.objects.filter(company=hr.company)
+    result = []
 
-    opportunity_location = (opportunity.location or "").strip().lower()
-    employment_type = (opportunity.employment_type or "").strip().lower()
+    for opportunity in opportunities:
+        recommendations = recommend_users_for_opportunity(opportunity)
 
-    recommendations = recommend_users_for_opportunity(opportunity)
+        # المتقدمين بس
+        applied_user_ids = set(
+            JobApplication.objects.filter(opportunity=opportunity)
+            .values_list('user__id', flat=True)
+        )
 
-    #  بس  اللي قدموا عالفرصة
-    applied_user_ids = set(
-        JobApplication.objects.filter(opportunity=opportunity)
-        .values_list('user__id', flat=True)
-    )
+        # أفضل 5  قدموا
+        top_candidates = []
+        for item in recommendations:
+            user = item["user"]
+            if user.id not in applied_user_ids:
+                continue
 
-    filtered_recommendations = [
-        {
-            "user_id": item["user"].id,
-            "username": item["user"].username,
-            "email": item["user"].email,
-            "similarity_score": round(item["ranking_score"], 3)
-        }
-        for item in recommendations
-        if item["user"].id in applied_user_ids
-    ]
+            resume = user.resumes.order_by('-created_at').first()
+            skills = []
+            if resume:
+                skills = list(resume.skills.values_list('skill', flat=True))
 
-    return Response(filtered_recommendations)
+            top_candidates.append({
+                "user_id": user.id,
+                "username": user.username,
+                "email": user.email,
+                "similarity_score": round(item["ranking_score"], 3),
+                "skills": skills
+            })
 
+            if len(top_candidates) == 5:
+                break
 
+        result.append({
+            "opportunity_id": opportunity.id,
+            "opportunity_name": opportunity.opportunity_name,
+            "description": opportunity.description,
+            "salary_range": opportunity.salary_range,
+            "location": opportunity.location,
+            "experience_level": opportunity.experience_level,
+            "recommendations": top_candidates
+        })
 
-
-
-
-
-
-
-
+    return Response(result)

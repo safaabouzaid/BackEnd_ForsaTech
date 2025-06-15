@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from devloper.models import User,Resume
-from .models import Opportunity,JobApplication,CompanyAd,OpportunityName,Company
-
+from .models import Opportunity,JobApplication,CompanyAd,OpportunityName,Company,SubscriptionPlan,SubscriptionChangeRequest
+from devloper.serializer import ResumeSerializer
 class HumanResourcesSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -12,23 +12,13 @@ class HumanResourcesSerializer(serializers.ModelSerializer):
         }
     
 
+        
+        
+        
 class OpportunitySerializer(serializers.ModelSerializer):
-    opportunity_name = serializers.ChoiceField(choices=[])
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        # جبت أسماء الفرص من  OpportunityName
-        names = OpportunityName.objects.values_list('name', 'name')
-        self.fields['opportunity_name'].choices = names
-
-    class Meta:
-        model=Opportunity
-        exclude = ['company']
-        
-        
-class OpportunitySerializer1(serializers.ModelSerializer):
     company_name = serializers.CharField(source='company.name', read_only=True)
     company_logo = serializers.ImageField(source='company.logo', read_only=True)  
+    opportunity_name = serializers.CharField() 
     class Meta:
         model = Opportunity
         fields = [
@@ -51,29 +41,51 @@ class CompanySerializer(serializers.ModelSerializer):
         fields = [ 'name', 'logo', 'website', 'description', 'email', 'address', 'employees']
 
 class ApplicantSerializer(serializers.ModelSerializer):
+    resume = serializers.SerializerMethodField()
+
     class Meta:
         model = User
-        fields = ['id','username', 'email','location','github_link','linkedin_link','phone']  
+        fields = ['id', 'username', 'email', 'location', 'github_link', 'linkedin_link', 'phone', 'resume']
 
-class OpportunitySerializer(serializers.ModelSerializer):
-    company = CompanySerializer()
-    applicants = serializers.SerializerMethodField()
+    def get_resume(self, obj):
+        try:
+            resume = Resume.objects.get(user=obj)
+            return ResumeSerializer(resume).data
+        except Resume.DoesNotExist:
+            return None
+
+#class OpportunitySerializer(serializers.ModelSerializer):
+#    company = CompanySerializer()
+#    applicants = serializers.SerializerMethodField()
+
+#    class Meta:
+#        model = Opportunity
+#        fields = ['id', 'description', 'applicants', 'company']
+
+ #   def get_applicants(self, obj):
+  #      applications = JobApplication.objects.filter(opportunity=obj)
+   #     users = [app.user for app in applications]
+    #    return ApplicantSerializer(users, many=True).data
+
+class OpportunityDetailSerializer(serializers.ModelSerializer):
+    company_name = serializers.CharField(source='company.name', read_only=True)
+    company_logo = serializers.ImageField(source='company.logo', read_only=True)
 
     class Meta:
         model = Opportunity
-        fields = ['id', 'description', 'applicants', 'company']
-
-    def get_applicants(self, obj):
-        applications = JobApplication.objects.filter(opportunity=obj)
-        users = [app.user for app in applications]
-        return ApplicantSerializer(users, many=True).data
-
+        fields = '__all__'
 
 class OpportunitySerializer1(serializers.ModelSerializer):
+    company_name = serializers.CharField(source='company.name', read_only=True)
+    company_logo = serializers.ImageField(source='company.logo', read_only=True)
+    opportunity_name = serializers.CharField()
+    company = serializers.PrimaryKeyRelatedField(read_only=True) 
 
     class Meta:
         model = Opportunity
-        fields = ['id','opportunity_name','description']
+        fields = '__all__'
+
+
 
 class CompanyAdSerializer(serializers.ModelSerializer):
     class Meta:
@@ -88,10 +100,19 @@ class CompanyAdSerializer(serializers.ModelSerializer):
 
 
 
-from rest_framework import serializers
-from .models import SubscriptionPlan
 
 class SubscriptionPlanSerializer(serializers.ModelSerializer):
     class Meta:
         model = SubscriptionPlan
         fields = '__all__'
+
+
+
+class SubscriptionChangeRequestSerializer(serializers.ModelSerializer):
+    company_name = serializers.CharField(source='company.name', read_only=True)
+    requested_plan_name = serializers.CharField(source='requested_plan.name', read_only=True)
+
+    class Meta:
+        model = SubscriptionChangeRequest
+        fields = ['id', 'company', 'company_name', 'requested_plan', 'requested_plan_name', 'status', 'created_at']
+        read_only_fields = ['status', 'created_at']

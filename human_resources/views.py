@@ -53,6 +53,7 @@ def loginHumanResource(request):
         'company_name': company_name,
         'company_logo': company_logo
     }, status=status.HTTP_200_OK)
+
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def createOpportunity(request):
@@ -87,16 +88,15 @@ def createOpportunity(request):
     data = request.data.copy()
     data.pop('company', None)
 
-    serializer = OpportunitySerializer(data=data)
+    serializer = OpportunitySerializer1(data=data)
 
     if serializer.is_valid():
         opportunity = Opportunity.objects.create(company=company, **serializer.validated_data)
-        result = OpportunitySerializer(opportunity, many=False)
+        result = OpportunityDetailSerializer(opportunity)
         return Response({"opportunity": result.data}, status=status.HTTP_201_CREATED)
     else:
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
+    
 
 @api_view(["DELETE"])
 @permission_classes([IsAuthenticated])
@@ -126,7 +126,7 @@ def updateOpportunity(request,pk):
     else:
         data = request.data 
 
-    serializer=OpportunitySerializer(opportunity,data=data)
+    serializer=OpportunitySerializer1(opportunity,data=data)
     if serializer.is_valid():
         serializer.save()
         return Response ({"Update opportunity":serializer.data})
@@ -150,7 +150,7 @@ def getByIdOpportunity(requst,pk):
 @api_view(['Get'])
 def getJobCard(request):
     opportunities = Opportunity.objects.all()
-    serializer = OpportunitySerializer(opportunities, many=True)
+    serializer = OpportunitySerializer1(opportunities, many=True)
     return Response(serializer.data)
 
 
@@ -222,13 +222,42 @@ def apply_for_opportunity(request, opportunity_id):
 
 ###### resume details for developer
 
-
 @api_view(['GET'])
-def user_resume(request, user_id):
-    user = get_object_or_404(User, id=user_id)
-    resumes = Resume.objects.filter(user=user)
-    serializer = ResumeSerializer(resumes, many=True)
-    return Response(serializer.data, status=status.HTTP_200_OK)
+def user_resume(request):
+    username = request.data.get('username')
+    if not username:
+        return Response({"detail": "Username is required."}, status=status.HTTP_400_BAD_REQUEST)
+
+    user = get_object_or_404(User, username=username)
+    resume = Resume.objects.filter(user=user).last()
+
+    if not resume:
+        return Response({"detail": "No resume found for this user."}, status=status.HTTP_404_NOT_FOUND)
+
+    personal_details = {
+        "username": user.username,
+        "email": user.email,
+        "phone": user.phone,
+        "location": user.location,
+        "github_link": user.github_link,
+        "linkedin_link": user.linkedin_link
+    }
+
+    resume_data = ResumeSerializer(resume).data
+    resume_data.pop("pdf_file", None)
+    resume_data.pop("created_at", None)
+
+    response_data = {
+        "personal_details": personal_details,
+        "summary": resume_data["summary"],
+        "skills": resume_data["skills"],
+        "education": resume_data["education"],
+        "projects": resume_data["projects"],
+        "experiences": resume_data["experiences"],
+        "trainings_courses": resume_data["trainings_courses"]
+    }
+
+    return Response(response_data, status=status.HTTP_200_OK)
 
 ##create ad
 
@@ -272,3 +301,63 @@ def get_opportunities_for_hr_company(request):
     
     serializer = OpportunitySerializer1(opportunities, many=True)
     return Response({'opportunities': serializer.data}, status=status.HTTP_200_OK)
+
+
+
+
+
+###############33
+@api_view(['GET'])
+def opportunity_details_view(request):
+    opportunity_id = request.headers.get('opportunity-id')
+
+    if not opportunity_id:
+        return Response({"error": "Missing opportunity-id in headers"}, status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+        opportunity = Opportunity.objects.get(id=opportunity_id)
+    except Opportunity.DoesNotExist:
+        return Response({"error": "Opportunity not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    #  الأشخاص يلي قدموا
+    applications = JobApplication.objects.filter(opportunity=opportunity)
+    users = [app.user for app in applications]
+    applicants_data = ApplicantSerializer(users, many=True).data
+
+    opportunity_data = OpportunityDetailSerializer(opportunity).data
+
+    return Response({
+        "opportunity_name": opportunity.opportunity_name, 
+        "applicants": applicants_data,
+    }, status=status.HTTP_200_OK)
+
+
+
+
+
+################## change plan
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def request_subscription_change(request):
+    user = request.user
+    try:
+        hr = humanResources.objects.get(user=user)
+        company = hr.company
+    except:
+        return Response({"error": "User is not HR or has no company."}, status=403)
+
+    requested_plan_id = request.data.get('requested_plan')
+    if not requested_plan_id:
+        return Response({"error": "requested_plan is required."}, status=400)
+
+    if SubscriptionChangeRequest.objects.filter(company=company, status='pending').exists():
+        return Response({"error": "You already have a pending request."}, status=400)
+
+    try:
+        plan = SubscriptionPlan.objects.get(id=requested_plan_id)
+    except SubscriptionPlan.DoesNotExist:
+        return Response({"error": "Requested plan not found."}, status=404)
+
+    request_obj = SubscriptionChangeRequest.objects.create(company=company, requested_plan=plan)
+    serializer = SubscriptionChangeRequestSerializer(request_obj)
+    return Response(serializer.data, status=201)
