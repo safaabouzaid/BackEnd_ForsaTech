@@ -50,7 +50,7 @@ def recommend_opportunities_view(request):
             "title": opportunity.opportunity_name,
             "description": opportunity.description,
             "similarity_score": round(score, 3),
-            "top_candidates": filtered_users
+            #"top_candidates": filtered_users
         })
 
     return Response(all_opportunity_data)
@@ -76,17 +76,19 @@ def recommend_users_view(request):
         )
 
         # أفضل 5  قدموا
+        filtered_recommendations = [
+            item for item in recommendations if item["user"].id in applied_user_ids
+        ]
+        filtered_recommendations.sort(key=lambda x: x["ranking_score"], reverse=True)
+        
         top_candidates = []
-        for item in recommendations:
+        for item in filtered_recommendations[:5]:
             user = item["user"]
-            if user.id not in applied_user_ids:
-                continue
-
             resume = user.resumes.order_by('-created_at').first()
             skills = []
             if resume:
                 skills = list(resume.skills.values_list('skill', flat=True))
-
+        
             top_candidates.append({
                 "user_id": user.id,
                 "username": user.username,
@@ -94,7 +96,7 @@ def recommend_users_view(request):
                 "similarity_score": round(item["ranking_score"], 3),
                 "skills": skills
             })
-
+        
             if len(top_candidates) == 5:
                 break
 
@@ -105,7 +107,8 @@ def recommend_users_view(request):
             "salary_range": opportunity.salary_range,
             "location": opportunity.location,
             "experience_level": opportunity.experience_level,
-            "recommendations": top_candidates
+            "opportunity_status": opportunity.status,
+            "recommendations": top_candidates,
         })
 
     return Response(result)
@@ -134,17 +137,19 @@ def recommend_applicants_for_opportunity(request, opportunity_id):
         .values_list('user__id', flat=True)
     )
 
+    filtered_recommendations = [
+        item for item in recommendations if item["user"].id in applied_user_ids
+    ]
+    filtered_recommendations.sort(key=lambda x: x["ranking_score"], reverse=True)
+    
     top_applicants = []
-    for item in recommendations:
+    for item in filtered_recommendations[:5]:
         user = item["user"]
-        if user.id not in applied_user_ids:
-            continue
-
         resume = user.resumes.order_by('-created_at').first()
         skills = []
         if resume:
             skills = list(resume.skills.values_list('skill', flat=True))
-
+    
         top_applicants.append({
             "user_id": user.id,
             "username": user.username,
@@ -152,9 +157,10 @@ def recommend_applicants_for_opportunity(request, opportunity_id):
             "similarity_score": round(item["ranking_score"], 3),
             "skills": skills
         })
-
+                        
     return Response({
         "opportunity_id": opportunity.id,
         "opportunity_name": opportunity.opportunity_name,
-        "top_applicants": top_applicants[:5]  # أو ممكن ترجعي الكل
+        "opportunity_status": opportunity.status,
+        "top_applicants": top_applicants[:5]  
     })

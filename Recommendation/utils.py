@@ -93,7 +93,8 @@ def get_user_skills_vector(user, embeddings):
     if not resume:
         return np.zeros(VECTOR_SIZE)
     skills = Skill.objects.filter(resume=resume).values_list('skill', flat=True)
-    return text_to_vector(list(skills), embeddings, debug_label=f"User Skills ({user.username})")
+    normalized_skills = [normalize_skill(s) for s in skills]
+    return text_to_vector(normalized_skills, embeddings,debug_label=f"User Skills ({user.username})")
 
 def get_experience_vector(user, embeddings):
     resume = Resume.objects.filter(user=user).first()
@@ -138,8 +139,9 @@ def get_user_resume_vector(user, embeddings):
 def get_opportunity_vector(opportunity, embeddings):
     title_vec = text_to_vector([opportunity.opportunity_name or ""], embeddings, debug_label=f"Opp Title ({opportunity.id})")
     desc_vec = text_to_vector([opportunity.description] if opportunity.description else [], embeddings)
-    raw_skills = [s.strip() for s in (opportunity.required_skills or "").split(",") if s.strip()]
+    raw_skills = [normalize_skill(s.strip()) for s in (opportunity.required_skills or "").split(",") if s.strip()]
     skill_vec = text_to_vector(raw_skills, embeddings, debug_label=f"Opp Skills ({opportunity.id})")
+
 
     combined = (
         OPP_TITLE_WEIGHT * title_vec +
