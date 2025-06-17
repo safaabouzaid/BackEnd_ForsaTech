@@ -319,7 +319,7 @@ def opportunity_details_view(request):
     except Opportunity.DoesNotExist:
         return Response({"error": "Opportunity not found"}, status=status.HTTP_404_NOT_FOUND)
 
-    #  الأشخاص يلي قدموا
+    #   يلي قدموا
     applications = JobApplication.objects.filter(opportunity=opportunity)
     users = [app.user for app in applications]
     applicants_data = ApplicantSerializer(users, many=True).data
@@ -328,6 +328,7 @@ def opportunity_details_view(request):
 
     return Response({
         "opportunity_name": opportunity.opportunity_name, 
+        "opportunity": opportunity_data,
         "applicants": applicants_data,
     }, status=status.HTTP_200_OK)
 

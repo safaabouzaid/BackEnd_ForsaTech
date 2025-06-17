@@ -9,9 +9,13 @@ genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 model = genai.GenerativeModel("gemini-1.5-flash")
 
 def get_inferred_skills(skill_name):
+    #Instructional Prompt
     prompt = f"""
-    The user added the following skill: "{skill_name}". What technical programming skills can be implicitly inferred? Just give me a JSON list of skill names.
+    The user has listed the skill: "{skill_name}". Based on this specific skill **only**, suggest a few closely related technical programming skills that are **commonly acquired together** and are reasonably inferred, **without exaggeration**. 
+    Limit the output to a **realistic** JSON list of 2 to 5 skill names only.
+    Respond with JSON list only.
     """
+    
     response = model.generate_content([prompt])
     content = response.text.strip()
 
