@@ -222,7 +222,7 @@ def apply_for_opportunity(request, opportunity_id):
 
 ###### resume details for developer
 
-@api_view(['GET'])
+@api_view(['POST'])
 def user_resume(request):
     username = request.data.get('username')
     if not username:

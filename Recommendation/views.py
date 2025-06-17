@@ -109,3 +109,52 @@ def recommend_users_view(request):
         })
 
     return Response(result)
+
+
+
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def recommend_applicants_for_opportunity(request, opportunity_id):
+    try:
+        hr = humanResources.objects.get(user=request.user)
+    except humanResources.DoesNotExist:
+        return Response({"error": "You are not an HR user."}, status=403)
+
+    try:
+        opportunity = Opportunity.objects.get(id=opportunity_id, company=hr.company)
+    except Opportunity.DoesNotExist:
+        return Response({"error": "Opportunity not found or does not belong to your company."}, status=404)
+
+    recommendations = recommend_users_for_opportunity(opportunity)
+
+    applied_user_ids = set(
+        JobApplication.objects.filter(opportunity=opportunity)
+        .values_list('user__id', flat=True)
+    )
+
+    top_applicants = []
+    for item in recommendations:
+        user = item["user"]
+        if user.id not in applied_user_ids:
+            continue
+
+        resume = user.resumes.order_by('-created_at').first()
+        skills = []
+        if resume:
+            skills = list(resume.skills.values_list('skill', flat=True))
+
+        top_applicants.append({
+            "user_id": user.id,
+            "username": user.username,
+            "email": user.email,
+            "similarity_score": round(item["ranking_score"], 3),
+            "skills": skills
+        })
+
+    return Response({
+        "opportunity_id": opportunity.id,
+        "opportunity_name": opportunity.opportunity_name,
+        "top_applicants": top_applicants[:5]  # أو ممكن ترجعي الكل
+    })
