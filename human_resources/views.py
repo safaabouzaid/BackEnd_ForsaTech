@@ -145,8 +145,8 @@ def getByIdOpportunity(requst,pk):
     print(opportunity)
     return Response({'Opportunity':serializer.data})
 
-#####
-### JobCard  
+
+#============================================== JobCard =================================================#
 @api_view(['Get'])
 def getJobCard(request):
     opportunities = Opportunity.objects.all()
@@ -154,7 +154,7 @@ def getJobCard(request):
     return Response(serializer.data)
 
 
-###Forsazforfile  
+#============================================Forsazforfile  ==============================================#
 
 @api_view(['GET'])
 def opportunity_list(request):
@@ -164,8 +164,8 @@ def opportunity_list(request):
 
 
 
-###forsa by id 
-##
+#=========================================forsa by id ===========================================#
+
 @api_view(['GET'])
 def opportunityById(request,pk ):
     opportunities = Opportunity.objects.get(pk=pk)
@@ -174,8 +174,7 @@ def opportunityById(request,pk ):
     
     
     
-###    
-## apply forsa 
+#===================================== apply forsa =======================================#
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -220,7 +219,7 @@ def apply_for_opportunity(request, opportunity_id):
 
 
 
-###### resume details for developer
+#========================== resume details for developer========================================#
 
 @api_view(['POST'])
 def user_resume(request):
@@ -259,7 +258,7 @@ def user_resume(request):
 
     return Response(response_data, status=status.HTTP_200_OK)
 
-##create ad
+#=========================================== create AD==================================#
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -287,7 +286,7 @@ def get_opportunity_names(request):
     return Response(names)
 
 
-#================get mycomany opp.===========#
+#============================== get mycomany OPP.=====================================#
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_opportunities_for_hr_company(request):
@@ -306,7 +305,7 @@ def get_opportunities_for_hr_company(request):
 
 
 
-###############33
+#======================================== OPP. details ==============================================#
 @api_view(['GET'])
 def opportunity_details_view(request):
     opportunity_id = request.headers.get('opportunity-id')
@@ -336,7 +335,7 @@ def opportunity_details_view(request):
 
 
 
-################## change plan
+#======================================= change plan====================================#
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def request_subscription_change(request):
@@ -362,3 +361,44 @@ def request_subscription_change(request):
     request_obj = SubscriptionChangeRequest.objects.create(company=company, requested_plan=plan)
     serializer = SubscriptionChangeRequestSerializer(request_obj)
     return Response(serializer.data, status=201)
+
+
+#================================ Update Job Application Status  =================================================#
+
+
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def update_job_application_status(request):
+    request_id = request.data.get('request_id')
+    action = request.data.get('action')
+
+    if not request_id or not action:
+        return Response({'error': 'Both request_id and action are required'}, status=status.HTTP_400_BAD_REQUEST)
+
+    if action not in ['approve', 'reject']:
+        return Response({'error': 'Invalid action'}, status=status.HTTP_400_BAD_REQUEST)
+
+    application = get_object_or_404(JobApplication, id=request_id)
+
+    if application.status != 'pending':
+        return Response({'error': 'Application already processed'}, status=status.HTTP_400_BAD_REQUEST)
+
+    if action == 'approve':
+        application.status = 'accepted'
+    elif action == 'reject':
+        application.status = 'rejected'
+
+    application.save()
+    return Response({'message': f'Application {action}d successfully'}, status=status.HTTP_200_OK)
+
+
+#=============================================    All_job_applications   =============================================#
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def list_job_applications(request):
+    applications = JobApplication.objects.all().order_by('-applied_at')
+    serializer = JobApplicationSerializer(applications, many=True)
+    return Response(serializer.data, status=200)

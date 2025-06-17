@@ -85,7 +85,7 @@ def createCompany(request):
 
     return Response({"error": "Invalid data", "details": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
-#====================================== ALL COmpany  ================================#
+#====================================== ALL COmpany  ============================================#
 
 @api_view(['GET'])
 #@permission_classes([IsAdminUser])
@@ -121,7 +121,7 @@ def deleteCompany(request, pk):
     return Response({"message": "Company deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
 
 
-#================================   Company Ads  ====================================#
+#==========================================   Company Ads  ====================================#
 
 @api_view(['GET', 'POST'])   
 @permission_classes([])       
@@ -152,7 +152,7 @@ def delete_ad(request, ad_id):
     return Response({"message": "Company ad deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
 
 
-####    Company Details    #####
+#===================================   Company Details  ==================================#
 
 @api_view(['GET'])
 def get_company_profile(request, pk):
@@ -160,7 +160,7 @@ def get_company_profile(request, pk):
     serializer = CompanyDetailSerializer(company)
     return Response({'company': serializer.data}, status=status.HTTP_200_OK)
 
-#====================================== dashboard stats. ===============================#
+#====================================== dashboard stats. ========================================#
 
 @api_view(['GET'])
 @permission_classes([IsAdminUser]) 
@@ -265,7 +265,7 @@ def dashboard_stats(request):
 
 
 
-#===================================== complaints ==============================##
+#============================================== complaints ==================================================##
 
 
 
@@ -277,7 +277,7 @@ def get_all_complaints(request):
     serializer = ComplaintSerializer(complaints, many=True)
     return Response({'complaints': serializer.data}, status=status.HTTP_200_OK)
 
-#=========================================Update status=============================#
+#=========================================  Update status  =============================#
 
 @api_view(['PATCH'])
 @permission_classes([IsAdminUser])
@@ -299,7 +299,7 @@ def update_complaint_status(request, complaint_id):
 
 
 
-#================================== Plans ========================================#
+#============================================ Plans ===========================================#
 
 @api_view(['GET'])
 def list_subscription_plans(request):
@@ -344,7 +344,7 @@ def list_subscription_requests(request):
 @permission_classes([IsAdminUser])  
 def handle_subscription_request(request):
     request_id = request.data.get('request_id')
-    action = request.data.get('action')  # "approve" or "reject"
+    action = request.data.get('action')   
 
     if not request_id or action not in ['approve', 'reject']:
         return Response({"error": "request_id and valid action required."}, status=400)

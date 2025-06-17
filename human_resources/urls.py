@@ -17,7 +17,8 @@ urlpatterns = [
     path('opportunities/my-company/', views.get_opportunities_for_hr_company, name='hr-company-opportunities'),
     path('opportunityById/<int:pk>/',views.opportunityById, name='opportunityCard'),
     path('request-subscription/',views.request_subscription_change, name='request_subscription'),
-
+    path('job-applications/', views.list_job_applications, name='list_job_applications'),
+    path('job-applications/update-status/', views.update_job_application_status, name='update_job_status'),
 
 
 

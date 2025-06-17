@@ -41,6 +41,7 @@ class CompanySerializer(serializers.ModelSerializer):
         fields = [ 'name', 'logo', 'website', 'description', 'email', 'address', 'employees']
 
 class ApplicantSerializer(serializers.ModelSerializer):
+    
     resume = serializers.SerializerMethodField()
 
     class Meta:
@@ -53,6 +54,34 @@ class ApplicantSerializer(serializers.ModelSerializer):
             return ResumeSerializer(resume).data
         except Resume.DoesNotExist:
             return None
+
+# serializers.py
+class OpportunitySerializer1(serializers.ModelSerializer):
+    company_name = serializers.CharField(source='company.name', read_only=True)
+    company_logo = serializers.ImageField(source='company.logo', read_only=True)
+    opportunity_name = serializers.CharField()
+    company = serializers.PrimaryKeyRelatedField(read_only=True) 
+
+    class Meta:
+        model = Opportunity
+        fields = '__all__'
+
+
+class OpportunitySerializer2(serializers.ModelSerializer):
+    class Meta:
+        model = Opportunity
+        fields = '__all__'
+
+
+
+class JobApplicationSerializer(serializers.ModelSerializer):
+    user = ApplicantSerializer(read_only=True)
+    opportunity = OpportunitySerializer2(read_only=True)
+
+
+    class Meta:
+        model = JobApplication
+        fields = ['id', 'user', 'opportunity', 'applied_at', 'status']
 
 #class OpportunitySerializer(serializers.ModelSerializer):
 #    company = CompanySerializer()
@@ -75,15 +104,6 @@ class OpportunityDetailSerializer(serializers.ModelSerializer):
         model = Opportunity
         fields = '__all__'
 
-class OpportunitySerializer1(serializers.ModelSerializer):
-    company_name = serializers.CharField(source='company.name', read_only=True)
-    company_logo = serializers.ImageField(source='company.logo', read_only=True)
-    opportunity_name = serializers.CharField()
-    company = serializers.PrimaryKeyRelatedField(read_only=True) 
-
-    class Meta:
-        model = Opportunity
-        fields = '__all__'
 
 
 
