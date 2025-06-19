@@ -36,6 +36,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',
     'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -45,7 +46,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'devloper.apps.DevloperConfig',
     'human_resources.apps.HumanResourcesConfig',
-    'corsheaders',
     'rest_framework',
     'django_filters',
     'Recommendation',
@@ -81,6 +81,7 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -88,7 +89,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     
 
 
@@ -115,17 +115,13 @@ CORS_ALLOWED_ORIGINS = [
      'http://localhost:3000', 
      'http://localhost:3001',
      'http://localhost:5173',
-     'https://f4d8-149-36-51-14.ngrok-free.app',
-     'https://34bb-149-102-239-226.ngrok-free.app',
-     'https://forsa-tech-admin-dashboard.netlify.app',
-     'https://21a2-212-8-250-217.ngrok-free.app',
-     'https://d134-37-19-221-246.ngrok-free.app',
-     'https://9ca3-212-8-243-133.ngrok-free.app',
-     'https://1042-212-8-252-183.ngrok-free.app',
+     'https://admin-forsa-tech.netlify.app',
+     'https://forsatech.netlify.app',
+     'https://1f64-89-39-107-197.ngrok-free.app',
      
 
 ]
-
+CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOW_HEADERS = list(default_headers) + [
     'ngrok-skip-browser-warning',

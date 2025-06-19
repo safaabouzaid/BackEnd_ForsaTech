@@ -78,7 +78,6 @@ class JobApplicationSerializer(serializers.ModelSerializer):
     user = ApplicantSerializer(read_only=True)
     opportunity = OpportunitySerializer2(read_only=True)
 
-
     class Meta:
         model = JobApplication
         fields = ['id', 'user', 'opportunity', 'applied_at', 'status']

@@ -15,10 +15,11 @@ class CompanyAdSerializer(serializers.ModelSerializer):
     company_name = serializers.CharField(write_only=True)
     company_logo = serializers.ImageField(source='company.logo', read_only=True)
     company = serializers.CharField(source='company.name', read_only=True)
+    ad_image = serializers.ImageField(required=False)
 
     class Meta:
         model = CompanyAd
-        fields = ['id', 'title', 'description', 'created_at', 'company', 'company_logo', 'company_name']
+        fields = ['id', 'title', 'description', 'created_at', 'company', 'company_logo', 'company_name','ad_image']
 
     def create(self, validated_data):
         company_name = validated_data.pop('company_name', None)

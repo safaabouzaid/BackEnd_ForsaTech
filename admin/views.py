@@ -331,6 +331,14 @@ def update_subscription_plan(request, plan_id):
 
 
 
+
+@api_view(['DELETE'])
+@permission_classes([IsAdminUser])
+def delete_subscription_plan(request, plan_id):
+    plan = get_object_or_404(SubscriptionPlan, pk=plan_id)
+    plan.delete()
+    return Response({"message": "Subscription plan deleted successfully."}, status=status.HTTP_204_NO_CONTENT)
+
 @api_view(['GET'])
 @permission_classes([IsAdminUser]) 
 def list_subscription_requests(request):

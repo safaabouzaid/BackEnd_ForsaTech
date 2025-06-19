@@ -392,7 +392,7 @@ def update_job_application_status(request):
 
     application.save()
     return Response({'message': f'Application {action}d successfully'}, status=status.HTTP_200_OK)
-
+          
 
 #=============================================    All_job_applications   =============================================#
 
