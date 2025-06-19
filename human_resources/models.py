@@ -38,6 +38,7 @@ class Company(models.Model):
 
 
 
+
 class humanResources(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     company = models.ForeignKey(Company, on_delete=models.CASCADE, null=True, blank=True)

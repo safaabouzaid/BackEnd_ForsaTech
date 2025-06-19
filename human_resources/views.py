@@ -13,7 +13,8 @@ from .models import User  ,humanResources,OpportunityName,Opportunity, JobApplic
 from django.utils import timezone
 from devloper.models import User, Resume, Education, Experience, Language
 from devloper.serializer import ResumeSerializer
-
+from django.core.mail import send_mail
+from django.conf import settings
 
 @api_view(['POST'])
 def loginHumanResource(request):
@@ -360,8 +361,6 @@ def request_subscription_change(request):
 
 
 #================================ Update Job Application Status  =================================================#
-
-
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def update_job_application_status(request):
@@ -382,14 +381,52 @@ def update_job_application_status(request):
     if application.status != 'pending':
         return Response({'error': 'This application has already been processed.'}, status=status.HTTP_400_BAD_REQUEST)
 
+    # Update status
     if action == 'accept':
         application.status = 'accepted'
     elif action == 'reject':
         application.status = 'rejected'
 
     application.save()
-    return Response({'message': f'Application {action}ed successfully.'}, status=status.HTTP_200_OK)
 
+    # Prepare email
+    user = application.user
+    job_title = application.opportunity.opportunity_name
+    company_name = application.opportunity.company.name
+    user_email = user.email
+
+    if action == 'accept':
+        subject = '🎉 Your application has been accepted!'
+        message = (
+            f"Hello {user.username},\n\n"
+            f"🎉 Congratulations! Your application for the position \"{job_title}\" at {company_name} has been accepted.✅ \n"
+            f"Our team will contact you soon 📞.\n\n"
+            f"Best regards,\n"
+            f"Forsa-Tech Team p"
+        )
+    else:
+        subject = '❌ Your application has been rejected'
+        message = (
+            f"Hello {user.username},\n\n"
+            f" Unfortunately, your application for the position \"{job_title}\" at {company_name} has been rejected.\n"
+            f"💡 Don't give up! You're welcome to apply for other opportunities in the future.\n\n"
+            f"Best wishes,\n"
+            f"Forsa-Tech Team "
+        )
+
+    if user_email:
+        try:
+            send_mail(
+                subject,
+                message,
+                settings.DEFAULT_FROM_EMAIL,
+                [user_email],
+                fail_silently=False
+            )
+        except Exception as e:
+            print(f"Failed to send email: {e}")
+
+    return Response({'message': f'Application {action}ed and user notified via email.'}, status=status.HTTP_200_OK)
 #=============================================    All_job_applications   =============================================#
 
 @api_view(['GET'])
