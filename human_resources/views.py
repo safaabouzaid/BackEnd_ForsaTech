@@ -318,19 +318,17 @@ def opportunity_details_view(request):
     except Opportunity.DoesNotExist:
         return Response({"error": "Opportunity not found"}, status=status.HTTP_404_NOT_FOUND)
 
-    #   يلي قدموا
     applications = JobApplication.objects.filter(opportunity=opportunity)
-    users = [app.user for app in applications]
-    applicants_data = ApplicantSerializer(users, many=True).data
+
+    applicants_data = JobApplicationSerializer(applications, many=True).data
 
     opportunity_data = OpportunityDetailSerializer(opportunity).data
 
     return Response({
         "opportunity_name": opportunity.opportunity_name, 
         "opportunity": opportunity_data,
-        "applicants": applicants_data,
+        "applicants": applicants_data,  #    user + status
     }, status=status.HTTP_200_OK)
-
 
 
 
@@ -366,33 +364,33 @@ def request_subscription_change(request):
 #================================ Update Job Application Status  =================================================#
 
 
-
-
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def update_job_application_status(request):
-    request_id = request.data.get('request_id')
+    application_id = request.data.get('application_id')  
     action = request.data.get('action')
 
-    if not request_id or not action:
-        return Response({'error': 'Both request_id and action are required'}, status=status.HTTP_400_BAD_REQUEST)
+    if not application_id or not action:
+        return Response({'error': 'Both application_id and action are required'}, status=status.HTTP_400_BAD_REQUEST)
 
-    if action not in ['approve', 'reject']:
-        return Response({'error': 'Invalid action'}, status=status.HTTP_400_BAD_REQUEST)
+    if action not in ['accept', 'reject']:
+        return Response({'error': 'Invalid action. Must be either accept or reject.'}, status=status.HTTP_400_BAD_REQUEST)
 
-    application = get_object_or_404(JobApplication, id=request_id)
+    try:
+        application = JobApplication.objects.get(id=application_id)
+    except JobApplication.DoesNotExist:
+        return Response({'error': 'Job application not found.'}, status=status.HTTP_404_NOT_FOUND)
 
     if application.status != 'pending':
-        return Response({'error': 'Application already processed'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'error': 'This application has already been processed.'}, status=status.HTTP_400_BAD_REQUEST)
 
-    if action == 'approve':
+    if action == 'accept':
         application.status = 'accepted'
     elif action == 'reject':
         application.status = 'rejected'
 
     application.save()
-    return Response({'message': f'Application {action}d successfully'}, status=status.HTTP_200_OK)
-          
+    return Response({'message': f'Application {action}ed successfully.'}, status=status.HTTP_200_OK)
 
 #=============================================    All_job_applications   =============================================#
 

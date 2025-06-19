@@ -117,7 +117,7 @@ CORS_ALLOWED_ORIGINS = [
      'http://localhost:5173',
      'https://admin-forsa-tech.netlify.app',
      'https://forsatech.netlify.app',
-     'https://1f64-89-39-107-197.ngrok-free.app',
+     'https://5b59-89-39-107-197.ngrok-free.app',
      
 
 ]
