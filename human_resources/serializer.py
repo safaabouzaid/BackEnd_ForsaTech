@@ -17,7 +17,7 @@ class HumanResourcesSerializer(serializers.ModelSerializer):
         
 class OpportunitySerializer(serializers.ModelSerializer):
     company_name = serializers.CharField(source='company.name', read_only=True)
-    company_logo = serializers.ImageField(source='company.logo', read_only=True)  
+    company_logo = serializers.URLField(source='company.logo', read_only=True)  
     opportunity_name = serializers.CharField() 
     class Meta:
         model = Opportunity
@@ -58,7 +58,7 @@ class ApplicantSerializer(serializers.ModelSerializer):
 # serializers.py
 class OpportunitySerializer1(serializers.ModelSerializer):
     company_name = serializers.CharField(source='company.name', read_only=True)
-    company_logo = serializers.ImageField(source='company.logo', read_only=True)
+    company_logo = serializers.URLField(source='company.logo', read_only=True)
     opportunity_name = serializers.CharField()
     company = serializers.PrimaryKeyRelatedField(read_only=True) 
 
@@ -76,7 +76,7 @@ class OpportunitySerializer2(serializers.ModelSerializer):
 
 class JobApplicationSerializer(serializers.ModelSerializer):
     user = ApplicantSerializer(read_only=True)
-    opportunity = OpportunitySerializer2(read_only=True)
+    #opportunity = OpportunitySerializer2(read_only=True)
 
     class Meta:
         model = JobApplication
@@ -97,7 +97,7 @@ class JobApplicationSerializer(serializers.ModelSerializer):
 
 class OpportunityDetailSerializer(serializers.ModelSerializer):
     company_name = serializers.CharField(source='company.name', read_only=True)
-    company_logo = serializers.ImageField(source='company.logo', read_only=True)
+    company_logo = serializers.URLField(source='company.logo', read_only=True)
 
     class Meta:
         model = Opportunity

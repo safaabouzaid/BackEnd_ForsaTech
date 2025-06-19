@@ -13,9 +13,9 @@ class CompanySerializer(serializers.ModelSerializer):
 
 class CompanyAdSerializer(serializers.ModelSerializer):
     company_name = serializers.CharField(write_only=True)
-    company_logo = serializers.ImageField(source='company.logo', read_only=True)
+    company_logo = serializers.URLField(source='company.logo', read_only=True)
     company = serializers.CharField(source='company.name', read_only=True)
-    ad_image = serializers.ImageField(required=False)
+    ad_image = serializers.URLField(required=False)
 
     class Meta:
         model = CompanyAd

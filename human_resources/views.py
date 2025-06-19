@@ -331,8 +331,6 @@ def opportunity_details_view(request):
     }, status=status.HTTP_200_OK)
 
 
-
-
 #======================================= change plan====================================#
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])

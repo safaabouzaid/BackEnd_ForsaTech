@@ -22,7 +22,7 @@ class SubscriptionPlan(models.Model):
 
 class Company(models.Model):
     name = models.CharField(max_length=255, null=True, blank=True)
-    logo = models.ImageField(upload_to="company_logos/", blank=True, null=True)
+    logo = models.URLField(blank=True, null=True)
     website = models.URLField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     email = models.EmailField(null=True, blank=True)
@@ -53,7 +53,8 @@ class CompanyAd(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    ad_image = models.ImageField(upload_to='ad_images/', null=True, blank=True)  
+    ad_image = models.URLField(blank=True, null=True)
+      
     
 
     def __str__(self):
