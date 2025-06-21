@@ -19,11 +19,14 @@ urlpatterns = [
     path('request-subscription/',views.request_subscription_change, name='request_subscription'),
     path('job-applications/', views.list_job_applications, name='list_job_applications'),
     path('job-applications/update-status/', views.update_job_application_status, name='update_job_status'),
+    path('check-status/', views.check_application_status, name='check_application_status'),
+
 
 
 
 #    path('HR/getAllOpportunity/', views.getAllOpportunity, name='opportunity'),
     path('apply/<int:opportunity_id>/', views.apply_for_opportunity, name='apply-for-opportunity'),
+    
 
 
 

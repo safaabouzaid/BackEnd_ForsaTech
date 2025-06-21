@@ -21,3 +21,4 @@ gensim>=4.3.0
 fasttext-wheel
 spacy
 sentence_transformers
+tenacity

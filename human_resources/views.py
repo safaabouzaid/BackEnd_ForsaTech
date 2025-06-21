@@ -16,6 +16,9 @@ from devloper.serializer import ResumeSerializer
 from django.core.mail import send_mail
 from django.conf import settings
 
+
+
+
 @api_view(['POST'])
 def loginHumanResource(request):
     if request.method == 'GET':
@@ -45,7 +48,8 @@ def loginHumanResource(request):
     hr_profile = user.humanresources
     company = hr_profile.company
     company_name = company.name if company else None
-    company_logo = request.build_absolute_uri(company.logo.url) if company and company.logo else None
+    company_logo = request.build_absolute_uri(company.logo) if company and company.logo else None
+
 
 
     return Response({
@@ -435,3 +439,35 @@ def list_job_applications(request):
     applications = JobApplication.objects.all().order_by('-applied_at')
     serializer = JobApplicationSerializer(applications, many=True)
     return Response(serializer.data, status=200)
+
+
+
+
+
+
+#========================================CHeck status ==============================================#
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def check_application_status(request):
+    username = request.data.get('username')
+    opportunity_id = request.data.get('opportunity_id')
+
+    if not username or not opportunity_id:
+        return Response({'error': 'username and opportunity_id are required.'}, status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+        user = User.objects.get(username=username)
+    except User.DoesNotExist:
+        return Response({'error': 'User not found.'}, status=status.HTTP_404_NOT_FOUND)
+
+    try:
+        opportunity = Opportunity.objects.get(id=opportunity_id)
+    except Opportunity.DoesNotExist:
+        return Response({'error': 'Opportunity not found.'}, status=status.HTTP_404_NOT_FOUND)
+
+    application = JobApplication.objects.filter(user=user, opportunity=opportunity).first()
+    if application:
+        return Response({'status': application.status}, status=status.HTTP_200_OK)
+    else:
+        return Response({'status': 'not_applied'}, status=status.HTTP_200_OK)
