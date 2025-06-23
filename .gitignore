@@ -7,3 +7,4 @@ Recommendation/wiki-news-300d-1M-subword.vec
 *.bin
 *.bin.gz
 models/cc.en.300.bin
+staticfiles/

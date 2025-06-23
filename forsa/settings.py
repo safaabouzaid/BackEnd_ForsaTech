@@ -13,9 +13,12 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from datetime import timedelta
 
 
+import os
 from pathlib import Path
 from decouple import config
 from corsheaders.defaults import default_headers
+import dj_database_url
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -139,17 +142,20 @@ CACHES = {
         'LOCATION': 'unique-snowflake',
     }
 }
-
+DATABASES = {
+    'default': dj_database_url.config(default='postgresql://forsa_tech_user:vp7qNQlnJBOB4tWAkvDhb3vvbWmlSxOl@dpg-d1cfcnmuk2gs73almmu0-a.oregon-postgres.render.com/forsa_tech')}
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 #
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+
+#
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': BASE_DIR / 'db.sqlite3',
+#    }
+#}
 #
 #DATABASES = {
 #    'default': {
@@ -222,3 +228,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
