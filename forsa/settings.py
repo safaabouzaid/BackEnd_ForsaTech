@@ -31,7 +31,7 @@ SECRET_KEY = 'django-insecure-^un3t(k@!2vyq@raoui&^+frmnp8$k51(k*b%%8$@*m3!nll-2
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -143,8 +143,12 @@ CACHES = {
     }
 }
 DATABASES = {
-    'default': dj_database_url.config(default='postgresql://forsa_tech_user:vp7qNQlnJBOB4tWAkvDhb3vvbWmlSxOl@dpg-d1cfcnmuk2gs73almmu0-a.oregon-postgres.render.com/forsa_tech')}
-
+    'default': dj_database_url.config(
+        default='postgresql://forsa_tech_user:vp7qNQlnJBOB4tWAkvDhb3vvbWmlSxOl@dpg-d1cfcnmuk2gs73almmu0-a.oregon-postgres.render.com/forsa_tech',
+        conn_max_age=600,
+        ssl_require=True,  
+    )
+}
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 #

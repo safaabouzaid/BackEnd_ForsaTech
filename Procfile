@@ -1,1 +1,1 @@
-web: gunicorn Forsa_tech_backend.wsgi
+web: gunicorn forsa.wsgi
