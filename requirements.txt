@@ -30,4 +30,4 @@ google-generativeai
 gunicorn
 psycopg2-binary
 
-scipy==1.9.3
+scipy==1.7.3 
