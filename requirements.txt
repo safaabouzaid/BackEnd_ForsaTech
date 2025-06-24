@@ -21,7 +21,7 @@ numpy
 nltk
 scikit-learn
 gensim==4.3.1
-fasttext==0.9.2
+fasttext
 spacy
 sentence-transformers
 tenacity
