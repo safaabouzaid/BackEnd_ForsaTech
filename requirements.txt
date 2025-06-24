@@ -1,3 +1,6 @@
+
+scipy>=1.9.3 --only-binary :all:
+
 asgiref==3.8.1
 dj-database-url==3.0.0
 Django==5.2.3
@@ -30,4 +33,3 @@ google-generativeai
 gunicorn
 psycopg2-binary
 
-scipy>=1.9.3
