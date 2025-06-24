@@ -5,7 +5,7 @@ asgiref==3.8.1
 dj-database-url==3.0.0
 Django==5.2.3
 django-cors-headers==4.7.0
-django-decouple==3.8
+python-decouple
 packaging==25.0
 sqlparse==0.5.3
 typing_extensions==4.14.0
