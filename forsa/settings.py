@@ -122,6 +122,7 @@ CORS_ALLOWED_ORIGINS = [
      'https://admin-forsa-tech.netlify.app',
      'https://forsatech.netlify.app',
      'https://5e5b-169-150-196-103.ngrok-free.app',
+     'https://backend-forsatech.onrender.com',
      
 
 ]

@@ -2718,7 +2718,7 @@
     "model": "devloper.Experience",
     "pk": 32,
     "fields": {
-      "user": 32,
+      "resume": 32,
       "job_title": "MLOps Engineer",
       "company": "Tartous AI Solutions",
       "start_date": "2022-05",
