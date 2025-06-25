@@ -71,6 +71,7 @@ class DashboardStatsSerializer(serializers.Serializer):
     active_jobs = serializers.IntegerField()
     avg_company_size = serializers.IntegerField()
     new_companies = serializers.IntegerField()
+    premium_members = serializers.IntegerField()
 
 
 class UserSerializer(serializers.ModelSerializer):

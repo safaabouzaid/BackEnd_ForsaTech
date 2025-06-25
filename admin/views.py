@@ -19,7 +19,7 @@ from django.conf import settings
 import random
 import string
 from human_resources.serializer import SubscriptionPlanSerializer,SubscriptionChangeRequestSerializer
-
+from django.db.models import Q
 def generate_password(length=8):
     characters = string.ascii_letters + string.digits
     return ''.join(random.choices(characters, k=length))
@@ -246,6 +246,11 @@ def dashboard_stats(request):
         created_at__month=datetime.now().month
     ).count()
 
+    #Premium Members Count
+    premium_members_count = Company.objects.filter(
+        Q(subscription_plan__price__gt=0)
+    ).count()
+
 
     data = {
         "num_companies": num_companies,
@@ -257,7 +262,8 @@ def dashboard_stats(request):
         "pie_chart_data": pie_chart_data,
         "active_jobs": active_jobs,
         "avg_company_size": avg_company_size['avg_size'] or 0,
-        "new_companies": new_companies
+        "new_companies": new_companies,
+        "premium_members": premium_members_count
     }
 
     serializer = DashboardStatsSerializer(data)
