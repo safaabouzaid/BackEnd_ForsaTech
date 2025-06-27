@@ -32,7 +32,7 @@ def get_sbert_model():
         from sentence_transformers import SentenceTransformer
         model = cache.get('sbert_model')
         if not model:
-            model = SentenceTransformer('all-MiniLM-L6-v2')
+            model = SentenceTransformer('paraphrase-albert-small-v2')
             cache.set('sbert_model', model, timeout=None)
         sbert_model = model
         return sbert_model

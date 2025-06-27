@@ -135,3 +135,5 @@ class SubscriptionChangeRequestSerializer(serializers.ModelSerializer):
         model = SubscriptionChangeRequest
         fields = ['id', 'company', 'company_name', 'requested_plan', 'requested_plan_name', 'status', 'created_at']
         read_only_fields = ['status', 'created_at']
+
+

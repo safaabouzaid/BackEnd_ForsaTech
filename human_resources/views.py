@@ -17,9 +17,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from datetime import datetime, timedelta
 from django.db.models import Count
-
-
-
+from .models import SubscriptionChangeRequest
 
 @api_view(['POST'])
 def loginHumanResource(request):
@@ -529,3 +527,57 @@ def hr_dashboard_stats(request):
     }
 
     return Response(data, status=status.HTTP_200_OK)
+
+
+
+#================================================= check subscription status======================================================#
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def check_subscription_status(request):
+    user = request.user
+
+    if not hasattr(user, 'humanresources'):
+        return Response({'detail': 'You are not authorized as HR'}, status=status.HTTP_403_FORBIDDEN)
+
+    company = user.humanresources.company
+
+    if not company:
+        return Response({
+            "status": "No Company",
+            "message": "Your account is not linked to any company. Please contact the admin."
+        }, status=status.HTTP_200_OK)
+
+    current_plan = company.subscription_plan
+
+    sub_request = SubscriptionChangeRequest.objects.filter(company=company).order_by('-created_at').first()
+
+    if not current_plan:
+        return Response({
+            "status": "No Plan",
+            "message": "You do not have any active subscription plan. We recommend subscribing to unlock more features!"
+        }, status=status.HTTP_200_OK)
+
+    if sub_request:
+        if sub_request.status == 'pending':
+            return Response({
+                "status": f"Pending",
+                "message": "Your subscription change request is pending. Please wait, we will notify you once it's processed."
+            }, status=status.HTTP_200_OK)
+        
+        elif sub_request.status == 'approved':
+            return Response({
+                "status": f"{current_plan.name}",
+                "message": f"Your company is now subscribed to {current_plan.name}. Enjoy the features, and consider upgrading for more benefits!"
+            }, status=status.HTTP_200_OK)
+        
+        elif sub_request.status == 'rejected':
+            return Response({
+                "status": f"Rejected",
+                "message": "Your subscription change request was rejected. Please contact support or submit a new request."
+            }, status=status.HTTP_200_OK)
+
+    return Response({
+        "status": f"{current_plan.name}",
+        "message": f"Your company is subscribed to {current_plan.name}. Consider upgrading to a higher plan for more features."
+    }, status=status.HTTP_200_OK)

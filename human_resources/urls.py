@@ -21,7 +21,7 @@ urlpatterns = [
     path('job-applications/update-status/', views.update_job_application_status, name='update_job_status'),
     path('check-status/', views.check_application_status, name='check_application_status'),
     path('dashboard-status/', views.hr_dashboard_stats, name='hr_dashboard_stats'),
-
+    path('check-subscription-status/', views.check_subscription_status, name='check_subscription_status'),
 
 
 
