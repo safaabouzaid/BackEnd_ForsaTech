@@ -29,7 +29,9 @@ def get_sbert_model():
     global sbert_model
     if sbert_model is None:
         from sentence_transformers import SentenceTransformer
-        sbert_model = SentenceTransformer('sentence-transformers/paraphrase-MiniLM-L3-v2')
+        sbert_model = SentenceTransformer('all-MiniLM-L6-v2')
+
+
     return sbert_model
 
 
