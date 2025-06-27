@@ -1,1 +1,1 @@
-web: gunicorn forsa.wsgi
+web: gunicorn forsa.wsgi --timeout 120

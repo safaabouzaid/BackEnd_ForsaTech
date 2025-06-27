@@ -24,21 +24,14 @@ def get_nlp():
 
 # --- Lazy Loading SBERT ---
 sbert_model = None
+
 def get_sbert_model():
     global sbert_model
-    if sbert_model is not None:
-        return sbert_model
-    try:
+    if sbert_model is None:
         from sentence_transformers import SentenceTransformer
-        model = cache.get('sbert_model')
-        if not model:
-            model = SentenceTransformer('paraphrase-albert-small-v2')
-            cache.set('sbert_model', model, timeout=None)
-        sbert_model = model
-        return sbert_model
-    except Exception as e:
-        logger.error(f"Error loading SBERT model: {e}")
-        return None
+        sbert_model = SentenceTransformer('sentence-transformers/paraphrase-MiniLM-L3-v2')
+    return sbert_model
+
 
 # --- Constants ---
 VECTOR_SIZE = 384
