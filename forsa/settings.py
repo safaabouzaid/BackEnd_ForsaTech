@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     'human_resources.apps.HumanResourcesConfig',
     'rest_framework',
     'django_filters',
-    'Recommendation.apps.RecommendationConfig',
+    'Recommendation',
 
 
     
