@@ -8,3 +8,4 @@ Recommendation/wiki-news-300d-1M-subword.vec
 *.bin.gz
 models/cc.en.300.bin
 staticfiles/
+/embed_opportunities.py

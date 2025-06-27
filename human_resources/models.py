@@ -1,5 +1,6 @@
 from django.db import models
 from devloper.models import User
+from django.contrib.postgres.fields import ArrayField
 
 class SubscriptionPlan(models.Model):
     
@@ -98,6 +99,8 @@ class Opportunity(models.Model):
     status = models.CharField(max_length=50)
     benefits = models.CharField(max_length=50,blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    embedding = ArrayField(models.FloatField(), size=384, null=True, blank=True)
+
     
     def __str__(self):
          return f"{self.opportunity_name} at {self.company.name}"

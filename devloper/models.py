@@ -2,6 +2,7 @@ from django.db import models # type: ignore
 from django.contrib.auth.models import AbstractUser # type: ignore
 from django.conf import settings # type: ignore
 from django.core.validators import EmailValidator # type: ignore
+from django.contrib.postgres.fields import ArrayField
 #
 #class User(AbstractUser):
 #    email = models.EmailField(unique=True,null=True, blank=True )  
@@ -35,6 +36,8 @@ class Resume(models.Model):
     summary = models.TextField(blank=True, null=True)
     pdf_file = models.FileField(upload_to='resumes/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    embedding = ArrayField(models.FloatField(), size=384, null=True, blank=True)
+
 
     def __str__(self):
         return f"Resume for {self.user.username} - {self.created_at}"

@@ -153,7 +153,10 @@ def get_opportunities_with_vectors(embeddings):
     opportunities = Opportunity.objects.all()
     result = []
     for opp in opportunities:
-        vec = get_opportunity_vector(opp, embeddings)
+        if opp.embedding:
+            vec = np.array(opp.embedding)
+        else:
+            vec = get_opportunity_vector(opp, embeddings)
         if np.linalg.norm(vec) > 0:
             result.append({"id": opp.id, "opportunity": opp, "vector": vec})
     return result
@@ -162,7 +165,12 @@ def recommend_opportunities(user):
     model = get_sbert_model()
     if model is None:
         return []
-    user_vector = get_user_resume_vector(user, model)
+    resume = user.resumes.first()
+    if resume and resume.embedding:
+        user_vector = np.array(resume.embedding)
+    else:
+        user_vector = np.zeros(384)
+    
     if np.linalg.norm(user_vector) == 0:
         logger.warning(f"User {user.username} has no valid resume data.")
         return []
@@ -205,7 +213,10 @@ def recommend_users_for_opportunity(opportunity):
     model = get_sbert_model()
     if model is None:
         return []
-    opp_vector = get_opportunity_vector(opportunity, model)
+    if opportunity.embedding:  # لو عندي embedding محفوظ
+        opp_vector = np.array(opportunity.embedding)
+    else:
+        opp_vector = get_opportunity_vector(opportunity, model)
     if np.linalg.norm(opp_vector) == 0:
         logger.warning(f"Opportunity {opportunity.opportunity_name} has no valid data.")
         return []
