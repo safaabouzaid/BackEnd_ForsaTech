@@ -1,7 +1,6 @@
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.preprocessing import MinMaxScaler
-from django.core.cache import cache
 import logging
 from devloper.models import Resume, Skill, User
 from human_resources.models import Opportunity
@@ -24,16 +23,12 @@ def get_nlp():
 
 # --- Lazy Loading SBERT ---
 sbert_model = None
-
 def get_sbert_model():
     global sbert_model
     if sbert_model is None:
         from sentence_transformers import SentenceTransformer
-        sbert_model = SentenceTransformer('all-MiniLM-L6-v2')
-
-
+        sbert_model = SentenceTransformer('paraphrase-MiniLM-L3-v2')
     return sbert_model
-
 
 # --- Constants ---
 VECTOR_SIZE = 384
@@ -46,12 +41,6 @@ OPP_DESC_WEIGHT = 0.1
 OPP_SKILL_WEIGHT = 0.7
 
 # --- Helpers ---
-def tokenize(text):
-    if not isinstance(text, str):
-        return []
-    doc = get_nlp()(text.lower().strip())
-    return [token.lemma_ for token in doc if not token.is_punct and not token.is_space and token.is_alpha]
-
 def normalize_skill(skill):
     if not isinstance(skill, str):
         return ""
@@ -88,105 +77,92 @@ def text_to_vector(text_list, model, debug_label=""):
         return np.zeros(VECTOR_SIZE)
 
 # --- Resume Vectors ---
-def get_user_skills_vector(user, embeddings):
+def get_user_resume_vector(user):
     resume = Resume.objects.filter(user=user).first()
-    if not resume:
+    if resume and resume.embedding:
+        return np.array(resume.embedding)
+
+    # لو ما فيه embedding ازم احسبه
+    model = get_sbert_model()
+    if not model:
         return np.zeros(VECTOR_SIZE)
+
     skills = Skill.objects.filter(resume=resume).values_list('skill', flat=True)
-    normalized_skills = [normalize_skill(s) for s in skills]
-    return text_to_vector(normalized_skills, embeddings, debug_label=f"User Skills ({user.username})")
+    skills_vec = text_to_vector([normalize_skill(s) for s in skills], model, f"User Skills ({user.username})")
 
-def get_experience_vector(user, embeddings):
-    resume = Resume.objects.filter(user=user).first()
-    if not resume:
-        return np.zeros(VECTOR_SIZE)
-    experiences = resume.experiences.all()
-    texts = [f"{exp.job_title or ''} {exp.company or ''} {exp.description or ''}" for exp in experiences]
-    return text_to_vector(texts, embeddings, debug_label=f"User Experience ({user.username})")
+    experiences = resume.experiences.all() if resume else []
+    exp_texts = [f"{e.job_title or ''} {e.company or ''} {e.description or ''}" for e in experiences]
+    exp_vec = text_to_vector(exp_texts, model, f"User Experience ({user.username})")
 
-def get_project_vector(user, embeddings):
-    resume = Resume.objects.filter(user=user).first()
-    if not resume:
-        return np.zeros(VECTOR_SIZE)
-    projects = resume.projects.all()
-    texts = [f"{proj.title or ''} {proj.description or ''}" for proj in projects]
-    return text_to_vector(texts, embeddings, debug_label=f"User Projects ({user.username})")
+    projects = resume.projects.all() if resume else []
+    proj_texts = [f"{p.title or ''} {p.description or ''}" for p in projects]
+    proj_vec = text_to_vector(proj_texts, model, f"User Projects ({user.username})")
 
-def get_training_vector(user, embeddings):
-    resume = Resume.objects.filter(user=user).first()
-    if not resume:
-        return np.zeros(VECTOR_SIZE)
-    trainings = resume.trainings_courses.all()
-    texts = [f"{tr.title or ''} {tr.institution or ''} {tr.description or ''}" for tr in trainings]
-    return text_to_vector(texts, embeddings, debug_label=f"User Training ({user.username})")
+    trainings = resume.trainings_courses.all() if resume else []
+    train_texts = [f"{t.title or ''} {t.institution or ''} {t.description or ''}" for t in trainings]
+    train_vec = text_to_vector(train_texts, model, f"User Training ({user.username})")
 
-def get_user_resume_vector(user, embeddings):
-    skill_vec = get_user_skills_vector(user, embeddings)
-    experience_vec = get_experience_vector(user, embeddings)
-    project_vec = get_project_vector(user, embeddings)
-    training_vec = get_training_vector(user, embeddings)
     combined = (
-        SKILL_WEIGHT * skill_vec +
-        EXPERIENCE_WEIGHT * experience_vec +
-        PROJECT_WEIGHT * project_vec +
-        TRAINING_WEIGHT * training_vec
+        SKILL_WEIGHT * skills_vec +
+        EXPERIENCE_WEIGHT * exp_vec +
+        PROJECT_WEIGHT * proj_vec +
+        TRAINING_WEIGHT * train_vec
     )
     norm = np.linalg.norm(combined)
     return combined / norm if norm != 0 else np.zeros(VECTOR_SIZE)
 
 # --- Opportunity Vector ---
-def get_opportunity_vector(opportunity, embeddings):
-    title_vec = text_to_vector([opportunity.opportunity_name or ""], embeddings, debug_label=f"Opp Title ({opportunity.id})")
-    desc_vec = text_to_vector([opportunity.description] if opportunity.description else [], embeddings)
-    raw_skills = [normalize_skill(s.strip()) for s in (opportunity.required_skills or "").split(",") if s.strip()]
-    skill_vec = text_to_vector(raw_skills, embeddings, debug_label=f"Opp Skills ({opportunity.id})")
+def get_opportunity_vector(opportunity):
+    if opportunity.embedding:
+        return np.array(opportunity.embedding)
+
+    model = get_sbert_model()
+    if not model:
+        return np.zeros(VECTOR_SIZE)
+
+    title_vec = text_to_vector([opportunity.opportunity_name or ""], model, f"Opp Title ({opportunity.id})")
+    desc_vec = text_to_vector([opportunity.description or ""], model)
+    skills = [normalize_skill(s.strip()) for s in (opportunity.required_skills or "").split(",") if s.strip()]
+    skills_vec = text_to_vector(skills, model, f"Opp Skills ({opportunity.id})")
+
     combined = (
         OPP_TITLE_WEIGHT * title_vec +
         OPP_DESC_WEIGHT * desc_vec +
-        OPP_SKILL_WEIGHT * skill_vec
+        OPP_SKILL_WEIGHT * skills_vec
     )
     norm = np.linalg.norm(combined)
     return combined / norm if norm != 0 else np.zeros(VECTOR_SIZE)
 
 # --- Recommendation Logic ---
-def get_opportunities_with_vectors(embeddings):
+def get_opportunities_with_vectors():
     opportunities = Opportunity.objects.all()
     result = []
     for opp in opportunities:
-        if opp.embedding:
-            vec = np.array(opp.embedding)
-        else:
-            vec = get_opportunity_vector(opp, embeddings)
+        vec = get_opportunity_vector(opp)
         if np.linalg.norm(vec) > 0:
-            result.append({"id": opp.id, "opportunity": opp, "vector": vec})
+            result.append({"opportunity": opp, "vector": vec})
     return result
 
 def recommend_opportunities(user):
-    model = get_sbert_model()
-    if model is None:
-        return []
-    resume = user.resumes.first()
-    if resume and resume.embedding:
-        user_vector = np.array(resume.embedding)
-    else:
-        user_vector = np.zeros(384)
-    
+    user_vector = get_user_resume_vector(user)
     if np.linalg.norm(user_vector) == 0:
         logger.warning(f"User {user.username} has no valid resume data.")
         return []
 
-    user_location = user.location.strip().lower() if user.location else ""
-    opportunities_data = get_opportunities_with_vectors(model)
+    user_location = (user.location or "").strip().lower()
+    opportunities = get_opportunities_with_vectors()
     scores = []
-    for item in opportunities_data:
+    for item in opportunities:
         opp = item["opportunity"]
         opp_vector = item["vector"]
-        job_location = opp.location.strip().lower() if opp.location else ""
+        job_location = (opp.location or "").strip().lower()
         job_type = (opp.employment_type or "").strip().lower()
+
         if job_type in ['on-site', 'hybrid'] and user_location and job_location and user_location != job_location:
             continue
-        similarity = cosine_similarity([user_vector], [opp_vector])[0][0]
-        scores.append({"opportunity": opp, "similarity": similarity})
+
+        sim = cosine_similarity([user_vector], [opp_vector])[0][0]
+        scores.append({"opportunity": opp, "similarity": sim})
 
     if scores:
         sims = np.array([s["similarity"] for s in scores]).reshape(-1, 1)
@@ -198,40 +174,32 @@ def recommend_opportunities(user):
             for i, s in enumerate(scores):
                 s["ranking_score"] = scaled[i][0]
         scores.sort(key=lambda x: x["ranking_score"], reverse=True)
+
     return scores
 
-def get_all_users_with_vectors(embeddings):
-    users = User.objects.all()
-    result = []
-    for user in users:
-        vec = get_user_resume_vector(user, embeddings)
-        if np.linalg.norm(vec) > 0:
-            result.append({"user": user, "vector": vec})
-    return result
-
 def recommend_users_for_opportunity(opportunity):
-    model = get_sbert_model()
-    if model is None:
-        return []
-    if opportunity.embedding:  # لو عندي embedding محفوظ
-        opp_vector = np.array(opportunity.embedding)
-    else:
-        opp_vector = get_opportunity_vector(opportunity, model)
+    opp_vector = get_opportunity_vector(opportunity)
     if np.linalg.norm(opp_vector) == 0:
         logger.warning(f"Opportunity {opportunity.opportunity_name} has no valid data.")
         return []
-    all_users = get_all_users_with_vectors(model)
+
+    all_users = User.objects.all()
     scores = []
-    opp_location = opportunity.location.strip().lower() if opportunity.location else ""
+    opp_location = (opportunity.location or "").strip().lower()
     opp_type = (opportunity.employment_type or "").strip().lower()
-    for data in all_users:
-        user = data["user"]
-        user_vec = data["vector"]
-        user_location = user.location.strip().lower() if user.location else ""
+
+    for user in all_users:
+        user_vector = get_user_resume_vector(user)
+        if np.linalg.norm(user_vector) == 0:
+            continue
+
+        user_location = (user.location or "").strip().lower()
         if opp_type in ['on-site', 'hybrid'] and opp_location and user_location and opp_location != user_location:
             continue
-        sim = cosine_similarity([opp_vector], [user_vec])[0][0]
+
+        sim = cosine_similarity([opp_vector], [user_vector])[0][0]
         scores.append({"user": user, "similarity": sim})
+
     if scores:
         sims = np.array([s["similarity"] for s in scores]).reshape(-1, 1)
         if np.all(sims == sims[0]):
@@ -242,4 +210,5 @@ def recommend_users_for_opportunity(opportunity):
             for i, s in enumerate(scores):
                 s["ranking_score"] = scaled[i][0]
         scores.sort(key=lambda x: x["ranking_score"], reverse=True)
+
     return scores

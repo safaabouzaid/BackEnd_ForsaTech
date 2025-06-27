@@ -50,7 +50,6 @@ def recommend_opportunities_view(request):
             "title": opportunity.opportunity_name,
             "description": opportunity.description,
             "similarity_score": round(score, 3),
-            #"top_candidates": filtered_users
         })
 
     return Response(all_opportunity_data)
