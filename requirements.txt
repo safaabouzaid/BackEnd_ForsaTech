@@ -17,7 +17,6 @@ pytz==2025.1
 django-jazzmin
 python-dotenv
 Pillow
-numpy
 nltk
 scikit-learn
 gensim==4.3.1
@@ -30,4 +29,5 @@ gunicorn
 psycopg2-binary
 whitenoise
 
-torch==2.2.0
+numpy<2
+torch --index-url https://download.pytorch.org/whl/cpu
