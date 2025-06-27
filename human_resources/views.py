@@ -15,6 +15,8 @@ from devloper.models import User, Resume, Education, Experience, Language
 from devloper.serializer import ResumeSerializer
 from django.core.mail import send_mail
 from django.conf import settings
+from datetime import datetime, timedelta
+from django.db.models import Count
 
 
 
@@ -471,3 +473,59 @@ def check_application_status(request):
         return Response({'status': application.status}, status=status.HTTP_200_OK)
     else:
         return Response({'status': 'not_applied'}, status=status.HTTP_200_OK)
+
+
+
+# ========================== HR Dashboard Stats ================================
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def hr_dashboard_stats(request):
+    hr_user = request.user
+
+    if not hasattr(hr_user, 'humanresources'):
+        return Response({'detail': 'User is not HR'}, status=status.HTTP_403_FORBIDDEN)
+
+    company = hr_user.humanresources.company
+
+    today = datetime.now()
+    days_since_sunday = (today.weekday() + 1) % 7
+    start_of_week = today - timedelta(days=days_since_sunday)
+
+    # Number of applications 
+    applications_this_week = JobApplication.objects.filter(
+        opportunity__company=company,
+        applied_at__date__gte=start_of_week.date()
+    ).count()
+
+    # Status
+    pending_applications = JobApplication.objects.filter(
+        opportunity__company=company,
+        status='pending'
+    ).count()
+
+    accepted_applications = JobApplication.objects.filter(
+        opportunity__company=company,
+        status='accepted'
+    ).count()
+
+    rejected_applications = JobApplication.objects.filter(
+        opportunity__company=company,
+        status='rejected'
+    ).count()
+
+    # Active job
+    active_jobs = Opportunity.objects.filter(
+        company=company,
+        application_deadline__gte=datetime.now()
+    ).count()
+
+    data = {
+        "applications_this_week": applications_this_week,
+        "pending_applications": pending_applications,
+        "accepted_applications": accepted_applications,
+        "rejected_applications": rejected_applications,
+        "active_jobs": active_jobs,
+    }
+
+    return Response(data, status=status.HTTP_200_OK)
