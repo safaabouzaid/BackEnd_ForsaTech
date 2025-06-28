@@ -4,6 +4,7 @@ from sklearn.preprocessing import MinMaxScaler
 import logging
 from devloper.models import Resume, Skill, User
 from human_resources.models import Opportunity
+from sentence_transformers import SentenceTransformer
 
 logger = logging.getLogger(__name__)
 
@@ -26,8 +27,7 @@ sbert_model = None
 def get_sbert_model():
     global sbert_model
     if sbert_model is None:
-        from sentence_transformers import SentenceTransformer
-        sbert_model = SentenceTransformer('paraphrase-MiniLM-L3-v2')
+        sbert_model = SentenceTransformer('./my_local_sbert')
     return sbert_model
 
 # --- Constants ---
