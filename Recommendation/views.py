@@ -1,7 +1,7 @@
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from .utils import recommend_opportunities,recommend_users_for_opportunity
+from .utils import recommend_opportunities,recommend_users_for_opportunity,suggest_additional_skills
 import time
 from human_resources.models import humanResources,Opportunity,JobApplication
 
@@ -163,3 +163,12 @@ def recommend_applicants_for_opportunity(request, opportunity_id):
         "opportunity_status": opportunity.status,
         "top_applicants": top_applicants[:5]  
     })
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def recommend_skills_view(request):
+    user = request.user
+    recommendations = recommend_opportunities(user)
+    skill_suggestions = suggest_additional_skills(user, recommendations)
+    return Response(skill_suggestions)

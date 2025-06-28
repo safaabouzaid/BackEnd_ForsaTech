@@ -567,7 +567,7 @@ def check_subscription_status(request):
         
         elif sub_request.status == 'approved':
             return Response({
-                "status": f"{current_plan.name}",
+                "status": f"approved",
                 "message": f"Your company is now subscribed to {current_plan.name}. Enjoy the features, and consider upgrading for more benefits!"
             }, status=status.HTTP_200_OK)
         

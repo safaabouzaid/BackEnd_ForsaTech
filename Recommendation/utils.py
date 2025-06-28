@@ -216,3 +216,31 @@ def recommend_users_for_opportunity(opportunity):
         scores.sort(key=lambda x: x["ranking_score"], reverse=True)
 
     return scores
+
+def suggest_additional_skills(user, opportunities):
+    
+    resume = Resume.objects.filter(user=user).first()
+    if not resume:
+        return []
+    
+    user_skills = set([normalize_skill(s) for s in Skill.objects.filter(resume=resume).values_list('skill', flat=True)])
+    
+    suggestions = []
+    for item in opportunities:
+        opp = item["opportunity"]
+        score = item["ranking_score"]
+
+        opp_skills = set([
+            normalize_skill(s.strip()) for s in (opp.required_skills or "").split(",") if s.strip()
+        ])
+        
+        missing_skills = list(opp_skills - user_skills)
+        
+        suggestions.append({
+            "opportunity_id": opp.id,
+            "opportunity_name": opp.opportunity_name,
+            "similarity_score": round(score, 3),
+            "missing_skills": missing_skills
+        })
+
+    return suggestions
