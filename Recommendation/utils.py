@@ -80,25 +80,24 @@ def text_to_vector(text_list, model, debug_label=""):
 def get_user_resume_vector(user):
     resume = Resume.objects.filter(user=user).first()
     if resume and resume.embedding:
-        return np.array(resume.embedding)
+        return np.array(resume.embedding)  
 
-    # لو ما فيه embedding ازم احسبه
     model = get_sbert_model()
-    if not model:
+    if not model or not resume:
         return np.zeros(VECTOR_SIZE)
 
     skills = Skill.objects.filter(resume=resume).values_list('skill', flat=True)
     skills_vec = text_to_vector([normalize_skill(s) for s in skills], model, f"User Skills ({user.username})")
 
-    experiences = resume.experiences.all() if resume else []
+    experiences = resume.experiences.all()
     exp_texts = [f"{e.job_title or ''} {e.company or ''} {e.description or ''}" for e in experiences]
     exp_vec = text_to_vector(exp_texts, model, f"User Experience ({user.username})")
 
-    projects = resume.projects.all() if resume else []
+    projects = resume.projects.all()
     proj_texts = [f"{p.title or ''} {p.description or ''}" for p in projects]
     proj_vec = text_to_vector(proj_texts, model, f"User Projects ({user.username})")
 
-    trainings = resume.trainings_courses.all() if resume else []
+    trainings = resume.trainings_courses.all()
     train_texts = [f"{t.title or ''} {t.institution or ''} {t.description or ''}" for t in trainings]
     train_vec = text_to_vector(train_texts, model, f"User Training ({user.username})")
 
@@ -109,7 +108,12 @@ def get_user_resume_vector(user):
         TRAINING_WEIGHT * train_vec
     )
     norm = np.linalg.norm(combined)
-    return combined / norm if norm != 0 else np.zeros(VECTOR_SIZE)
+    final_vec = combined / norm if norm != 0 else np.zeros(VECTOR_SIZE)
+
+    resume.embedding = final_vec.tolist()
+    resume.save()
+
+    return final_vec
 
 # --- Opportunity Vector ---
 def get_opportunity_vector(opportunity):
@@ -183,7 +187,7 @@ def recommend_users_for_opportunity(opportunity):
         logger.warning(f"Opportunity {opportunity.opportunity_name} has no valid data.")
         return []
 
-    all_users = User.objects.all()
+    all_users = User.objects.filter(resumes__isnull=False).distinct()
     scores = []
     opp_location = (opportunity.location or "").strip().lower()
     opp_type = (opportunity.employment_type or "").strip().lower()
