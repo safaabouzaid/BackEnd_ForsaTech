@@ -1,1 +1,1 @@
-web: gunicorn forsa.wsgi --timeout 120
+web: gunicorn forsa.wsgi --workers=1 --threads=2 --timeout 300 --preload
