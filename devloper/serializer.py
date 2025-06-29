@@ -66,4 +66,11 @@ class ResumeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Resume
-        fields = '__all__'
+        fields = '__all__'\
+            
+            
+            
+class DeveloperSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Developer
+        fields = ['gender', 'birth_date', 'profile_picture']            

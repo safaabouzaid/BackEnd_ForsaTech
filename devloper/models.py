@@ -30,6 +30,24 @@ class User(AbstractUser):
     def __str__(self):
         return self.username
 
+class Developer(models.Model):
+    GENDER_CHOICES = [
+        ('male', 'Male'),
+        ('female', 'Female'),
+        
+    ]
+
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='developer_profile')
+    gender = models.CharField(max_length=10, choices=GENDER_CHOICES)
+    birth_date = models.DateField(blank=True, null=True) 
+    bio = models.TextField(blank=True, null=True)
+    profile_picture = models.ImageField(upload_to='developers/', blank=True, null=True)
+
+    def __str__(self):
+        return f"Developer Profile of {self.user.username}"
+    
+    
+
 class Resume(models.Model):
     
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="resumes",null=True, blank=True)

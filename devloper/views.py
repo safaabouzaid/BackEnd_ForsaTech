@@ -105,3 +105,56 @@ def save_languages(request):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     return Response({"message": "Languages saved/updated successfully."}, status=status.HTTP_200_OK)
+
+
+## add  profile 
+
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def add_developer(request):
+    if hasattr(request.user, 'developer_profile'):
+        return Response({'detail': 'Developer profile already exists.'}, status=400)
+    
+    serializer = DeveloperSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save(user=request.user)
+        return Response(serializer.data, status=201)
+    return Response(serializer.errors, status=400)
+
+
+
+### modfy forfile
+ 
+@api_view(['PUT', 'PATCH'])
+@permission_classes([IsAuthenticated])
+def update_developer(request):
+    try:
+        developer = request.user.developer_profile
+    except Developer.DoesNotExist:
+        return Response({'detail': 'Developer profile not found.'}, status=404)
+
+    partial = request.method == 'PATCH'
+    serializer = DeveloperSerializer(developer, data=request.data, partial=partial)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=200)
+    return Response(serializer.errors, status=400)
+
+
+
+### delet profile 
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def delete_developer(request):
+    try:
+        developer = request.user.developer_profile
+    except Developer.DoesNotExist:
+        return Response({'detail': 'Developer profile not found.'}, status=404)
+
+    developer.delete()
+    return Response({'detail': 'Developer profile deleted successfully.'}, status=204)
+
+
