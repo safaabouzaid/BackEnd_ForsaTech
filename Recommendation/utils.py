@@ -116,7 +116,7 @@ def get_user_resume_vector(user):
     return final_vec
 
 # --- Opportunity Vector ---
-def get_opportunity_vector(opportunity):
+def get_opportunity_vector(opportunity, model):
     if opportunity.embedding:
         return np.array(opportunity.embedding)
 

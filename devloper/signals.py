@@ -48,11 +48,11 @@ def update_embedding(sender, instance, **kwargs):
 
 
 @receiver(post_save, sender=Opportunity)
-def update_opportunity_embedding(sender, instance, **kwargs):
-    model = get_sbert_model()
-    vec = get_opportunity_vector(instance, model)
-    if np.linalg.norm(vec) > 0:
-        instance.embedding = vec.tolist()
-    else:
-        instance.embedding = None
-    instance.save(update_fields=["embedding"])
+def update_opportunity_embedding(sender, instance, created, **kwargs):
+    if created:  
+        model = get_sbert_model()
+        vec = get_opportunity_vector(instance, model)
+        if np.linalg.norm(vec) > 0:
+            Opportunity.objects.filter(pk=instance.pk).update(embedding=vec.tolist())
+        else:
+            Opportunity.objects.filter(pk=instance.pk).update(embedding=None)
