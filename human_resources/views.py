@@ -581,3 +581,13 @@ def check_subscription_status(request):
         "status": f"{current_plan.name}",
         "message": f"Your company is subscribed to {current_plan.name}. Consider upgrading to a higher plan for more features."
     }, status=status.HTTP_200_OK)
+
+
+## applay ads 
+
+@api_view(['GET'])
+
+def company_ads_list(request):
+    ads = CompanyAd.objects.all()
+    serializer = CompanyAdSerializer(ads, many=True)
+    return Response(serializer.data)

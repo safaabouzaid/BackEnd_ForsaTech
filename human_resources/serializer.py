@@ -137,3 +137,11 @@ class SubscriptionChangeRequestSerializer(serializers.ModelSerializer):
         read_only_fields = ['status', 'created_at']
 
 
+
+## ads 
+class CompanyAdSerializer(serializers.ModelSerializer):
+    company_name = serializers.CharField(source='company.name', read_only=True)
+
+    class Meta:
+        model = CompanyAd
+        fields = ['id', 'company_name', 'title', 'description', 'ad_image']
