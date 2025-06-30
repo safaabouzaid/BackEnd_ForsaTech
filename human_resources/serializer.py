@@ -109,7 +109,7 @@ class OpportunityDetailSerializer(serializers.ModelSerializer):
 class CompanyAdSerializer(serializers.ModelSerializer):
     class Meta:
         model = CompanyAd
-        fields = ['id', 'title', 'description', 'created_at']
+        fields = ['id', 'title', 'description', 'created_at' ,'ad_image']
         read_only_fields = ['id', 'created_at']
 
 
@@ -139,7 +139,7 @@ class SubscriptionChangeRequestSerializer(serializers.ModelSerializer):
 
 
 ## ads 
-class CompanyAdSerializer(serializers.ModelSerializer):
+class CompanyAdSerializer1(serializers.ModelSerializer):
     company_name = serializers.CharField(source='company.name', read_only=True)
 
     class Meta:

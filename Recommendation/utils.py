@@ -116,7 +116,7 @@ def get_user_resume_vector(user):
     return final_vec
 
 # --- Opportunity Vector ---
-def get_opportunity_vector(opportunity, model):
+def get_opportunity_vector(opportunity, model=None):
     if opportunity.embedding:
         return np.array(opportunity.embedding)
 
@@ -179,7 +179,7 @@ def recommend_opportunities(user):
                 s["ranking_score"] = scaled[i][0]
         scores.sort(key=lambda x: x["ranking_score"], reverse=True)
 
-    return scores
+    return scores[:10]
 
 def recommend_users_for_opportunity(opportunity):
     opp_vector = get_opportunity_vector(opportunity)
