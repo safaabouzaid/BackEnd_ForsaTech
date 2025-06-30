@@ -3,7 +3,8 @@ from django.dispatch import receiver
 from .gemini import get_inferred_skills
 from django.db.models.signals import post_save, post_delete
 from .models import Resume, Skill, Experience, Project, TrainingCourse
-from Recommendation.utils import get_sbert_model, get_user_resume_vector,get_opportunity_vector
+from Recommendation.utils import get_sbert_model, get_user_resume_vector
+#from Recommendation.tasks import generate_opportunity_embedding
 import numpy as np
 from human_resources.models import Opportunity
 
@@ -49,10 +50,5 @@ def update_embedding(sender, instance, **kwargs):
 
 @receiver(post_save, sender=Opportunity)
 def update_opportunity_embedding(sender, instance, created, **kwargs):
-    if created:  
-        model = get_sbert_model()
-        vec = get_opportunity_vector(instance, model)
-        if np.linalg.norm(vec) > 0:
-            Opportunity.objects.filter(pk=instance.pk).update(embedding=vec.tolist())
-        else:
-            Opportunity.objects.filter(pk=instance.pk).update(embedding=None)
+    if created:
+        pass  

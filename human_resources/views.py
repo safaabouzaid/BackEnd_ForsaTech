@@ -589,5 +589,5 @@ def check_subscription_status(request):
 
 def company_ads_list(request):
     ads = CompanyAd.objects.all()
-    serializer = CompanyAdSerializer(ads, many=True)
+    serializer = CompanyAdSerializer1(ads, many=True)
     return Response(serializer.data)
