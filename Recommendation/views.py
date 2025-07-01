@@ -105,6 +105,8 @@ def recommend_users_view(request):
             "opportunity_id": opportunity.id,
             "opportunity_name": opportunity.opportunity_name,
             "description": opportunity.description,
+            "posting_date":opportunity.posting_date,
+            "application_deadline":opportunity.application_deadline,
             "salary_range": opportunity.salary_range,
             "location": opportunity.location,
             "experience_level": opportunity.experience_level,
