@@ -171,7 +171,7 @@ def recommend_opportunities(user):
 
 def recommend_users_for_opportunity(opportunity):
     opp_vector = get_opportunity_vector(opportunity)
-    if np.linalg.norm(opp_vector) == 0:
+    if opp_vector is None or np.linalg.norm(opp_vector) == 0:
         logger.warning(f"Opportunity {opportunity.opportunity_name} has no valid data.")
         return []
 
@@ -204,6 +204,7 @@ def recommend_users_for_opportunity(opportunity):
         scores.sort(key=lambda x: x["ranking_score"], reverse=True)
 
     return scores
+
 
 def suggest_additional_skills(user, opportunities):
     
