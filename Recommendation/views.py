@@ -4,6 +4,8 @@ from rest_framework.response import Response
 from .utils import recommend_opportunities,recommend_users_for_opportunity,suggest_additional_skills
 import time
 from human_resources.models import humanResources,Opportunity,JobApplication
+from django.http import JsonResponse
+from .tasks import generate_all_opportunity_embeddings
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -172,3 +174,9 @@ def recommend_skills_view(request):
     recommendations = recommend_opportunities(user)
     skill_suggestions = suggest_additional_skills(user, recommendations)
     return Response(skill_suggestions)
+
+
+
+def update_embeddings(request):
+    generate_all_opportunity_embeddings()
+    return JsonResponse({"status": "done"})
