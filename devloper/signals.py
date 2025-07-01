@@ -38,6 +38,10 @@ if 'loaddata' not in sys.argv:
 @receiver([post_save, post_delete], sender=Project)
 @receiver([post_save, post_delete], sender=TrainingCourse)
 def update_embedding(sender, instance, **kwargs):
+
+    if kwargs.get('signal').__name__ == 'post_delete':
+        return
+
     resume = instance.resume
     model = get_sbert_model()
     vec = get_user_resume_vector(resume.user, model)
@@ -46,6 +50,7 @@ def update_embedding(sender, instance, **kwargs):
     else:
         resume.embedding = None
     resume.save()
+
 
 
 @receiver(post_save, sender=Opportunity)

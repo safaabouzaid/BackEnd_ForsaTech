@@ -66,12 +66,23 @@ def text_to_vector(text_list, model, debug_label=""):
     if not model:
         logger.warning("SBERT model is not loaded.")
         return np.zeros(VECTOR_SIZE)
+    
     filtered = [t for t in text_list if isinstance(t, str) and t.strip()]
     if not filtered:
         return np.zeros(VECTOR_SIZE)
+    
     try:
-        embeddings = model.encode(filtered)
-        return np.mean(embeddings, axis=0)
+        batch_size = 32  
+        embeddings = []
+        
+        for i in range(0, len(filtered), batch_size):
+            batch = filtered[i:i+batch_size]
+            batch_embeds = model.encode(batch)
+            embeddings.append(batch_embeds)
+        
+        embeddings = np.vstack(embeddings)  
+        return np.mean(embeddings, axis=0)  
+    
     except Exception as e:
         logger.error(f"Encoding failed for {debug_label}: {e}")
         return np.zeros(VECTOR_SIZE)
@@ -175,13 +186,21 @@ def recommend_users_for_opportunity(opportunity):
         logger.warning(f"Opportunity {opportunity.opportunity_name} has no valid data.")
         return []
 
-    all_users = User.objects.filter(resumes__isnull=False).distinct()
-    scores = []
     opp_location = (opportunity.location or "").strip().lower()
     opp_type = (opportunity.employment_type or "").strip().lower()
 
+    resumes = Resume.objects.select_related('user').filter(embedding__isnull=False)
+    user_resume_map = {resume.user_id: resume for resume in resumes}
+
+    all_users = User.objects.filter(id__in=user_resume_map.keys()).distinct()
+    scores = []
+
     for user in all_users:
-        user_vector = get_user_resume_vector(user)
+        resume = user_resume_map.get(user.id)
+        if not resume or not resume.embedding:
+            continue  
+
+        user_vector = np.array(resume.embedding)
         if np.linalg.norm(user_vector) == 0:
             continue
 
@@ -204,6 +223,7 @@ def recommend_users_for_opportunity(opportunity):
         scores.sort(key=lambda x: x["ranking_score"], reverse=True)
 
     return scores
+
 
 
 def suggest_additional_skills(user, opportunities):
