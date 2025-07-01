@@ -118,24 +118,10 @@ def get_user_resume_vector(user):
 # --- Opportunity Vector ---
 def get_opportunity_vector(opportunity, model=None):
     if opportunity.embedding:
-        return np.array(opportunity.embedding)
-
-    model = get_sbert_model()
-    if not model:
-        return np.zeros(VECTOR_SIZE)
-
-    title_vec = text_to_vector([opportunity.opportunity_name or ""], model, f"Opp Title ({opportunity.id})")
-    desc_vec = text_to_vector([opportunity.description or ""], model)
-    skills = [normalize_skill(s.strip()) for s in (opportunity.required_skills or "").split(",") if s.strip()]
-    skills_vec = text_to_vector(skills, model, f"Opp Skills ({opportunity.id})")
-
-    combined = (
-        OPP_TITLE_WEIGHT * title_vec +
-        OPP_DESC_WEIGHT * desc_vec +
-        OPP_SKILL_WEIGHT * skills_vec
-    )
-    norm = np.linalg.norm(combined)
-    return combined / norm if norm != 0 else np.zeros(VECTOR_SIZE)
+        vec = np.array(opportunity.embedding)
+        if np.linalg.norm(vec) > 0:
+            return vec
+    return None
 
 # --- Recommendation Logic ---
 def get_opportunities_with_vectors():
@@ -143,7 +129,7 @@ def get_opportunities_with_vectors():
     result = []
     for opp in opportunities:
         vec = get_opportunity_vector(opp)
-        if np.linalg.norm(vec) > 0:
+        if vec is not None:
             result.append({"opportunity": opp, "vector": vec})
     return result
 
@@ -163,6 +149,8 @@ def recommend_opportunities(user):
         job_type = (opp.employment_type or "").strip().lower()
 
         if job_type in ['on-site', 'hybrid'] and user_location and job_location and user_location != job_location:
+            continue
+        if opp_vector is None or np.linalg.norm(opp_vector) == 0:
             continue
 
         sim = cosine_similarity([user_vector], [opp_vector])[0][0]
