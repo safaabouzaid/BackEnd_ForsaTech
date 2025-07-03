@@ -159,9 +159,7 @@ def delete_developer(request):
 
 
 ### for sava resume 
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from rest_framework import status
+
 from .models import Resume, Skill, Education, Experience, Language, User
 
 @api_view(['POST'])
@@ -198,7 +196,7 @@ def create_resume_from_parser(request):
         for lang in request.data.get("languages", []):
             Language.objects.create(
                 resume=resume,
-                name=lang.get("language", "English"),
+                name=lang.get("name", "English"),
                 level=lang.get("level", "1")
             )
 
