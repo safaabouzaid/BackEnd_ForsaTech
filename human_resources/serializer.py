@@ -1,7 +1,8 @@
 from rest_framework import serializers
 from devloper.models import User,Resume
-from .models import Opportunity,JobApplication,CompanyAd,OpportunityName,Company,SubscriptionPlan,SubscriptionChangeRequest
+from .models import Opportunity,JobApplication,CompanyAd,OpportunityName,Company,SubscriptionPlan,SubscriptionChangeRequest,InterviewSchedule
 from devloper.serializer import ResumeSerializer
+
 class HumanResourcesSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -145,3 +146,13 @@ class CompanyAdSerializer1(serializers.ModelSerializer):
     class Meta:
         model = CompanyAd
         fields = ['id', 'company_name', 'title', 'description', 'ad_image']
+
+
+
+class InterviewScheduleSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(source='user.username', read_only=True)
+    opportunity = serializers.CharField(source='opportunity.opportunity_name', read_only=True)
+
+    class Meta:
+        model = InterviewSchedule
+        fields = ['id', 'username', 'opportunity', 'date', 'time', 'created_at']

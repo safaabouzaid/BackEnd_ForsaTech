@@ -9,7 +9,7 @@ from human_resources.models import Company, Opportunity
 from human_resources.serializer import *
 from rest_framework.permissions import IsAuthenticated
 from django.views.decorators.csrf import csrf_exempt
-from .models import User  ,humanResources,OpportunityName,Opportunity, JobApplication
+from .models import User  ,humanResources,OpportunityName,Opportunity, JobApplication,InterviewSchedule
 from django.utils import timezone
 from devloper.models import User, Resume, Education, Experience, Language
 from devloper.serializer import ResumeSerializer
@@ -18,6 +18,7 @@ from django.conf import settings
 from datetime import datetime, timedelta
 from django.db.models import Count
 from .models import SubscriptionChangeRequest
+
 
 @api_view(['POST'])
 def loginHumanResource(request):
@@ -591,3 +592,57 @@ def company_ads_list(request):
     ads = CompanyAd.objects.all()
     serializer = CompanyAdSerializer1(ads, many=True)
     return Response(serializer.data)
+
+
+
+
+
+#==========================================Interview Schedules=====================================#
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def create_interview_schedule(request):
+    user = request.user
+    if not hasattr(user, 'humanresources'):
+        return Response({'error': 'Unauthorized'}, status=status.HTTP_403_FORBIDDEN)
+
+    hr = user.humanresources
+
+    username = request.data.get('username')
+    opportunity_id = request.data.get('opportunity_id')
+    date = request.data.get('date')
+    time = request.data.get('time')
+
+    if not all([username, opportunity_id, date, time]):
+        return Response({'error': 'All fields are required'}, status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+        dev_user = User.objects.get(username=username)
+        opportunity = Opportunity.objects.get(id=opportunity_id)
+
+        InterviewSchedule.objects.create(
+            hr=hr,
+            user=dev_user,
+            opportunity=opportunity,
+            date=date,
+            time=time
+        )
+        return Response({'message': 'Interview scheduled successfully'}, status=status.HTTP_201_CREATED)
+
+    except User.DoesNotExist:
+        return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+    except Opportunity.DoesNotExist:
+        return Response({'error': 'Opportunity not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_interview_schedules(request):
+    user = request.user
+    if not hasattr(user, 'humanresources'):
+        return Response({'error': 'Unauthorized'}, status=status.HTTP_403_FORBIDDEN)
+
+    hr = user.humanresources
+    schedules = InterviewSchedule.objects.filter(hr=hr)
+    serializer = InterviewScheduleSerializer(schedules, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)

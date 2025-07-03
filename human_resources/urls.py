@@ -25,7 +25,8 @@ urlpatterns = [
 #    path('HR/getAllOpportunity/', views.getAllOpportunity, name='opportunity'),
     path('apply/<int:opportunity_id>/', views.apply_for_opportunity, name='apply-for-opportunity'),
     path('company_ads/', views.company_ads_list, name='company_ads_list'),
-    
+    path('schedule-interview/', views.create_interview_schedule, name='create_interview'),
+    path('get-interviews/',views.get_interview_schedules, name='get_interviews'),
 
 
 
