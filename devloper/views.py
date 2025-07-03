@@ -202,5 +202,5 @@ def create_resume_from_parser(request):
 
         return Response({"message": "Resume saved successfully"}, status=status.HTTP_201_CREATED)
 
-    except Exception as e:
+    except Exception as e:  
         return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
