@@ -158,3 +158,51 @@ def delete_developer(request):
     return Response({'detail': 'Developer profile deleted successfully.'}, status=204)
 
 
+### for sava resume 
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
+from .models import Resume, Skill, Education, Experience, Language, User
+
+@api_view(['POST'])
+def create_resume_from_parser(request):
+    try:
+        user_id = request.data.get('user_id')
+        user = User.objects.get(id=user_id)
+
+        resume = Resume.objects.create(
+            user=user,
+            summary=request.data.get("summary", ""),
+        )
+
+        # skills
+        for skill in request.data.get("skills", []):
+            Skill.objects.create(resume=resume, skill=skill)
+
+        # education
+        for edu in request.data.get("education", []):
+            Education.objects.create(resume=resume, degree=edu, institution="")
+
+        # experience
+        for exp in request.data.get("experiences", []):
+            Experience.objects.create(
+                resume=resume,
+                job_title=exp.get("job_title", ""),
+                company=exp.get("company", ""),
+                start_date=exp.get("start_date", ""),
+                end_date=exp.get("end_date", ""),
+                description=exp.get("description", "")
+            )
+
+        # languages
+        for lang in request.data.get("languages", []):
+            Language.objects.create(
+                resume=resume,
+                name=lang.get("language", "English"),
+                level=lang.get("level", "1")
+            )
+
+        return Response({"message": "Resume saved successfully"}, status=status.HTTP_201_CREATED)
+
+    except Exception as e:
+        return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
