@@ -1,4 +1,4 @@
-name: Run Embedding Update
+name: Run Resume Embedding Update
 
 on:
   schedule:
@@ -9,5 +9,4 @@ jobs:
     steps:
       - name: Call Render API
         run: |
-
-          curl -X GET "https://backend-forsatech.onrender.com/recommend/update-embeddings/"
+          curl -X GET "https://backend-forsatech.onrender.com/recommend/update-resumes-embeddings/"

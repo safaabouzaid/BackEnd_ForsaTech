@@ -88,12 +88,12 @@ def text_to_vector(text_list, model, debug_label=""):
         return np.zeros(VECTOR_SIZE)
 
 # --- Resume Vectors ---
-def get_user_resume_vector(user):
+def get_user_resume_vector(user, model=None):
     resume = Resume.objects.filter(user=user).first()
     if resume and resume.embedding:
         return np.array(resume.embedding)  
 
-    model = get_sbert_model()
+    model = model or get_sbert_model()
     if not model or not resume:
         return np.zeros(VECTOR_SIZE)
 
