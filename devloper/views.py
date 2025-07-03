@@ -14,6 +14,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 
+from django.contrib.auth import get_user_model
+
 User = get_user_model()  
 
 @api_view(['POST'])
@@ -194,11 +196,11 @@ def create_resume_from_parser(request):
 
         # languages
         for lang in request.data.get("languages", []):
-            Language.objects.create(
-                resume=resume,
-                name=lang.get("name", "English"),
-                level=lang.get("level", "1")
-            )
+         Language.objects.create(
+          resume=resume,
+          name=lang.get("name", "English"),
+          level=lang.get("level", "1")
+    )
 
         return Response({"message": "Resume saved successfully"}, status=status.HTTP_201_CREATED)
 
