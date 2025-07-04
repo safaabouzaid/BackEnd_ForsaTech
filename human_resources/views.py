@@ -598,8 +598,6 @@ def company_ads_list(request):
 
 
 #==========================================Interview Schedules=====================================#
-from django.core.mail import send_mail
-from django.conf import settings
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -629,35 +627,7 @@ def create_interview_schedule(request):
             date=date,
             time=time
         )
-
-        user_email = dev_user.email
-        job_title = opportunity.opportunity_name
-        company_name = opportunity.company.name
-
-        subject = f'📅 Interview Scheduled for {job_title}'
-        message = (
-            f"Hello {dev_user.username},\n\n"
-            f"Your interview for the position \"{job_title}\" at {company_name} has been scheduled.\n"
-            f"📅 Date: {date}\n"
-            f"⏰ Time: {time}\n\n"
-            f"Please be prepared and reach out if you have any questions.\n\n"
-            f"Best regards,\n"
-            f"Forsa-Tech Team"
-        )
-
-        if user_email:
-            try:
-                send_mail(
-                    subject,
-                    message,
-                    settings.DEFAULT_FROM_EMAIL,
-                    [user_email],
-                    fail_silently=False
-                )
-            except Exception as e:
-                print(f"Failed to send interview email: {e}")
-
-        return Response({'message': 'Interview scheduled successfully and email sent.'}, status=status.HTTP_201_CREATED)
+        return Response({'message': 'Interview scheduled successfully'}, status=status.HTTP_201_CREATED)
 
     except User.DoesNotExist:
         return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
