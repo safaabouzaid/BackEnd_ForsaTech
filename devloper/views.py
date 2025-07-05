@@ -206,3 +206,20 @@ def create_resume_from_parser(request):
 
     except Exception as e:  
         return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+
+## update FCM-token 
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def update_fcm_token(request):
+    fcm_token = request.data.get('fcm_token')
+    
+    if not fcm_token:
+        return Response({"error": "FCM token is required."}, status=status.HTTP_400_BAD_REQUEST)
+
+    user = request.user
+    user.fcm_token = fcm_token
+    user.save()
+
+    return Response({"message": "FCM token updated successfully."}, status=status.HTTP_200_OK)
