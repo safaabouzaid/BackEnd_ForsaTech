@@ -2,6 +2,7 @@ from django.db import models # type: ignore
 from django.contrib.auth.models import AbstractUser # type: ignore
 from django.conf import settings # type: ignore
 from django.core.validators import EmailValidator # type: ignore
+from django.contrib.postgres.fields import ArrayField
 #
 #class User(AbstractUser):
 #    email = models.EmailField(unique=True,null=True, blank=True )  
@@ -13,9 +14,8 @@ from django.core.validators import EmailValidator # type: ignore
 #    def __str__(self):
 #        return self.email
     
+
     
-
-
 class User(AbstractUser):
     username = models.CharField(max_length=255,unique=False, default='')
     email = models.EmailField(unique=True)
@@ -30,12 +30,32 @@ class User(AbstractUser):
     def __str__(self):
         return self.username
 
+class Developer(models.Model):
+    GENDER_CHOICES = [
+        ('male', 'Male'),
+        ('female', 'Female'),
+        
+    ]
+
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='developer_profile')
+    gender = models.CharField(max_length=10, choices=GENDER_CHOICES)
+    birth_date = models.DateField(blank=True, null=True) 
+    bio = models.TextField(blank=True, null=True)
+    profile_picture = models.ImageField(upload_to='developers/', blank=True, null=True)
+
+    def __str__(self):
+        return f"Developer Profile of {self.user.username}"
+    
+    
+
 class Resume(models.Model):
     
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="resumes",null=True, blank=True)
     summary = models.TextField(blank=True, null=True)
     pdf_file = models.FileField(upload_to='resumes/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    embedding = ArrayField(models.FloatField(), size=384, null=True, blank=True)
+
 
     def __str__(self):
         return f"Resume for {self.user.username} - {self.created_at}"
@@ -44,6 +64,8 @@ class Skill(models.Model):
     resume = models.ForeignKey(Resume, on_delete=models.CASCADE, related_name="skills")
     skill = models.CharField(max_length=255)
     level = models.CharField(max_length=50, blank=True, null=True)
+    is_inferred = models.BooleanField(default=False,null=True)
+    source_skill = models.CharField(max_length=255, blank=True, null=True)   #في حال ماكانت الاصلية يلي عندي 
 
     def __str__(self):
         return f"{self.skill} - {self.resume.user.username}"
@@ -92,6 +114,40 @@ class TrainingCourse(models.Model):
 
 
 
+
+class Language(models.Model):
+    LANGUAGE_CHOICES = [
+        ('Arabic', 'Arabic'),
+        ('English', 'English'),
+        ('Spanish', 'Spanish'),
+        ('German', 'German'),
+        ('Turkish', 'Turkish'),
+        ('Russian', 'Russian'),
+        ('French', 'French'),
+        ('Chinese', 'Chinese'),
+        ('Japanese', 'Japanese'),
+        ('Hindi', 'Hindi'),
+        ('Italian', 'Italian'),
+        ('Portuguese', 'Portuguese'),
+        ('Korean', 'Korean'),
+        ('Persian', 'Persian'),
+        ('Urdu', 'Urdu'),
+    ]
+
+    LEVEL_CHOICES = [
+        ('1', '1'),
+        ('2', '2'),
+        ('3', '3'),
+        ('4', '4'),
+        ('5', '5'),
+    ]
+
+    resume = models.ForeignKey(Resume, on_delete=models.CASCADE, related_name="languages")
+    name = models.CharField(max_length=50, choices=LANGUAGE_CHOICES)
+    level = models.CharField(max_length=6, choices=LEVEL_CHOICES)
+
+    def __str__(self):
+        return f"{self.get_name_display()} - {self.get_level_display()} ({self.resume.user.username})"
 
 
 

@@ -1,0 +1,952 @@
+[
+  {
+    "model": "devloper.user",
+    "pk": 61,
+    "fields": {
+      "username": "hr.ahmad.ali",
+      "email": "ahmad.ali@example.com",
+      "password": "password123",
+      "phone": "",
+      "location": "Damascus",
+      "github_link": "",
+      "linkedin_link": "",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2025-06-20T10:00:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "devloper.user",
+    "pk": 62,
+    "fields": {
+      "username": "hr.sara.khalil",
+      "email": "sara.khalil@example.com",
+      "password": "password123",
+      "phone": "",
+      "location": "Damascus",
+      "github_link": "",
+      "linkedin_link": "",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2025-06-20T10:01:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "devloper.user",
+    "pk": 63,
+    "fields": {
+      "username": "hr.rami.hasan",
+      "email": "rami.hasan@example.com",
+      "password": "password123",
+      "phone": "",
+      "location": "Damascus",
+      "github_link": "",
+      "linkedin_link": "",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2025-06-20T10:02:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "devloper.user",
+    "pk": 64,
+    "fields": {
+      "username": "hr.nour.fares",
+      "email": "nour.fares@example.com",
+      "password": "password123",
+      "phone": "",
+      "location": "Damascus",
+      "github_link": "",
+      "linkedin_link": "",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2025-06-20T10:03:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "devloper.user",
+    "pk": 65,
+    "fields": {
+      "username": "hr.tariq.mansour",
+      "email": "tariq.mansour@example.com",
+      "password": "password123",
+      "phone": "",
+      "location": "Damascus",
+      "github_link": "",
+      "linkedin_link": "",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2025-06-20T10:04:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "devloper.user",
+    "pk": 66,
+    "fields": {
+      "username": "hr.layan.badawi",
+      "email": "layan.badawi@example.com",
+      "password": "password123",
+      "phone": "",
+      "location": "Aleppo",
+      "github_link": "",
+      "linkedin_link": "",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2025-06-20T10:05:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "devloper.user",
+    "pk": 67,
+    "fields": {
+      "username": "hr.anas.yassin",
+      "email": "anas.yassin@example.com",
+      "password": "password123",
+      "phone": "",
+      "location": "Aleppo",
+      "github_link": "",
+      "linkedin_link": "",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2025-06-20T10:06:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "devloper.user",
+    "pk": 68,
+    "fields": {
+      "username": "hr.rana.salem",
+      "email": "rana.salem@example.com",
+      "password": "password123",
+      "phone": "",
+      "location": "Aleppo",
+      "github_link": "",
+      "linkedin_link": "",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2025-06-20T10:07:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "devloper.user",
+    "pk": 69,
+    "fields": {
+      "username": "hr.mazen.zaki",
+      "email": "mazen.zaki@example.com",
+      "password": "password123",
+      "phone": "",
+      "location": "Aleppo",
+      "github_link": "",
+      "linkedin_link": "",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2025-06-20T10:08:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "devloper.user",
+    "pk": 70,
+    "fields": {
+      "username": "hr.dina.haddad",
+      "email": "dina.haddad@example.com",
+      "password": "password123",
+      "phone": "",
+      "location": "Aleppo",
+      "github_link": "",
+      "linkedin_link": "",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2025-06-20T10:09:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "devloper.user",
+    "pk": 71,
+    "fields": {
+      "username": "hr.basel.khouri",
+      "email": "basel.khouri@example.com",
+      "password": "password123",
+      "phone": "",
+      "location": "Homs",
+      "github_link": "",
+      "linkedin_link": "",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2025-06-20T10:10:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "devloper.user",
+    "pk": 72,
+    "fields": {
+      "username": "hr.maya.mansour",
+      "email": "maya.mansour@example.com",
+      "password": "password123",
+      "phone": "",
+      "location": "Homs",
+      "github_link": "",
+      "linkedin_link": "",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2025-06-20T10:11:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "devloper.user",
+    "pk": 73,
+    "fields": {
+      "username": "hr.omar.daher",
+      "email": "omar.daher@example.com",
+      "password": "password123",
+      "phone": "",
+      "location": "Homs",
+      "github_link": "",
+      "linkedin_link": "",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2025-06-20T10:12:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "devloper.user",
+    "pk": 74,
+    "fields": {
+      "username": "hr.rania.farah",
+      "email": "rania.farah@example.com",
+      "password": "password123",
+      "phone": "",
+      "location": "Homs",
+      "github_link": "",
+      "linkedin_link": "",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2025-06-20T10:13:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "devloper.user",
+    "pk": 75,
+    "fields": {
+      "username": "hr.fares.salloum",
+      "email": "fares.salloum@example.com",
+      "password": "password123",
+      "phone": "",
+      "location": "Homs",
+      "github_link": "",
+      "linkedin_link": "",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2025-06-20T10:14:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "devloper.user",
+    "pk": 76,
+    "fields": {
+      "username": "hr.lama.daoud",
+      "email": "lama.daoud@example.com",
+      "password": "password123",
+      "phone": "",
+      "location": "Latakia",
+      "github_link": "",
+      "linkedin_link": "",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2025-06-20T10:15:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "devloper.user",
+    "pk": 77,
+    "fields": {
+      "username": "hr.samir.awad",
+      "email": "samir.awad@example.com",
+      "password": "password123",
+      "phone": "",
+      "location": "Latakia",
+      "github_link": "",
+      "linkedin_link": "",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2025-06-20T10:16:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "devloper.user",
+    "pk": 78,
+    "fields": {
+      "username": "hr.huda.najjar",
+      "email": "huda.najjar@example.com",
+      "password": "password123",
+      "phone": "",
+      "location": "Latakia",
+      "github_link": "",
+      "linkedin_link": "",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2025-06-20T10:17:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "devloper.user",
+    "pk": 79,
+    "fields": {
+      "username": "hr.khalid.qassem",
+      "email": "khalid.qassem@example.com",
+      "password": "password123",
+      "phone": "",
+      "location": "Latakia",
+      "github_link": "",
+      "linkedin_link": "",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2025-06-20T10:18:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "devloper.user",
+    "pk": 80,
+    "fields": {
+      "username": "hr.yasmin.saad",
+      "email": "yasmin.saad@example.com",
+      "password": "password123",
+      "phone": "",
+      "location": "Latakia",
+      "github_link": "",
+      "linkedin_link": "",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2025-06-20T10:19:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "devloper.user",
+    "pk": 81,
+    "fields": {
+      "username": "hr.fadi.malek",
+      "email": "fadi.malek@example.com",
+      "password": "password123",
+      "phone": "",
+      "location": "Tartus",
+      "github_link": "",
+      "linkedin_link": "",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2025-06-20T10:20:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "devloper.user",
+    "pk": 82,
+    "fields": {
+      "username": "hr.lina.yousef",
+      "email": "lina.yousef@example.com",
+      "password": "password123",
+      "phone": "",
+      "location": "Tartus",
+      "github_link": "",
+      "linkedin_link": "",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2025-06-20T10:21:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "devloper.user",
+    "pk": 83,
+    "fields": {
+      "username": "hr.hassan.idris",
+      "email": "hassan.idris@example.com",
+      "password": "password123",
+      "phone": "",
+      "location": "Tartus",
+      "github_link": "",
+      "linkedin_link": "",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2025-06-20T10:22:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "devloper.user",
+    "pk": 84,
+    "fields": {
+      "username": "hr.diana.ghanim",
+      "email": "diana.ghanim@example.com",
+      "password": "password123",
+      "phone": "",
+      "location": "Tartus",
+      "github_link": "",
+      "linkedin_link": "",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2025-06-20T10:23:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "devloper.user",
+    "pk": 85,
+    "fields": {
+      "username": "hr.mohammad.assaf",
+      "email": "mohammad.assaf@example.com",
+      "password": "password123",
+      "phone": "",
+      "location": "Tartus",
+      "github_link": "",
+      "linkedin_link": "",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2025-06-20T10:24:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "devloper.user",
+    "pk": 86,
+    "fields": {
+      "username": "hr.sami.jawad",
+      "email": "sami.jawad@example.com",
+      "password": "password123",
+      "phone": "",
+      "location": "Hama",
+      "github_link": "",
+      "linkedin_link": "",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2025-06-20T10:25:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "devloper.user",
+    "pk": 87,
+    "fields": {
+      "username": "hr.ola.mansour",
+      "email": "ola.mansour@example.com",
+      "password": "password123",
+      "phone": "",
+      "location": "Hama",
+      "github_link": "",
+      "linkedin_link": "",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2025-06-20T10:26:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "devloper.user",
+    "pk": 88,
+    "fields": {
+      "username": "hr.mahmoud.ibrahim",
+      "email": "mahmoud.ibrahim@example.com",
+      "password": "password123",
+      "phone": "",
+      "location": "Hama",
+      "github_link": "",
+      "linkedin_link": "",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2025-06-20T10:27:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "devloper.user",
+    "pk": 89,
+    "fields": {
+      "username": "hr.fatima.ghazi",
+      "email": "fatima.ghazi@example.com",
+      "password": "password123",
+      "phone": "",
+      "location": "Hama",
+      "github_link": "",
+      "linkedin_link": "",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2025-06-20T10:28:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "devloper.user",
+    "pk": 90,
+    "fields": {
+      "username": "hr.waleed.sabbagh",
+      "email": "waleed.sabbagh@example.com",
+      "password": "password123",
+      "phone": "",
+      "location": "Hama",
+      "github_link": "",
+      "linkedin_link": "",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2025-06-20T10:29:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "devloper.user",
+    "pk": 91,
+    "fields": {
+      "username": "hr.aya.tabbaa",
+      "email": "aya.tabbaa@example.com",
+      "password": "password123",
+      "phone": "",
+      "location": "Damascus",
+      "github_link": "",
+      "linkedin_link": "",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2025-06-20T10:30:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "devloper.user",
+    "pk": 92,
+    "fields": {
+      "username": "hr.zaid.kanaan",
+      "email": "zaid.kanaan@example.com",
+      "password": "password123",
+      "phone": "",
+      "location": "Damascus",
+      "github_link": "",
+      "linkedin_link": "",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2025-06-20T10:31:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "devloper.user",
+    "pk": 93,
+    "fields": {
+      "username": "hr.dana.farah",
+      "email": "dana.farah@example.com",
+      "password": "password123",
+      "phone": "",
+      "location": "Damascus",
+      "github_link": "",
+      "linkedin_link": "",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2025-06-20T10:32:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "devloper.user",
+    "pk": 94,
+    "fields": {
+      "username": "hr.youssef.mansour",
+      "email": "youssef.mansour@example.com",
+      "password": "password123",
+      "phone": "",
+      "location": "Damascus",
+      "github_link": "",
+      "linkedin_link": "",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2025-06-20T10:33:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "devloper.user",
+    "pk": 95,
+    "fields": {
+      "username": "hr.leila.haddad",
+      "email": "leila.haddad@example.com",
+      "password": "password123",
+      "phone": "",
+      "location": "Damascus",
+      "github_link": "",
+      "linkedin_link": "",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2025-06-20T10:34:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "devloper.user",
+    "pk": 96,
+    "fields": {
+      "username": "hr.fares.ahmed",
+      "email": "fares.ahmed@example.com",
+      "password": "password123",
+      "phone": "",
+      "location": "Aleppo",
+      "github_link": "",
+      "linkedin_link": "",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2025-06-20T10:35:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "devloper.user",
+    "pk": 97,
+    "fields": {
+      "username": "hr.nour.ali",
+      "email": "nour.ali@example.com",
+      "password": "password123",
+      "phone": "",
+      "location": "Aleppo",
+      "github_link": "",
+      "linkedin_link": "",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2025-06-20T10:36:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "devloper.user",
+    "pk": 98,
+    "fields": {
+      "username": "hr.khalil.zaki",
+      "email": "khalil.zaki@example.com",
+      "password": "password123",
+      "phone": "",
+      "location": "Aleppo",
+      "github_link": "",
+      "linkedin_link": "",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2025-06-20T10:37:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "devloper.user",
+    "pk": 99,
+    "fields": {
+      "username": "hr.lina.issa",
+      "email": "lina.issa@example.com",
+      "password": "password123",
+      "phone": "",
+      "location": "Aleppo",
+      "github_link": "",
+      "linkedin_link": "",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2025-06-20T10:38:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "devloper.user",
+    "pk": 100,
+    "fields": {
+      "username": "hr.rami.awad",
+      "email": "rami.awad@example.com",
+      "password": "password123",
+      "phone": "",
+      "location": "Aleppo",
+      "github_link": "",
+      "linkedin_link": "",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2025-06-20T10:39:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "devloper.user",
+    "pk": 101,
+    "fields": {
+      "username": "hr.sami.hanna",
+      "email": "sami.hanna@example.com",
+      "password": "password123",
+      "phone": "",
+      "location": "Homs",
+      "github_link": "",
+      "linkedin_link": "",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2025-06-20T10:40:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "devloper.user",
+    "pk": 102,
+    "fields": {
+      "username": "hr.maya.dahir",
+      "email": "maya.dahir@example.com",
+      "password": "password123",
+      "phone": "",
+      "location": "Homs",
+      "github_link": "",
+      "linkedin_link": "",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2025-06-20T10:41:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "devloper.user",
+    "pk": 103,
+    "fields": {
+      "username": "hr.anas.khalid",
+      "email": "anas.khalid@example.com",
+      "password": "password123",
+      "phone": "",
+      "location": "Homs",
+      "github_link": "",
+      "linkedin_link": "",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2025-06-20T10:42:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "devloper.user",
+    "pk": 104,
+    "fields": {
+      "username": "hr.rana.fares",
+      "email": "rana.fares@example.com",
+      "password": "password123",
+      "phone": "",
+      "location": "Homs",
+      "github_link": "",
+      "linkedin_link": "",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2025-06-20T10:43:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "devloper.user",
+    "pk": 105,
+    "fields": {
+      "username": "hr.tariq.salloum",
+      "email": "tariq.salloum@example.com",
+      "password": "password123",
+      "phone": "",
+      "location": "Homs",
+      "github_link": "",
+      "linkedin_link": "",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2025-06-20T10:44:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "devloper.user",
+    "pk": 106,
+    "fields": {
+      "username": "hr.lama.ibrahim",
+      "email": "lama.ibrahim@example.com",
+      "password": "password123",
+      "phone": "",
+      "location": "Latakia",
+      "github_link": "",
+      "linkedin_link": "",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2025-06-20T10:45:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "devloper.user",
+    "pk": 107,
+    "fields": {
+      "username": "hr.samir.hasan",
+      "email": "samir.hasan@example.com",
+      "password": "password123",
+      "phone": "",
+      "location": "Latakia",
+      "github_link": "",
+      "linkedin_link": "",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2025-06-20T10:46:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "devloper.user",
+    "pk": 108,
+    "fields": {
+      "username": "hr.huda.qassem",
+      "email": "huda.qassem@example.com",
+      "password": "password123",
+      "phone": "",
+      "location": "Latakia",
+      "github_link": "",
+      "linkedin_link": "",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2025-06-20T10:47:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "devloper.user",
+    "pk": 109,
+    "fields": {
+      "username": "hr.khalid.yassin",
+      "email": "khalid.yassin@example.com",
+      "password": "password123",
+      "phone": "",
+      "location": "Latakia",
+      "github_link": "",
+      "linkedin_link": "",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2025-06-20T10:48:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "devloper.user",
+    "pk": 110,
+    "fields": {
+      "username": "hr.yasmin.zaki",
+      "email": "yasmin.zaki@example.com",
+      "password": "password123",
+      "phone": "",
+      "location": "Latakia",
+      "github_link": "",
+      "linkedin_link": "",
+      "is_staff": true,
+      "is_active": true,
+      "is_superuser": false,
+      "date_joined": "2025-06-20T10:49:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  }
+]

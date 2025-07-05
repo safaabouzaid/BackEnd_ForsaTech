@@ -1,0 +1,482 @@
+[
+  {
+    "model": "human_resources.Company",
+    "pk": 1,
+    "fields": {
+      "name": "Transtek Systems",
+      "logo": "http://www.transtek.com/images/transtek_logo.png",
+      "website": "http://www.transtek.com",
+      "description": "Leading Syrian ERP software provider offering Compass ERP solutions.",
+      "email": "info@transtek.com",
+      "address": "Damascus, Syria",
+      "employees": 250,
+      "created_at": "2025-06-20T10:00:00Z",
+      "subscription_plan": 2,
+      "job_posts_this_month": 13
+    }
+  },
+  {
+    "model": "human_resources.Company",
+    "pk": 2,
+    "fields": {
+      "name": "MTN Syria",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/MTN_Logo.svg/2560px-MTN_Logo.svg.png",
+      "website": "http://www.mtn.com.sy",
+      "description": "Major mobile network operator in Syria, offering GSM and 4G services.",
+      "email": "contact@mtn.com.sy",
+      "address": "Damascus, Syria",
+      "employees": 1500,
+      "created_at": "2025-06-20T10:00:00Z",
+      "subscription_plan": 2,
+      "job_posts_this_month": 13
+    }
+  },
+  {
+    "model": "human_resources.Company",
+    "pk": 3,
+    "fields": {
+      "name": "Syriatel",
+      "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/4/41/Syriatel_logo.png/220px-Syriatel_logo.png",
+      "website": "https://www.syriatel.sy",
+      "description": "Largest Syrian mobile phone operator with GSM, 3G, and LTE services.",
+      "email": "info@syriatel.sy",
+      "address": "Damascus, Syria",
+      "employees": 2000,
+      "created_at": "2025-06-20T10:00:00Z",
+      "subscription_plan": 1,
+      "job_posts_this_month": 4
+    }
+  },
+  {
+    "model": "human_resources.Company",
+    "pk": 4,
+    "fields": {
+      "name": "Wafa Telecom",
+      "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/c/c0/Wafa_Telecom_logo.png/220px-Wafa_Telecom_logo.png",
+      "website": "https://www.wafatelecom.sy",
+      "description": "Syrian telecommunications company offering mobile network services.",
+      "email": "contact@wafatelecom.sy",
+      "address": "Damascus, Syria",
+      "employees": 500,
+      "created_at": "2025-06-20T10:00:00Z",
+      "subscription_plan": 1,
+      "job_posts_this_month": 1
+    }
+  },
+  {
+    "model": "human_resources.Company",
+    "pk": 5,
+    "fields": {
+      "name": "Sama Telecom",
+      "logo": "https://sama-telecom.com/images/logo.png",
+      "website": "https://sama-telecom.com",
+      "description": "Syrian-based telecom provider specializing in messaging and voice services.",
+      "email": "info@sama-telecom.com",
+      "address": "Damascus, Syria",
+      "employees": 120,
+      "created_at": "2025-06-20T10:00:00Z",
+      "subscription_plan": 1,
+      "job_posts_this_month": 8
+    }
+  },
+  {
+    "model": "human_resources.Company",
+    "pk": 6,
+    "fields": {
+      "name": "ASG - Arab Software Group",
+      "logo": "https://www.asg.sy/assets/img/logo.png",
+      "website": "https://www.asg.sy",
+      "description": "Software development and IT services company in Syria.",
+      "email": "contact@asg.sy",
+      "address": "Damascus, Syria",
+      "employees": 120,
+      "created_at": "2025-06-20T10:00:00Z",
+      "subscription_plan": 1,
+      "job_posts_this_month": 14
+    }
+  },
+  {
+    "model": "human_resources.Company",
+    "pk": 7,
+    "fields": {
+      "name": "Ebla Soft",
+      "logo": "https://www.eblasoft.com/images/logo.png",
+      "website": "https://www.eblasoft.com",
+      "description": "Syrian software development company known for ERP solutions.",
+      "email": "info@eblasoft.com",
+      "address": "Damascus, Syria",
+      "employees": 130,
+      "created_at": "2025-06-20T10:00:00Z",
+      "subscription_plan": 2,
+      "job_posts_this_month": 9
+    }
+  },
+  {
+    "model": "human_resources.Company",
+    "pk": 8,
+    "fields": {
+      "name": "Syria Smart",
+      "logo": "https://syriasmart.com/assets/logo.png",
+      "website": "https://syriasmart.com",
+      "description": "IT maintenance and advisory services provider since 2005.",
+      "email": "info@syriasmart.com",
+      "address": "Damascus, Syria",
+      "employees": 50,
+      "created_at": "2025-06-20T10:00:00Z",
+      "subscription_plan": 2,
+      "job_posts_this_month": 10
+    }
+  },
+  {
+    "model": "human_resources.Company",
+    "pk": 9,
+    "fields": {
+      "name": "Syscom",
+      "logo": "https://syscom.com.sy/images/logo.png",
+      "website": "https://syscom.com.sy",
+      "description": "Provider of communication systems and IT solutions.",
+      "email": "info@syscom.com.sy",
+      "address": "Damascus, Syria",
+      "employees": 95,
+      "created_at": "2025-06-20T10:00:00Z",
+      "subscription_plan": 2,
+      "job_posts_this_month": 10
+    }
+  },
+  {
+    "model": "human_resources.Company",
+    "pk": 10,
+    "fields": {
+      "name": "Barakat Telecom",
+      "logo": "https://barakat-telecom.com/logo.png",
+      "website": "https://barakat-telecom.com",
+      "description": "Telecom equipment and services provider in Syria.",
+      "email": "support@barakat-telecom.com",
+      "address": "Aleppo, Syria",
+      "employees": 60,
+      "created_at": "2025-06-20T10:00:00Z",
+      "subscription_plan": 2,
+      "job_posts_this_month": 5
+    }
+  },
+  {
+    "model": "human_resources.Company",
+    "pk": 11,
+    "fields": {
+      "name": "Tawasul Telecom",
+      "logo": "https://tawasul.sy/assets/logo.png",
+      "website": "https://tawasul.sy",
+      "description": "Syrian company providing ICT solutions, data center services, and cloud hosting.",
+      "email": "info@tawasul.sy",
+      "address": "Damascus, Syria",
+      "employees": 100,
+      "created_at": "2025-06-24T10:00:00Z",
+      "subscription_plan": 2,
+      "job_posts_this_month": 8
+    }
+  },
+  {
+    "model": "human_resources.Company",
+    "pk": 12,
+    "fields": {
+      "name": "SyTech",
+      "logo": "https://sytech.sy/wp-content/uploads/2021/06/logo.png",
+      "website": "https://sytech.sy",
+      "description": "Technology services and IT infrastructure provider in Syria.",
+      "email": "contact@sytech.sy",
+      "address": "Damascus, Syria",
+      "employees": 60,
+      "created_at": "2025-06-24T10:00:00Z",
+      "subscription_plan": 1,
+      "job_posts_this_month": 3
+    }
+  },
+  {
+    "model": "human_resources.Company",
+    "pk": 13,
+    "fields": {
+      "name": "Rawafed Tech",
+      "logo": "https://rawafedtech.com/images/logo.png",
+      "website": "https://rawafedtech.com",
+      "description": "Software development and IT consulting company based in Syria.",
+      "email": "info@rawafedtech.com",
+      "address": "Damascus, Syria",
+      "employees": 45,
+      "created_at": "2025-06-24T10:00:00Z",
+      "subscription_plan": 1,
+      "job_posts_this_month": 7
+    }
+  },
+  {
+    "model": "human_resources.Company",
+    "pk": 14,
+    "fields": {
+      "name": "BIT Systems",
+      "logo": "https://www.bitsyria.com/assets/img/logo.png",
+      "website": "https://www.bitsyria.com",
+      "description": "Syrian IT company offering ERP systems and business solutions.",
+      "email": "support@bitsyria.com",
+      "address": "Damascus, Syria",
+      "employees": 80,
+      "created_at": "2025-06-24T10:00:00Z",
+      "subscription_plan": 2,
+      "job_posts_this_month": 10
+    }
+  },
+  {
+    "model": "human_resources.Company",
+    "pk": 15,
+    "fields": {
+      "name": "Smart Vision",
+      "logo": "https://smartvision.sy/images/logo.png",
+      "website": "https://smartvision.sy",
+      "description": "Web and software solutions company with focus on smart applications.",
+      "email": "info@smartvision.sy",
+      "address": "Damascus, Syria",
+      "employees": 55,
+      "created_at": "2025-06-24T10:00:00Z",
+      "subscription_plan": 1,
+      "job_posts_this_month": 6
+    }
+  },
+  {
+    "model": "human_resources.Company",
+    "pk": 16,
+    "fields": {
+      "name": "Serianet",
+      "logo": "https://serianet.sy/images/logo.png",
+      "website": "https://serianet.sy",
+      "description": "ISP and IT services provider operating in several Syrian cities.",
+      "email": "support@serianet.sy",
+      "address": "Aleppo, Syria",
+      "employees": 70,
+      "created_at": "2025-06-24T10:00:00Z",
+      "subscription_plan": 2,
+      "job_posts_this_month": 5
+    }
+  },
+  {
+    "model": "human_resources.Company",
+    "pk": 17,
+    "fields": {
+      "name": "Altibi Tech",
+      "logo": "https://altibitech.com/images/logo.svg",
+      "website": "https://altibitech.com",
+      "description": "IT development company delivering AI and custom software solutions.",
+      "email": "info@altibitech.com",
+      "address": "Damascus, Syria",
+      "employees": 35,
+      "created_at": "2025-06-24T10:00:00Z",
+      "subscription_plan": 1,
+      "job_posts_this_month": 2
+    }
+  },
+  {
+    "model": "human_resources.Company",
+    "pk": 18,
+    "fields": {
+      "name": "Ebtekar",
+      "logo": "https://ebtekar.sy/assets/logo.png",
+      "website": "https://ebtekar.sy",
+      "description": "Syrian software development company focusing on web and ERP systems.",
+      "email": "contact@ebtekar.sy",
+      "address": "Latakia, Syria",
+      "employees": 40,
+      "created_at": "2025-06-24T10:00:00Z",
+      "subscription_plan": 2,
+      "job_posts_this_month": 4
+    }
+  },
+  {
+    "model": "human_resources.Company",
+    "pk": 19,
+    "fields": {
+      "name": "BashTech",
+      "logo": "https://bashtech.sy/logo.png",
+      "website": "https://bashtech.sy",
+      "description": "Startup providing mobile app and custom software development.",
+      "email": "support@bashtech.sy",
+      "address": "Homs, Syria",
+      "employees": 20,
+      "created_at": "2025-06-24T10:00:00Z",
+      "subscription_plan": 1,
+      "job_posts_this_month": 3
+    }
+  },
+  {
+    "model": "human_resources.Company",
+    "pk": 20,
+    "fields": {
+      "name": "CodiTech",
+      "logo": "https://coditech.sy/assets/logo.png",
+      "website": "https://coditech.sy",
+      "description": "Syria-based software company offering innovative tech solutions.",
+      "email": "hello@coditech.sy",
+      "address": "Damascus, Syria",
+      "employees": 30,
+      "created_at": "2025-06-24T10:00:00Z",
+      "subscription_plan": 1,
+      "job_posts_this_month": 4
+    }
+  },
+  {
+    "model": "human_resources.Company",
+    "pk": 21,
+    "fields": {
+      "name": "Innovatech Syria",
+      "logo": "https://innovatech.sy/assets/logo.png",
+      "website": "https://innovatech.sy",
+      "description": "Syrian company specializing in innovative mobile and web applications.",
+      "email": "contact@innovatech.sy",
+      "address": "Damascus, Syria",
+      "employees": 25,
+      "created_at": "2025-06-24T10:00:00Z",
+      "subscription_plan": 1,
+      "job_posts_this_month": 2
+    }
+  },
+  {
+    "model": "human_resources.Company",
+    "pk": 22,
+    "fields": {
+      "name": "Quantominds",
+      "logo": "https://quantominds.sy/logo.png",
+      "website": "https://quantominds.sy",
+      "description": "AI-focused software development company operating in Syria and MENA.",
+      "email": "info@quantominds.sy",
+      "address": "Aleppo, Syria",
+      "employees": 30,
+      "created_at": "2025-06-24T10:00:00Z",
+      "subscription_plan": 2,
+      "job_posts_this_month": 5
+    }
+  },
+  {
+    "model": "human_resources.Company",
+    "pk": 23,
+    "fields": {
+      "name": "NeoLogic",
+      "logo": "https://neologic.sy/assets/logo.svg",
+      "website": "https://neologic.sy",
+      "description": "Modern software company focused on SaaS solutions and ERP systems.",
+      "email": "support@neologic.sy",
+      "address": "Damascus, Syria",
+      "employees": 45,
+      "created_at": "2025-06-24T10:00:00Z",
+      "subscription_plan": 2,
+      "job_posts_this_month": 6
+    }
+  },
+  {
+    "model": "human_resources.Company",
+    "pk": 24,
+    "fields": {
+      "name": "Digital Karma",
+      "logo": "https://digitalkarma.sy/images/logo.png",
+      "website": "https://digitalkarma.sy",
+      "description": "Syrian startup offering UX/UI and digital product development services.",
+      "email": "team@digitalkarma.sy",
+      "address": "Damascus, Syria",
+      "employees": 18,
+      "created_at": "2025-06-24T10:00:00Z",
+      "subscription_plan": 1,
+      "job_posts_this_month": 3
+    }
+  },
+  {
+    "model": "human_resources.Company",
+    "pk": 25,
+    "fields": {
+      "name": "Skyware Solutions",
+      "logo": "https://skyware.sy/logo.png",
+      "website": "https://skyware.sy",
+      "description": "Web development and enterprise IT solutions provider in Syria.",
+      "email": "info@skyware.sy",
+      "address": "Latakia, Syria",
+      "employees": 38,
+      "created_at": "2025-06-24T10:00:00Z",
+      "subscription_plan": 1,
+      "job_posts_this_month": 4
+    }
+  },
+  {
+    "model": "human_resources.Company",
+    "pk": 26,
+    "fields": {
+      "name": "DataPioneers",
+      "logo": "https://datapioneers.sy/assets/img/logo.png",
+      "website": "https://datapioneers.sy",
+      "description": "Big data and analytics company offering insights for Syrian businesses.",
+      "email": "hello@datapioneers.sy",
+      "address": "Damascus, Syria",
+      "employees": 22,
+      "created_at": "2025-06-24T10:00:00Z",
+      "subscription_plan": 2,
+      "job_posts_this_month": 2
+    }
+  },
+  {
+    "model": "human_resources.Company",
+    "pk": 27,
+    "fields": {
+      "name": "CodeCrafters",
+      "logo": "https://codecrafters.sy/logo.svg",
+      "website": "https://codecrafters.sy",
+      "description": "Custom software and mobile app development firm in Syria.",
+      "email": "contact@codecrafters.sy",
+      "address": "Damascus, Syria",
+      "employees": 33,
+      "created_at": "2025-06-24T10:00:00Z",
+      "subscription_plan": 2,
+      "job_posts_this_month": 4
+    }
+  },
+  {
+    "model": "human_resources.Company",
+    "pk": 28,
+    "fields": {
+      "name": "Stacked Solutions",
+      "logo": "https://stacked.sy/assets/logo.png",
+      "website": "https://stacked.sy",
+      "description": "Software company offering full-stack web and API development services.",
+      "email": "dev@stacked.sy",
+      "address": "Damascus, Syria",
+      "employees": 29,
+      "created_at": "2025-06-24T10:00:00Z",
+      "subscription_plan": 1,
+      "job_posts_this_month": 3
+    }
+  },
+  {
+    "model": "human_resources.Company",
+    "pk": 29,
+    "fields": {
+      "name": "AppSyrian",
+      "logo": "https://appsyrian.sy/logo.png",
+      "website": "https://appsyrian.sy",
+      "description": "Syrian mobile app company targeting education and productivity sectors.",
+      "email": "info@appsyrian.sy",
+      "address": "Hama, Syria",
+      "employees": 26,
+      "created_at": "2025-06-24T10:00:00Z",
+      "subscription_plan": 2,
+      "job_posts_this_month": 3
+    }
+  },
+  {
+    "model": "human_resources.Company",
+    "pk": 30,
+    "fields": {
+      "name": "Nabd Tech",
+      "logo": "https://nabdtech.sy/logo.png",
+      "website": "https://nabdtech.sy",
+      "description": "Syrian IT and cloud solutions provider with a focus on enterprise tools.",
+      "email": "hello@nabdtech.sy",
+      "address": "Damascus, Syria",
+      "employees": 48,
+      "created_at": "2025-06-24T10:00:00Z",
+      "subscription_plan": 2,
+      "job_posts_this_month": 5
+    }
+  }
+]

@@ -1,0 +1,13 @@
+name: Run Embedding Update
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  
+jobs:
+  call-api:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call Render API
+        run: |
+
+          curl -X GET "https://backend-forsatech.onrender.com/recommend/update-embeddings/"

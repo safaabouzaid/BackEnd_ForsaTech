@@ -1,0 +1,5155 @@
+[
+  {
+    "model": "devloper.User",
+    "pk":111 ,
+    "fields": {
+      "username": "backend_dev_samer",
+      "email": "samer.b@example.com",
+      "phone": "+963933111222",
+      "location": "Damascus, Syria",
+      "github_link": "https://github.com/samerb",
+      "linkedin_link": "https://linkedin.com/in/samerb",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 1,
+    "fields": {
+      "user": 111,
+      "summary": "Experienced Backend Developer with strong skills in Node.js, Express, and MongoDB.",
+      "pdf_file": "resumes/samer_resume.pdf",
+      "created_at": "2024-06-15T10:00:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 1,
+    "fields": {
+      "resume": 1,
+      "skill": "Node.js",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 2,
+    "fields": {
+      "resume": 1,
+      "skill": "Express.js",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 3,
+    "fields": {
+      "resume": 1,
+      "skill": "MongoDB",
+      "level": "3",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 1,
+    "fields": {
+      "resume": 1,
+      "job_title": "Backend Developer",
+      "company": "SyriaCode",
+      "start_date": "2022-03",
+      "end_date": null,
+      "description": "Developed robust backend APIs for various applications."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 1,
+    "fields": {
+      "resume": 1,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 2,
+    "fields": {
+      "resume": 1,
+      "name": "English",
+      "level": "3"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 2,
+    "fields": {
+      "username": "devops_ahmad",
+      "email": "ahmad.d@example.com",
+      "phone": "+963944333444",
+      "location": "Aleppo, Syria",
+      "github_link": "https://github.com/ahmad_d",
+      "linkedin_link": "https://linkedin.com/in/ahmad_d",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 2,
+    "fields": {
+      "user": 2,
+      "summary": "DevOps Engineer with strong experience in CI/CD pipelines, Docker, and Kubernetes.",
+      "pdf_file": "resumes/ahmad_resume.pdf",
+      "created_at": "2024-06-16T11:00:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 4,
+    "fields": {
+      "resume": 2,
+      "skill": "Docker",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 5,
+    "fields": {
+      "resume": 2,
+      "skill": "Kubernetes",
+      "level": "3",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 6,
+    "fields": {
+      "resume": 2,
+      "skill": "CI/CD",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 2,
+    "fields": {
+      "resume": 2,
+      "job_title": "DevOps Engineer",
+      "company": "CloudSyria",
+      "start_date": "2021-09",
+      "end_date": null,
+      "description": "Managed infrastructure, automated deployments, and optimized CI/CD processes."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 3,
+    "fields": {
+      "resume": 2,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 4,
+    "fields": {
+      "resume": 2,
+      "name": "English",
+      "level": "4"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 3,
+    "fields": {
+      "username": "fullstack_lama",
+      "email": "lama.f@example.com",
+      "phone": "+963955666777",
+      "location": "Homs, Syria",
+      "github_link": "https://github.com/lama_f",
+      "linkedin_link": "https://linkedin.com/in/lama_f",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 3,
+    "fields": {
+      "user": 3,
+      "summary": "Full-stack developer proficient in MERN stack and agile methodologies.",
+      "pdf_file": "resumes/lama_resume.pdf",
+      "created_at": "2024-06-17T12:00:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 7,
+    "fields": {
+      "resume": 3,
+      "skill": "MongoDB",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 8,
+    "fields": {
+      "resume": 3,
+      "skill": "Express.js",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 9,
+    "fields": {
+      "resume": 3,
+      "skill": "React",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 10,
+    "fields": {
+      "resume": 3,
+      "skill": "Node.js",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 3,
+    "fields": {
+      "resume": 3,
+      "job_title": "Fullstack Developer",
+      "company": "Homs Innovations",
+      "start_date": "2021-01",
+      "end_date": null,
+      "description": "Developed and maintained web applications from front to back end."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 5,
+    "fields": {
+      "resume": 3,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 6,
+    "fields": {
+      "resume": 3,
+      "name": "English",
+      "level": "3"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 4,
+    "fields": {
+      "username": "mobile_ios_rami",
+      "email": "rami.ios@example.com",
+      "phone": "+963966888999",
+      "location": "Lattakia, Syria",
+      "github_link": "https://github.com/rami_ios",
+      "linkedin_link": "https://linkedin.com/in/rami_ios",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 4,
+    "fields": {
+      "user": 4,
+      "summary": "iOS Developer with 3+ years of experience in Swift and Objective-C.",
+      "pdf_file": "resumes/rami_ios_resume.pdf",
+      "created_at": "2024-06-18T09:30:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 11,
+    "fields": {
+      "resume": 4,
+      "skill": "Swift",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 12,
+    "fields": {
+      "resume": 4,
+      "skill": "Objective-C",
+      "level": "3",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 13,
+    "fields": {
+      "resume": 4,
+      "skill": "iOS Development",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 4,
+    "fields": {
+      "resume": 4,
+      "job_title": "iOS Developer",
+      "company": "Latakia Apps",
+      "start_date": "2021-05",
+      "end_date": null,
+      "description": "Developed and maintained several iOS applications, focusing on user experience."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 7,
+    "fields": {
+      "resume": 4,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 8,
+    "fields": {
+      "resume": 4,
+      "name": "English",
+      "level": "3"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 5,
+    "fields": {
+      "username": "ml_engineer_sara",
+      "email": "sara.ml@example.com",
+      "phone": "+963988112233",
+      "location": "Tartous, Syria",
+      "github_link": "https://github.com/sara_ml",
+      "linkedin_link": "https://linkedin.com/in/sara_ml",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 5,
+    "fields": {
+      "user": 5,
+      "summary": "Machine Learning Engineer specialized in deep learning frameworks and data pipelines.",
+      "pdf_file": "resumes/sara_ml_resume.pdf",
+      "created_at": "2024-06-19T10:15:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 14,
+    "fields": {
+      "resume": 5,
+      "skill": "Deep Learning",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 15,
+    "fields": {
+      "resume": 5,
+      "skill": "TensorFlow",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 16,
+    "fields": {
+      "resume": 5,
+      "skill": "Keras",
+      "level": "3",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 5,
+    "fields": {
+      "resume": 5,
+      "job_title": "ML Engineer",
+      "company": "AI Horizons Syria",
+      "start_date": "2022-01",
+      "end_date": null,
+      "description": "Developed and deployed machine learning models for various applications."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 9,
+    "fields": {
+      "resume": 5,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 10,
+    "fields": {
+      "resume": 5,
+      "name": "English",
+      "level": "4"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 6,
+    "fields": {
+      "username": "cyber_security_fares",
+      "email": "fares.cs@example.com",
+      "phone": "+963933445566",
+      "location": "Damascus, Syria",
+      "github_link": "https://github.com/farescs",
+      "linkedin_link": "https://linkedin.com/in/farescs",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 6,
+    "fields": {
+      "user": 6,
+      "summary": "Cybersecurity expert focusing on network security and penetration testing.",
+      "pdf_file": "resumes/fares_cs_resume.pdf",
+      "created_at": "2024-06-20T13:00:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 17,
+    "fields": {
+      "resume": 6,
+      "skill": "Network Security",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 18,
+    "fields": {
+      "resume": 6,
+      "skill": "Penetration Testing",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 19,
+    "fields": {
+      "resume": 6,
+      "skill": "Security Audits",
+      "level": "3",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 6,
+    "fields": {
+      "resume": 6,
+      "job_title": "Cybersecurity Analyst",
+      "company": "SecureNet Syria",
+      "start_date": "2020-11",
+      "end_date": null,
+      "description": "Conducted security assessments and implemented security protocols."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 11,
+    "fields": {
+      "resume": 6,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 12,
+    "fields": {
+      "resume": 6,
+      "name": "English",
+      "level": "4"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 7,
+    "fields": {
+      "username": "cloud_eng_nour",
+      "email": "nour.c@example.com",
+      "phone": "+963944778899",
+      "location": "Aleppo, Syria",
+      "github_link": "https://github.com/nour_c",
+      "linkedin_link": "https://linkedin.com/in/nour_c",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 7,
+    "fields": {
+      "user": 7,
+      "summary": "Cloud Engineer experienced in AWS, Azure, and cloud infrastructure management.",
+      "pdf_file": "resumes/nour_cloud_resume.pdf",
+      "created_at": "2024-06-21T09:00:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 20,
+    "fields": {
+      "resume": 7,
+      "skill": "AWS",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 21,
+    "fields": {
+      "resume": 7,
+      "skill": "Azure",
+      "level": "3",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 22,
+    "fields": {
+      "resume": 7,
+      "skill": "Cloud Computing",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 7,
+    "fields": {
+      "resume": 7,
+      "job_title": "Cloud Engineer",
+      "company": "Syrian Cloud Solutions",
+      "start_date": "2021-03",
+      "end_date": null,
+      "description": "Designed, deployed, and managed cloud-based solutions."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 13,
+    "fields": {
+      "resume": 7,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 14,
+    "fields": {
+      "resume": 7,
+      "name": "English",
+      "level": "4"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 8,
+    "fields": {
+      "username": "gamedev_omar",
+      "email": "omar.g@example.com",
+      "phone": "+963955112233",
+      "location": "Homs, Syria",
+      "github_link": "https://github.com/omar_g",
+      "linkedin_link": "https://linkedin.com/in/omar_g",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 8,
+    "fields": {
+      "user": 8,
+      "summary": "Game Developer with expertise in Unity, C#, and mobile game development.",
+      "pdf_file": "resumes/omar_game_resume.pdf",
+      "created_at": "2024-06-22T10:00:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 23,
+    "fields": {
+      "resume": 8,
+      "skill": "Unity 3D",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 24,
+    "fields": {
+      "resume": 8,
+      "skill": "C#",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 25,
+    "fields": {
+      "resume": 8,
+      "skill": "Game Design",
+      "level": "3",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 8,
+    "fields": {
+      "resume": 8,
+      "job_title": "Game Developer",
+      "company": "Homs Games Studio",
+      "start_date": "2020-07",
+      "end_date": null,
+      "description": "Developed several mobile games from concept to deployment."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 15,
+    "fields": {
+      "resume": 8,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 16,
+    "fields": {
+      "resume": 8,
+      "name": "English",
+      "level": "3"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 9,
+    "fields": {
+      "username": "ui_ux_maya",
+      "email": "maya.u@example.com",
+      "phone": "+963966445566",
+      "location": "Lattakia, Syria",
+      "github_link": "https://github.com/maya_u",
+      "linkedin_link": "https://linkedin.com/in/maya_u",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 9,
+    "fields": {
+      "user": 9,
+      "summary": "UI/UX Designer creating intuitive and aesthetically pleasing user interfaces.",
+      "pdf_file": "resumes/maya_uiux_resume.pdf",
+      "created_at": "2024-06-23T11:30:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 26,
+    "fields": {
+      "resume": 9,
+      "skill": "Figma",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 27,
+    "fields": {
+      "resume": 9,
+      "skill": "Sketch",
+      "level": "3",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 28,
+    "fields": {
+      "resume": 9,
+      "skill": "User Research",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 9,
+    "fields": {
+      "resume": 9,
+      "job_title": "UI/UX Designer",
+      "company": "Design Hub Syria",
+      "start_date": "2021-08",
+      "end_date": null,
+      "description": "Designed user interfaces and conducted user experience research for web and mobile applications."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 17,
+    "fields": {
+      "resume": 9,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 18,
+    "fields": {
+      "resume": 9,
+      "name": "English",
+      "level": "4"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 10,
+    "fields": {
+      "username": "data_eng_yara",
+      "email": "yara.d@example.com",
+      "phone": "+963988776655",
+      "location": "Tartous, Syria",
+      "github_link": "https://github.com/yara_d",
+      "linkedin_link": "https://linkedin.com/in/yara_d",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 10,
+    "fields": {
+      "user": 10,
+      "summary": "Data Engineer building scalable data pipelines and managing data infrastructure.",
+      "pdf_file": "resumes/yara_de_resume.pdf",
+      "created_at": "2024-06-24T12:45:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 29,
+    "fields": {
+      "resume": 10,
+      "skill": "Apache Spark",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 30,
+    "fields": {
+      "resume": 10,
+      "skill": "SQL",
+      "level": "5",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 31,
+    "fields": {
+      "resume": 10,
+      "skill": "ETL",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 10,
+    "fields": {
+      "resume": 10,
+      "job_title": "Data Engineer",
+      "company": "Syrian Data Solutions",
+      "start_date": "2021-02",
+      "end_date": null,
+      "description": "Designed and implemented data warehousing solutions and ETL processes."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 19,
+    "fields": {
+      "resume": 10,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 20,
+    "fields": {
+      "resume": 10,
+      "name": "English",
+      "level": "4"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 11,
+    "fields": {
+      "username": "blockchain_khalid",
+      "email": "khalid.b@example.com",
+      "phone": "+963933221144",
+      "location": "Damascus, Syria",
+      "github_link": "https://github.com/khalidb",
+      "linkedin_link": "https://linkedin.com/in/khalidb",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 11,
+    "fields": {
+      "user": 11,
+      "summary": "Blockchain Developer with experience in Solidity and smart contract development.",
+      "pdf_file": "resumes/khalid_blockchain_resume.pdf",
+      "created_at": "2024-06-25T09:00:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 32,
+    "fields": {
+      "resume": 11,
+      "skill": "Solidity",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 33,
+    "fields": {
+      "resume": 11,
+      "skill": "Ethereum",
+      "level": "3",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 34,
+    "fields": {
+      "resume": 11,
+      "skill": "Smart Contracts",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 11,
+    "fields": {
+      "resume": 11,
+      "job_title": "Blockchain Developer",
+      "company": "CryptoSyria",
+      "start_date": "2022-04",
+      "end_date": null,
+      "description": "Developed and audited smart contracts on Ethereum blockchain."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 21,
+    "fields": {
+      "resume": 11,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 22,
+    "fields": {
+      "resume": 11,
+      "name": "English",
+      "level": "3"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 12,
+    "fields": {
+      "username": "qa_automation_rana",
+      "email": "rana.qa@example.com",
+      "phone": "+963944556677",
+      "location": "Aleppo, Syria",
+      "github_link": "https://github.com/ranaqa",
+      "linkedin_link": "https://linkedin.com/in/ranaqa",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 12,
+    "fields": {
+      "user": 12,
+      "summary": "QA Automation Engineer with expertise in Selenium, PyTest, and test frameworks.",
+      "pdf_file": "resumes/rana_qa_resume.pdf",
+      "created_at": "2024-06-26T10:30:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 35,
+    "fields": {
+      "resume": 12,
+      "skill": "Selenium",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 36,
+    "fields": {
+      "resume": 12,
+      "skill": "PyTest",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 37,
+    "fields": {
+      "resume": 12,
+      "skill": "Test Automation",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 12,
+    "fields": {
+      "resume": 12,
+      "job_title": "QA Automation Engineer",
+      "company": "Automated Tests Syria",
+      "start_date": "2021-06",
+      "end_date": null,
+      "description": "Designed and implemented automated test scripts for web applications."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 23,
+    "fields": {
+      "resume": 12,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 24,
+    "fields": {
+      "resume": 12,
+      "name": "English",
+      "level": "3"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 13,
+    "fields": {
+      "username": "embedded_eng_mounir",
+      "email": "mounir.e@example.com",
+      "phone": "+963955889900",
+      "location": "Homs, Syria",
+      "github_link": "https://github.com/mounir_e",
+      "linkedin_link": "https://linkedin.com/in/mounir_e",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 13,
+    "fields": {
+      "user": 13,
+      "summary": "Embedded Systems Engineer with experience in C/C++ and microcontrollers.",
+      "pdf_file": "resumes/mounir_embedded_resume.pdf",
+      "created_at": "2024-06-27T11:00:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 38,
+    "fields": {
+      "resume": 13,
+      "skill": "Embedded C",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 39,
+    "fields": {
+      "resume": 13,
+      "skill": "Microcontrollers",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 40,
+    "fields": {
+      "resume": 13,
+      "skill": "RTOS",
+      "level": "3",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 13,
+    "fields": {
+      "resume": 13,
+      "job_title": "Embedded Engineer",
+      "company": "Syria Robotics",
+      "start_date": "2020-09",
+      "end_date": null,
+      "description": "Developed firmware for various embedded devices and IoT solutions."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 25,
+    "fields": {
+      "resume": 13,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 26,
+    "fields": {
+      "resume": 13,
+      "name": "English",
+      "level": "4"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 14,
+    "fields": {
+      "username": "ar_vr_developer_diana",
+      "email": "diana.arvr@example.com",
+      "phone": "+963966112233",
+      "location": "Lattakia, Syria",
+      "github_link": "https://github.com/diana_arvr",
+      "linkedin_link": "https://linkedin.com/in/diana_arvr",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 14,
+    "fields": {
+      "user": 14,
+      "summary": "AR/VR Developer passionate about creating immersive experiences using Unity and Unreal Engine.",
+      "pdf_file": "resumes/diana_arvr_resume.pdf",
+      "created_at": "2024-06-28T12:00:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 41,
+    "fields": {
+      "resume": 14,
+      "skill": "Unity 3D",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 42,
+    "fields": {
+      "resume": 14,
+      "skill": "Unreal Engine",
+      "level": "3",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 43,
+    "fields": {
+      "resume": 14,
+      "skill": "C++",
+      "level": "3",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 14,
+    "fields": {
+      "resume": 14,
+      "job_title": "AR/VR Developer",
+      "company": "Immersive Syria",
+      "start_date": "2021-04",
+      "end_date": null,
+      "description": "Developed augmented and virtual reality applications for various industries."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 27,
+    "fields": {
+      "resume": 14,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 28,
+    "fields": {
+      "resume": 14,
+      "name": "English",
+      "level": "4"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 15,
+    "fields": {
+      "username": "big_data_fares",
+      "email": "fares.bd@example.com",
+      "phone": "+963988445566",
+      "location": "Tartous, Syria",
+      "github_link": "https://github.com/fares_bd",
+      "linkedin_link": "https://linkedin.com/in/fares_bd",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 15,
+    "fields": {
+      "user": 15,
+      "summary": "Big Data Engineer proficient in Hadoop, Spark, and data warehousing.",
+      "pdf_file": "resumes/fares_bigdata_resume.pdf",
+      "created_at": "2024-06-29T10:00:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 44,
+    "fields": {
+      "resume": 15,
+      "skill": "Hadoop",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 45,
+    "fields": {
+      "resume": 15,
+      "skill": "Spark",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 46,
+    "fields": {
+      "resume": 15,
+      "skill": "Data Warehousing",
+      "level": "3",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 15,
+    "fields": {
+      "resume": 15,
+      "job_title": "Big Data Engineer",
+      "company": "Syrian Data Lakes",
+      "start_date": "2021-07",
+      "end_date": null,
+      "description": "Built and managed large-scale data processing systems."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 29,
+    "fields": {
+      "resume": 15,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 30,
+    "fields": {
+      "resume": 15,
+      "name": "English",
+      "level": "4"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 16,
+    "fields": {
+      "username": "robotics_ali",
+      "email": "ali.r@example.com",
+      "phone": "+963933556677",
+      "location": "Damascus, Syria",
+      "github_link": "https://github.com/ali_r",
+      "linkedin_link": "https://linkedin.com/in/ali_r",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 16,
+    "fields": {
+      "user": 16,
+      "summary": "Robotics Engineer specializing in ROS and robotic arm control.",
+      "pdf_file": "resumes/ali_robotics_resume.pdf",
+      "created_at": "2024-06-30T11:15:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 47,
+    "fields": {
+      "resume": 16,
+      "skill": "ROS",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 48,
+    "fields": {
+      "resume": 16,
+      "skill": "Robotic Control",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 49,
+    "fields": {
+      "resume": 16,
+      "skill": "Python",
+      "level": "3",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 16,
+    "fields": {
+      "resume": 16,
+      "job_title": "Robotics Engineer",
+      "company": "Damascus Robotics Institute",
+      "start_date": "2022-01",
+      "end_date": null,
+      "description": "Developed software for industrial robots and automation systems."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 31,
+    "fields": {
+      "resume": 16,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 32,
+    "fields": {
+      "resume": 16,
+      "name": "English",
+      "level": "4"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 17,
+    "fields": {
+      "username": "iot_engineer_sara",
+      "email": "sara.iot@example.com",
+      "phone": "+963944887766",
+      "location": "Aleppo, Syria",
+      "github_link": "https://github.com/sara_iot",
+      "linkedin_link": "https://linkedin.com/in/sara_iot",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 17,
+    "fields": {
+      "user": 17,
+      "summary": "IoT Engineer developing smart solutions and embedded systems.",
+      "pdf_file": "resumes/sara_iot_resume.pdf",
+      "created_at": "2024-07-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 50,
+    "fields": {
+      "resume": 17,
+      "skill": "Arduino",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 51,
+    "fields": {
+      "resume": 17,
+      "skill": "Raspberry Pi",
+      "level": "3",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 52,
+    "fields": {
+      "resume": 17,
+      "skill": "MQTT",
+      "level": "3",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 17,
+    "fields": {
+      "resume": 17,
+      "job_title": "IoT Engineer",
+      "company": "Smart Homes Syria",
+      "start_date": "2021-03",
+      "end_date": null
+    }
+  },
+  
+ {
+    "model": "devloper.User",
+    "pk": 18,
+    "fields": {
+      "username": "data_scientist_ghina",
+      "email": "ghina.ds@example.com",
+      "phone": "+963955113355",
+      "location": "Damascus, Syria",
+      "github_link": "https://github.com/ghinads",
+      "linkedin_link": "https://linkedin.com/in/ghinads",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 18,
+    "fields": {
+      "user": 18,
+      "summary": "Data Scientist focusing on predictive modeling and statistical analysis using Python and R.",
+      "pdf_file": "resumes/ghina_data_science_resume.pdf",
+      "created_at": "2024-07-02T09:30:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 53,
+    "fields": {
+      "resume": 18,
+      "skill": "Python",
+      "level": "5",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 54,
+    "fields": {
+      "resume": 18,
+      "skill": "R",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 55,
+    "fields": {
+      "resume": 18,
+      "skill": "Statistical Modeling",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 18,
+    "fields": {
+      "resume": 18,
+      "job_title": "Data Scientist",
+      "company": "Syria Analytics",
+      "start_date": "2021-08",
+      "end_date": null,
+      "description": "Built predictive models to optimize business processes for local companies."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 33,
+    "fields": {
+      "resume": 18,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 34,
+    "fields": {
+      "resume": 18,
+      "name": "English",
+      "level": "4"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 19,
+    "fields": {
+      "username": "frontend_nadeen",
+      "email": "nadeen.f@example.com",
+      "phone": "+963966224466",
+      "location": "Aleppo, Syria",
+      "github_link": "https://github.com/nadeenf",
+      "linkedin_link": "https://linkedin.com/in/nadeenf",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 19,
+    "fields": {
+      "user": 19,
+      "summary": "Frontend Developer with expertise in Vue.js and responsive design.",
+      "pdf_file": "resumes/nadeen_frontend_resume.pdf",
+      "created_at": "2024-07-03T10:00:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 56,
+    "fields": {
+      "resume": 19,
+      "skill": "Vue.js",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 57,
+    "fields": {
+      "resume": 19,
+      "skill": "HTML/CSS",
+      "level": "5",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 58,
+    "fields": {
+      "resume": 19,
+      "skill": "Responsive Design",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 19,
+    "fields": {
+      "resume": 19,
+      "job_title": "Frontend Developer",
+      "company": "Aleppo Web Solutions",
+      "start_date": "2022-03",
+      "end_date": null,
+      "description": "Developed interactive and responsive user interfaces for various web platforms."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 35,
+    "fields": {
+      "resume": 19,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 36,
+    "fields": {
+      "resume": 19,
+      "name": "English",
+      "level": "3"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 20,
+    "fields": {
+      "username": "db_admin_mazen",
+      "email": "mazen.db@example.com",
+      "phone": "+963933778899",
+      "location": "Homs, Syria",
+      "github_link": "https://github.com/mazen_db",
+      "linkedin_link": "https://linkedin.com/in/mazen_db",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 20,
+    "fields": {
+      "user": 20,
+      "summary": "Database Administrator specialized in PostgreSQL and MySQL, ensuring data integrity and performance.",
+      "pdf_file": "resumes/mazen_db_resume.pdf",
+      "created_at": "2024-07-04T11:00:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 59,
+    "fields": {
+      "resume": 20,
+      "skill": "PostgreSQL",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 60,
+    "fields": {
+      "resume": 20,
+      "skill": "MySQL",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 61,
+    "fields": {
+      "resume": 20,
+      "skill": "Database Optimization",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 20,
+    "fields": {
+      "resume": 20,
+      "job_title": "Database Administrator",
+      "company": "Homs Data Solutions",
+      "start_date": "2020-05",
+      "end_date": null,
+      "description": "Managed and optimized large-scale databases for various clients."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 37,
+    "fields": {
+      "resume": 20,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 38,
+    "fields": {
+      "resume": 20,
+      "name": "English",
+      "level": "3"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 21,
+    "fields": {
+      "username": "mobile_android_dana",
+      "email": "dana.a@example.com",
+      "phone": "+963944665511",
+      "location": "Lattakia, Syria",
+      "github_link": "https://github.com/dana_a",
+      "linkedin_link": "https://linkedin.com/in/dana_a",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 21,
+    "fields": {
+      "user": 21,
+      "summary": "Android Developer with a focus on native Android applications using Java and Kotlin.",
+      "pdf_file": "resumes/dana_android_resume.pdf",
+      "created_at": "2024-07-05T09:00:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 62,
+    "fields": {
+      "resume": 21,
+      "skill": "Android SDK",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 63,
+    "fields": {
+      "resume": 21,
+      "skill": "Java",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 64,
+    "fields": {
+      "resume": 21,
+      "skill": "Kotlin",
+      "level": "3",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 21,
+    "fields": {
+      "resume": 21,
+      "job_title": "Android Developer",
+      "company": "Lattakia Mobile",
+      "start_date": "2021-06",
+      "end_date": null,
+      "description": "Developed and maintained several Android applications, focusing on performance and user experience."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 39,
+    "fields": {
+      "resume": 21,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 40,
+    "fields": {
+      "resume": 21,
+      "name": "English",
+      "level": "3"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 22,
+    "fields": {
+      "username": "ai_researcher_mahmoud",
+      "email": "mahmoud.ai@example.com",
+      "phone": "+963988223344",
+      "location": "Tartous, Syria",
+      "github_link": "https://github.com/mahmoud_ai",
+      "linkedin_link": "https://linkedin.com/in/mahmoud_ai",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 22,
+    "fields": {
+      "user": 22,
+      "summary": "AI Researcher with a focus on computer vision and natural language processing.",
+      "pdf_file": "resumes/mahmoud_ai_resume.pdf",
+      "created_at": "2024-07-06T10:15:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 65,
+    "fields": {
+      "resume": 22,
+      "skill": "Computer Vision",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 66,
+    "fields": {
+      "resume": 22,
+      "skill": "NLP",
+      "level": "3",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 67,
+    "fields": {
+      "resume": 22,
+      "skill": "PyTorch",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 22,
+    "fields": {
+      "resume": 22,
+      "job_title": "AI Researcher",
+      "company": "Tartous AI Lab",
+      "start_date": "2022-02",
+      "end_date": null,
+      "description": "Conducted research and developed prototypes for advanced AI applications."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 41,
+    "fields": {
+      "resume": 22,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 42,
+    "fields": {
+      "resume": 22,
+      "name": "English",
+      "level": "4"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 23,
+    "fields": {
+      "username": "cyber_forensics_hassan",
+      "email": "hassan.cf@example.com",
+      "phone": "+963933557788",
+      "location": "Damascus, Syria",
+      "github_link": "https://github.com/hassancf",
+      "linkedin_link": "https://linkedin.com/in/hassancf",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 23,
+    "fields": {
+      "user": 23,
+      "summary": "Cyber Forensics Expert specializing in digital investigations and incident response.",
+      "pdf_file": "resumes/hassan_cyber_forensics_resume.pdf",
+      "created_at": "2024-07-07T13:00:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 68,
+    "fields": {
+      "resume": 23,
+      "skill": "Digital Forensics",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 69,
+    "fields": {
+      "resume": 23,
+      "skill": "Incident Response",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 70,
+    "fields": {
+      "resume": 23,
+      "skill": "Malware Analysis",
+      "level": "3",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 23,
+    "fields": {
+      "resume": 23,
+      "job_title": "Cyber Forensics Analyst",
+      "company": "Syria Cyber Defense",
+      "start_date": "2021-01",
+      "end_date": null,
+      "description": "Conducted digital forensic investigations and provided expert testimony."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 43,
+    "fields": {
+      "resume": 23,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 44,
+    "fields": {
+      "resume": 23,
+      "name": "English",
+      "level": "4"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 24,
+    "fields": {
+      "username": "project_manager_samer",
+      "email": "samer.pm@example.com",
+      "phone": "+963944889900",
+      "location": "Aleppo, Syria",
+      "github_link": "https://github.com/samer_pm",
+      "linkedin_link": "https://linkedin.com/in/samer_pm",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 24,
+    "fields": {
+      "user": 24,
+      "summary": "IT Project Manager experienced in Agile and Scrum methodologies, leading cross-functional teams.",
+      "pdf_file": "resumes/samer_pm_resume.pdf",
+      "created_at": "2024-07-08T09:00:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 71,
+    "fields": {
+      "resume": 24,
+      "skill": "Agile Methodologies",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 72,
+    "fields": {
+      "resume": 24,
+      "skill": "Scrum",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 73,
+    "fields": {
+      "resume": 24,
+      "skill": "Project Planning",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 24,
+    "fields": {
+      "resume": 24,
+      "job_title": "IT Project Manager",
+      "company": "Innovate Syria",
+      "start_date": "2020-03",
+      "end_date": null,
+      "description": "Managed multiple software development projects from inception to delivery."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 45,
+    "fields": {
+      "resume": 24,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 46,
+    "fields": {
+      "resume": 24,
+      "name": "English",
+      "level": "4"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 25,
+    "fields": {
+      "username": "network_engineer_hadi",
+      "email": "hadi.ne@example.com",
+      "phone": "+963955334455",
+      "location": "Homs, Syria",
+      "github_link": "https://github.com/hadine",
+      "linkedin_link": "https://linkedin.com/in/hadine",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 25,
+    "fields": {
+      "user": 25,
+      "summary": "Network Engineer with expertise in designing and implementing secure network infrastructures.",
+      "pdf_file": "resumes/hadi_network_resume.pdf",
+      "created_at": "2024-07-09T10:30:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 74,
+    "fields": {
+      "resume": 25,
+      "skill": "Cisco Networking",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 75,
+    "fields": {
+      "resume": 25,
+      "skill": "Firewalls",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 76,
+    "fields": {
+      "resume": 25,
+      "skill": "VPN",
+      "level": "3",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 25,
+    "fields": {
+      "resume": 25,
+      "job_title": "Network Engineer",
+      "company": "Homs Connect",
+      "start_date": "2019-11",
+      "end_date": null,
+      "description": "Designed, configured, and troubleshooted network systems for various organizations."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 47,
+    "fields": {
+      "resume": 25,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 48,
+    "fields": {
+      "resume": 25,
+      "name": "English",
+      "level": "4"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 26,
+    "fields": {
+      "username": "fullstack_rasha",
+      "email": "rasha.fs@example.com",
+      "phone": "+963966778899",
+      "location": "Lattakia, Syria",
+      "github_link": "https://github.com/rashafs",
+      "linkedin_link": "https://linkedin.com/in/rashafs",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 26,
+    "fields": {
+      "user": 26,
+      "summary": "Full-Stack Developer skilled in ASP.NET Core and Angular, creating scalable web applications.",
+      "pdf_file": "resumes/rasha_fullstack_resume.pdf",
+      "created_at": "2024-07-10T11:45:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 77,
+    "fields": {
+      "resume": 26,
+      "skill": "ASP.NET Core",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 78,
+    "fields": {
+      "resume": 26,
+      "skill": "Angular",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 79,
+    "fields": {
+      "resume": 26,
+      "skill": "C#",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 26,
+    "fields": {
+      "resume": 26,
+      "job_title": "Full-Stack Developer",
+      "company": "Latakia Tech Solutions",
+      "start_date": "2021-03",
+      "end_date": null,
+      "description": "Developed and maintained enterprise-level web applications."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 49,
+    "fields": {
+      "resume": 26,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 50,
+    "fields": {
+      "resume": 26,
+      "name": "English",
+      "level": "3"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 27,
+    "fields": {
+      "username": "cyber_consultant_mouaz",
+      "email": "mouaz.cc@example.com",
+      "phone": "+963988556677",
+      "location": "Tartous, Syria",
+      "github_link": "https://github.com/mouazcc",
+      "linkedin_link": "https://linkedin.com/in/mouazcc",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 27,
+    "fields": {
+      "user": 27,
+      "summary": "Cybersecurity Consultant providing strategic advice on security policies and compliance.",
+      "pdf_file": "resumes/mouaz_cyber_consultant_resume.pdf",
+      "created_at": "2024-07-11T10:00:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 80,
+    "fields": {
+      "resume": 27,
+      "skill": "Security Policies",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 81,
+    "fields": {
+      "resume": 27,
+      "skill": "Risk Assessment",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 82,
+    "fields": {
+      "resume": 27,
+      "skill": "Compliance",
+      "level": "3",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 27,
+    "fields": {
+      "resume": 27,
+      "job_title": "Cybersecurity Consultant",
+      "company": "Syria Secure Consulting",
+      "start_date": "2019-09",
+      "end_date": null,
+      "description": "Advised organizations on implementing robust cybersecurity frameworks."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 51,
+    "fields": {
+      "resume": 27,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 52,
+    "fields": {
+      "resume": 27,
+      "name": "English",
+      "level": "4"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 28,
+    "fields": {
+      "username": "game_designer_tarek",
+      "email": "tarek.gd@example.com",
+      "phone": "+963933114477",
+      "location": "Damascus, Syria",
+      "github_link": "https://github.com/tarekgd",
+      "linkedin_link": "https://linkedin.com/in/tarekgd",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 28,
+    "fields": {
+      "user": 28,
+      "summary": "Game Designer creating engaging game mechanics, narratives, and levels.",
+      "pdf_file": "resumes/tarek_game_design_resume.pdf",
+      "created_at": "2024-07-12T12:00:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 83,
+    "fields": {
+      "resume": 28,
+      "skill": "Game Mechanics",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 84,
+    "fields": {
+      "resume": 28,
+      "skill": "Level Design",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 85,
+    "fields": {
+      "resume": 28,
+      "skill": "Narrative Design",
+      "level": "3",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 28,
+    "fields": {
+      "resume": 28,
+      "job_title": "Game Designer",
+      "company": "Damascus Play Studios",
+      "start_date": "2020-04",
+      "end_date": null,
+      "description": "Designed core gameplay loops and narrative arcs for various mobile and PC games."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 53,
+    "fields": {
+      "resume": 28,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 54,
+    "fields": {
+      "resume": 28,
+      "name": "English",
+      "level": "3"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 29,
+    "fields": {
+      "username": "frontend_reem",
+      "email": "reem.f@example.com",
+      "phone": "+963944225588",
+      "location": "Aleppo, Syria",
+      "github_link": "https://github.com/reemf",
+      "linkedin_link": "https://linkedin.com/in/reemf",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 29,
+    "fields": {
+      "user": 29,
+      "summary": "Frontend Developer proficient in React.js and strong in building single-page applications.",
+      "pdf_file": "resumes/reem_frontend_resume.pdf",
+      "created_at": "2024-07-13T09:45:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 86,
+    "fields": {
+      "resume": 29,
+      "skill": "React.js",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 87,
+    "fields": {
+      "resume": 29,
+      "skill": "JavaScript",
+      "level": "5",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 88,
+    "fields": {
+      "resume": 29,
+      "skill": "SPA Development",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 29,
+    "fields": {
+      "resume": 29,
+      "job_title": "Frontend Developer",
+      "company": "Aleppo Digital",
+      "start_date": "2022-01",
+      "end_date": null,
+      "description": "Developed dynamic and user-friendly frontends for various web applications."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 55,
+    "fields": {
+      "resume": 29,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 56,
+    "fields": {
+      "resume": 29,
+      "name": "English",
+      "level": "4"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 30,
+    "fields": {
+      "username": "fullstack_basel",
+      "email": "basel.fs@example.com",
+      "phone": "+963955336699",
+      "location": "Homs, Syria",
+      "github_link": "https://github.com/baselfs",
+      "linkedin_link": "https://linkedin.com/in/baselfs",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 30,
+    "fields": {
+      "user": 30,
+      "summary": "Full-Stack Developer with strong skills in Python, Flask, and React.js.",
+      "pdf_file": "resumes/basel_fullstack_resume.pdf",
+      "created_at": "2024-07-14T10:00:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 89,
+    "fields": {
+      "resume": 30,
+      "skill": "Python",
+      "level": "5",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 90,
+    "fields": {
+      "resume": 30,
+      "skill": "Flask",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 91,
+    "fields": {
+      "resume": 30,
+      "skill": "React.js",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 30,
+    "fields": {
+      "resume": 30,
+      "job_title": "Full-Stack Developer",
+      "company": "Homs Innovations Lab",
+      "start_date": "2021-09",
+      "end_date": null,
+      "description": "Developed various web applications using Python-based backend and React frontend."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 57,
+    "fields": {
+      "resume": 30,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 58,
+    "fields": {
+      "resume": 30,
+      "name": "English",
+      "level": "3"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 31,
+    "fields": {
+      "username": "mobile_cross_platform_majida",
+      "email": "majida.mp@example.com",
+      "phone": "+963966112244",
+      "location": "Lattakia, Syria",
+      "github_link": "https://github.com/majida_mp",
+      "linkedin_link": "https://linkedin.com/in/majida_mp",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 31,
+    "fields": {
+      "user": 31,
+      "summary": "Cross-Platform Mobile Developer specialized in React Native and hybrid app development.",
+      "pdf_file": "resumes/majida_mobile_resume.pdf",
+      "created_at": "2024-07-15T09:30:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 92,
+    "fields": {
+      "resume": 31,
+      "skill": "React Native",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 93,
+    "fields": {
+      "resume": 31,
+      "skill": "JavaScript",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 94,
+    "fields": {
+      "resume": 31,
+      "skill": "Hybrid App Development",
+      "level": "3",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 31,
+    "fields": {
+      "resume": 31,
+      "job_title": "Cross-Platform Mobile Developer",
+      "company": "Syrian Apps Co.",
+      "start_date": "2021-07",
+      "end_date": null,
+      "description": "Developed and deployed cross-platform mobile applications for diverse clients."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 59,
+    "fields": {
+      "resume": 31,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 60,
+    "fields": {
+      "resume": 31,
+      "name": "English",
+      "level": "3"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 32,
+    "fields": {
+      "username": "machine_learning_engineer_jamil",
+      "email": "jamil.ml@example.com",
+      "phone": "+963988335577",
+      "location": "Tartous, Syria",
+      "github_link": "https://github.com/jamilml",
+      "linkedin_link": "https://linkedin.com/in/jamilml",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 32,
+    "fields": {
+      "user": 32,
+      "summary": "Machine Learning Engineer with experience in MLOps and deploying models to production.",
+      "pdf_file": "resumes/jamil_mlops_resume.pdf",
+      "created_at": "2024-07-16T10:45:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 95,
+    "fields": {
+      "resume": 32,
+      "skill": "MLOps",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 96,
+    "fields": {
+      "resume": 32,
+      "skill": "Docker",
+      "level": "3",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 97,
+    "fields": {
+      "resume": 32,
+      "skill": "Model Deployment",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 32,
+    "fields": {
+      "resume": 32,
+      "job_title": "MLOps Engineer",
+      "company": "Tartous AI Solutions",
+      "start_date": "2022-05",
+      "end_date": null,
+      "description": "Streamlined machine learning model deployment and lifecycle management."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 61,
+    "fields": {
+      "resume": 32,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 62,
+    "fields": {
+      "resume": 32,
+      "name": "English",
+      "level": "4"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 33,
+    "fields": {
+      "username": "backend_java_nadia",
+      "email": "nadia.java@example.com",
+      "phone": "+963933668800",
+      "location": "Damascus, Syria",
+      "github_link": "https://github.com/nadiajava",
+      "linkedin_link": "https://linkedin.com/in/nadiajava",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 33,
+    "fields": {
+      "user": 33,
+      "summary": "Backend Developer expert in Java and Spring Boot for building microservices.",
+      "pdf_file": "resumes/nadia_java_resume.pdf",
+      "created_at": "2024-07-17T11:00:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 98,
+    "fields": {
+      "resume": 33,
+      "skill": "Java",
+      "level": "5",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 99,
+    "fields": {
+      "resume": 33,
+      "skill": "Spring Boot",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 100,
+    "fields": {
+      "resume": 33,
+      "skill": "Microservices",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 33,
+    "fields": {
+      "resume": 33,
+      "job_title": "Backend Developer",
+      "company": "Damascus Digital Hub",
+      "start_date": "2021-03",
+      "end_date": null,
+      "description": "Developed scalable backend services for financial and e-commerce platforms."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 63,
+    "fields": {
+      "resume": 33,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 64,
+    "fields": {
+      "resume": 33,
+      "name": "English",
+      "level": "4"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 34,
+    "fields": {
+      "username": "cloud_architect_fares",
+      "email": "fares.ca@example.com",
+      "phone": "+963944112233",
+      "location": "Aleppo, Syria",
+      "github_link": "https://github.com/faresca",
+      "linkedin_link": "https://linkedin.com/in/faresca",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 34,
+    "fields": {
+      "user": 34,
+      "summary": "Cloud Architect designing and implementing robust cloud solutions on GCP and Azure.",
+      "pdf_file": "resumes/fares_cloud_arch_resume.pdf",
+      "created_at": "2024-07-18T09:00:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 101,
+    "fields": {
+      "resume": 34,
+      "skill": "GCP",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 102,
+    "fields": {
+      "resume": 34,
+      "skill": "Azure",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 103,
+    "fields": {
+      "resume": 34,
+      "skill": "Cloud Architecture",
+      "level": "5",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 34,
+    "fields": {
+      "resume": 34,
+      "job_title": "Cloud Architect",
+      "company": "Syrian Cloud Innovations",
+      "start_date": "2020-01",
+      "end_date": null,
+      "description": "Led the architectural design and migration of on-premise systems to cloud platforms."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 65,
+    "fields": {
+      "resume": 34,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 66,
+    "fields": {
+      "resume": 34,
+      "name": "English",
+      "level": "4"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 35,
+    "fields": {
+      "username": "devops_lara",
+      "email": "lara.d@example.com",
+      "phone": "+963955224466",
+      "location": "Homs, Syria",
+      "github_link": "https://github.com/larad",
+      "linkedin_link": "https://linkedin.com/in/larad",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 35,
+    "fields": {
+      "user": 35,
+      "summary": "DevOps Engineer with strong background in Jenkins, GitLab CI/CD, and infrastructure as code.",
+      "pdf_file": "resumes/lara_devops_resume.pdf",
+      "created_at": "2024-07-19T10:15:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 104,
+    "fields": {
+      "resume": 35,
+      "skill": "Jenkins",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 105,
+    "fields": {
+      "resume": 35,
+      "skill": "GitLab CI/CD",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 106,
+    "fields": {
+      "resume": 35,
+      "skill": "Terraform",
+      "level": "3",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 35,
+    "fields": {
+      "resume": 35,
+      "job_title": "DevOps Engineer",
+      "company": "Homs Automations",
+      "start_date": "2021-05",
+      "end_date": null,
+      "description": "Implemented and managed CI/CD pipelines, improving deployment frequency and reliability."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 67,
+    "fields": {
+      "resume": 35,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 68,
+    "fields": {
+      "resume": 35,
+      "name": "English",
+      "level": "4"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 36,
+    "fields": {
+      "username": "bi_developer_yazan",
+      "email": "yazan.bi@example.com",
+      "phone": "+963966335588",
+      "location": "Lattakia, Syria",
+      "github_link": "https://github.com/yazanbi",
+      "linkedin_link": "https://linkedin.com/in/yazanbi",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 36,
+    "fields": {
+      "user": 36,
+      "summary": "Business Intelligence Developer creating dashboards and reports using Power BI and Tableau.",
+      "pdf_file": "resumes/yazan_bi_resume.pdf",
+      "created_at": "2024-07-20T11:00:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 107,
+    "fields": {
+      "resume": 36,
+      "skill": "Power BI",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 108,
+    "fields": {
+      "resume": 36,
+      "skill": "Tableau",
+      "level": "3",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 109,
+    "fields": {
+      "resume": 36,
+      "skill": "Data Visualization",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 36,
+    "fields": {
+      "resume": 36,
+      "job_title": "BI Developer",
+      "company": "Latakia Analytics",
+      "start_date": "2021-02",
+      "end_date": null,
+      "description": "Developed interactive dashboards and reports to support business decision-making."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 69,
+    "fields": {
+      "resume": 36,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 70,
+    "fields": {
+      "resume": 36,
+      "name": "English",
+      "level": "3"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 37,
+    "fields": {
+      "username": "ux_researcher_layan",
+      "email": "layan.ux@example.com",
+      "phone": "+963988446699",
+      "location": "Tartous, Syria",
+      "github_link": "https://github.com/layanux",
+      "linkedin_link": "https://linkedin.com/in/layanux",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 37,
+    "fields": {
+      "user": 37,
+      "summary": "UX Researcher skilled in user interviews, usability testing, and wireframing.",
+      "pdf_file": "resumes/layan_ux_resume.pdf",
+      "created_at": "2024-07-21T09:30:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 110,
+    "fields": {
+      "resume": 37,
+      "skill": "User Interviews",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 111,
+    "fields": {
+      "resume": 37,
+      "skill": "Usability Testing",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 112,
+    "fields": {
+      "resume": 37,
+      "skill": "Wireframing",
+      "level": "3",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 37,
+    "fields": {
+      "resume": 37,
+      "job_title": "UX Researcher",
+      "company": "Tartous UX Lab",
+      "start_date": "2021-08",
+      "end_date": null,
+      "description": "Conducted user research to inform design decisions for various digital products."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 71,
+    "fields": {
+      "resume": 37,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 72,
+    "fields": {
+      "resume": 37,
+      "name": "English",
+      "level": "4"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 38,
+    "fields": {
+      "username": "backend_net_amal",
+      "email": "amal.net@example.com",
+      "phone": "+963933779911",
+      "location": "Damascus, Syria",
+      "github_link": "https://github.com/amalnet",
+      "linkedin_link": "https://linkedin.com/in/amalnet",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 38,
+    "fields": {
+      "user": 38,
+      "summary": "Backend Developer specializing in .NET Core and SQL Server, building robust APIs.",
+      "pdf_file": "resumes/amal_net_resume.pdf",
+      "created_at": "2024-07-22T11:00:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 113,
+    "fields": {
+      "resume": 38,
+      "skill": ".NET Core",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 114,
+    "fields": {
+      "resume": 38,
+      "skill": "C#",
+      "level": "5",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 115,
+    "fields": {
+      "resume": 38,
+      "skill": "SQL Server",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 38,
+    "fields": {
+      "resume": 38,
+      "job_title": "Backend Developer",
+      "company": "Syria Solutions Co.",
+      "start_date": "2021-04",
+      "end_date": null,
+      "description": "Developed high-performance backend services for various business applications."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 73,
+    "fields": {
+      "resume": 38,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 74,
+    "fields": {
+      "resume": 38,
+      "name": "English",
+      "level": "4"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 39,
+    "fields": {
+      "username": "ai_engineer_khaled",
+      "email": "khaled.ai@example.com",
+      "phone": "+963944336600",
+      "location": "Aleppo, Syria",
+      "github_link": "https://github.com/khaledai",
+      "linkedin_link": "https://linkedin.com/in/khaledai",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 39,
+    "fields": {
+      "user": 39,
+      "summary": "AI Engineer specializing in AI model deployment and optimization for edge devices.",
+      "pdf_file": "resumes/khaled_ai_deploy_resume.pdf",
+      "created_at": "2024-07-23T09:00:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 116,
+    "fields": {
+      "resume": 39,
+      "skill": "Edge AI",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 117,
+    "fields": {
+      "resume": 39,
+      "skill": "TensorFlow Lite",
+      "level": "3",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 118,
+    "fields": {
+      "resume": 39,
+      "skill": "Model Optimization",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 39,
+    "fields": {
+      "resume": 39,
+      "job_title": "AI Engineer",
+      "company": "Aleppo Smart Tech",
+      "start_date": "2022-06",
+      "end_date": null,
+      "description": "Developed and deployed lightweight AI models for various embedded systems."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 75,
+    "fields": {
+      "resume": 39,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 76,
+    "fields": {
+      "resume": 39,
+      "name": "English",
+      "level": "4"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 40,
+    "fields": {
+      "username": "mobile_ui_ux_judy",
+      "email": "judy.uiux@example.com",
+      "phone": "+963955447711",
+      "location": "Homs, Syria",
+      "github_link": "https://github.com/judy_uiux",
+      "linkedin_link": "https://linkedin.com/in/judy_uiux",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 40,
+    "fields": {
+      "user": 40,
+      "summary": "Mobile UI/UX Designer specializing in intuitive and engaging interfaces for Android and iOS.",
+      "pdf_file": "resumes/judy_mobile_uiux_resume.pdf",
+      "created_at": "2024-07-24T10:30:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 119,
+    "fields": {
+      "resume": 40,
+      "skill": "Mobile UI Design",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 120,
+    "fields": {
+      "resume": 40,
+      "skill": "Figma",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 121,
+    "fields": {
+      "resume": 40,
+      "skill": "User Flows",
+      "level": "3",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 40,
+    "fields": {
+      "resume": 40,
+      "job_title": "Mobile UI/UX Designer",
+      "company": "Homs App Design",
+      "start_date": "2021-01",
+      "end_date": null,
+      "description": "Designed user interfaces and experiences for various mobile applications."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 77,
+    "fields": {
+      "resume": 40,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 78,
+    "fields": {
+      "resume": 40,
+      "name": "English",
+      "level": "4"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 41,
+    "fields": {
+      "username": "data_analyst_salma",
+      "email": "salma.da@example.com",
+      "phone": "+963966558822",
+      "location": "Lattakia, Syria",
+      "github_link": "https://github.com/salmada",
+      "linkedin_link": "https://linkedin.com/in/salmada",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 41,
+    "fields": {
+      "user": 41,
+      "summary": "Data Analyst skilled in extracting insights from data using SQL and Excel.",
+      "pdf_file": "resumes/salma_data_analyst_resume.pdf",
+      "created_at": "2024-07-25T11:00:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 122,
+    "fields": {
+      "resume": 41,
+      "skill": "SQL",
+      "level": "5",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 123,
+    "fields": {
+      "resume": 41,
+      "skill": "Excel",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 124,
+    "fields": {
+      "resume": 41,
+      "skill": "Data Cleaning",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 41,
+    "fields": {
+      "resume": 41,
+      "job_title": "Data Analyst",
+      "company": "Latakia Business Insights",
+      "start_date": "2022-03",
+      "end_date": null,
+      "description": "Analyzed large datasets to identify trends and provide actionable insights for businesses."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 79,
+    "fields": {
+      "resume": 41,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 80,
+    "fields": {
+      "resume": 41,
+      "name": "English",
+      "level": "3"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 42,
+    "fields": {
+      "username": "backend_php_omar",
+      "email": "omar.php@example.com",
+      "phone": "+963988669933",
+      "location": "Tartous, Syria",
+      "github_link": "https://github.com/omarphp",
+      "linkedin_link": "https://linkedin.com/in/omarphp",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 42,
+    "fields": {
+      "user": 42,
+      "summary": "Backend Developer experienced in PHP and Laravel for developing robust web applications.",
+      "pdf_file": "resumes/omar_php_resume.pdf",
+      "created_at": "2024-07-26T10:00:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 125,
+    "fields": {
+      "resume": 42,
+      "skill": "PHP",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 126,
+    "fields": {
+      "resume": 42,
+      "skill": "Laravel",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 127,
+    "fields": {
+      "resume": 42,
+      "skill": "RESTful APIs",
+      "level": "3",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 42,
+    "fields": {
+      "resume": 42,
+      "job_title": "Backend Developer",
+      "company": "Tartous Web Dev",
+      "start_date": "2021-01",
+      "end_date": null,
+      "description": "Developed and maintained high-performance backend systems for various web projects."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 81,
+    "fields": {
+      "resume": 42,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 82,
+    "fields": {
+      "resume": 42,
+      "name": "English",
+      "level": "3"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 43,
+    "fields": {
+      "username": "cyber_security_architect_basma",
+      "email": "basma.csa@example.com",
+      "phone": "+963933225588",
+      "location": "Damascus, Syria",
+      "github_link": "https://github.com/basmacsa",
+      "linkedin_link": "https://linkedin.com/in/basmacsa",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 43,
+    "fields": {
+      "user": 43,
+      "summary": "Cybersecurity Architect designing secure enterprise architectures and solutions.",
+      "pdf_file": "resumes/basma_csa_resume.pdf",
+      "created_at": "2024-07-27T13:00:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 128,
+    "fields": {
+      "resume": 43,
+      "skill": "Security Architecture",
+      "level": "5",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 129,
+    "fields": {
+      "resume": 43,
+      "skill": "Cloud Security",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 130,
+    "fields": {
+      "resume": 43,
+      "skill": "Identity & Access Management",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 43,
+    "fields": {
+      "resume": 43,
+      "job_title": "Cybersecurity Architect",
+      "company": "Syria Secure Solutions",
+      "start_date": "2020-08",
+      "end_date": null,
+      "description": "Led the design and implementation of secure architectural frameworks for large organizations."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 83,
+    "fields": {
+      "resume": 43,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 84,
+    "fields": {
+      "resume": 43,
+      "name": "English",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 44,
+    "fields": {
+      "username": "project_coordinator_judy",
+      "email": "judy.pc@example.com",
+      "phone": "+963944779900",
+      "location": "Aleppo, Syria",
+      "github_link": "https://github.com/judypc",
+      "linkedin_link": "https://linkedin.com/in/judypc",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 44,
+    "fields": {
+      "user": 44,
+      "summary": "IT Project Coordinator ensuring smooth project execution and team communication.",
+      "pdf_file": "resumes/judy_project_coord_resume.pdf",
+      "created_at": "2024-07-28T09:00:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 131,
+    "fields": {
+      "resume": 44,
+      "skill": "Project Coordination",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 132,
+    "fields": {
+      "resume": 44,
+      "skill": "Communication",
+      "level": "5",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 133,
+    "fields": {
+      "resume": 44,
+      "skill": "Stakeholder Management",
+      "level": "3",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 44,
+    "fields": {
+      "resume": 44,
+      "job_title": "IT Project Coordinator",
+      "company": "Aleppo Digital Projects",
+      "start_date": "2021-02",
+      "end_date": null,
+      "description": "Facilitated communication between teams and stakeholders, ensuring project milestones were met."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 85,
+    "fields": {
+      "resume": 44,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 86,
+    "fields": {
+      "resume": 44,
+      "name": "English",
+      "level": "4"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 45,
+    "fields": {
+      "username": "senior_web_dev_ghassan",
+      "email": "ghassan.swd@example.com",
+      "phone": "+963955113344",
+      "location": "Homs, Syria",
+      "github_link": "https://github.com/ghassanswd",
+      "linkedin_link": "https://linkedin.com/in/ghassanswd",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 45,
+    "fields": {
+      "user": 45,
+      "summary": "Senior Web Developer with extensive experience in scalable web architectures and performance optimization.",
+      "pdf_file": "resumes/ghassan_senior_web_resume.pdf",
+      "created_at": "2024-07-29T10:15:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 134,
+    "fields": {
+      "resume": 45,
+      "skill": "System Design",
+      "level": "5",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 135,
+    "fields": {
+      "resume": 45,
+      "skill": "Performance Optimization",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 136,
+    "fields": {
+      "resume": 45,
+      "skill": "Microservices",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 45,
+    "fields": {
+      "resume": 45,
+      "job_title": "Senior Web Developer",
+      "company": "Homs Digital Solutions",
+      "start_date": "2018-07",
+      "end_date": null,
+      "description": "Led development teams and designed highly scalable web applications for various industries."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 87,
+    "fields": {
+      "resume": 45,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 88,
+    "fields": {
+      "resume": 45,
+      "name": "English",
+      "level": "4"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 46,
+    "fields": {
+      "username": "iot_architect_mazen",
+      "email": "mazen.iot@example.com",
+      "phone": "+963966224455",
+      "location": "Lattakia, Syria",
+      "github_link": "https://github.com/mazeniot",
+      "linkedin_link": "https://linkedin.com/in/mazeniot",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 46,
+    "fields": {
+      "user": 46,
+      "summary": "IoT Architect designing end-to-end IoT solutions from hardware to cloud.",
+      "pdf_file": "resumes/mazen_iot_resume.pdf",
+      "created_at": "2024-07-30T11:00:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 137,
+    "fields": {
+      "resume": 46,
+      "skill": "IoT Architecture",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 138,
+    "fields": {
+      "resume": 46,
+      "skill": "Sensor Integration",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 139,
+    "fields": {
+      "resume": 46,
+      "skill": "Cloud IoT Platforms",
+      "level": "3",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 46,
+    "fields": {
+      "resume": 46,
+      "job_title": "IoT Architect",
+      "company": "Latakia IoT Solutions",
+      "start_date": "2019-11",
+      "end_date": null,
+      "description": "Designed and oversaw the implementation of smart city and industrial IoT solutions."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 89,
+    "fields": {
+      "resume": 46,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 90,
+    "fields": {
+      "resume": 46,
+      "name": "English",
+      "level": "4"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 47,
+    "fields": {
+      "username": "cyber_governance_lina",
+      "email": "lina.cg@example.com",
+      "phone": "+963988771122",
+      "location": "Tartous, Syria",
+      "github_link": "https://github.com/linacg",
+      "linkedin_link": "https://linkedin.com/in/linacg",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 47,
+    "fields": {
+      "user": 47,
+      "summary": "Cyber Governance, Risk, and Compliance (GRC) Specialist.",
+      "pdf_file": "resumes/lina_grc_resume.pdf",
+      "created_at": "2024-07-31T09:45:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 140,
+    "fields": {
+      "resume": 47,
+      "skill": "GRC",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 141,
+    "fields": {
+      "resume": 47,
+      "skill": "ISO 27001",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 142,
+    "fields": {
+      "resume": 47,
+      "skill": "Data Privacy",
+      "level": "3",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 47,
+    "fields": {
+      "resume": 47,
+      "job_title": "Cyber GRC Specialist",
+      "company": "Syria Compliance Services",
+      "start_date": "2020-03",
+      "end_date": null,
+      "description": "Ensured adherence to cybersecurity regulations and implemented governance frameworks."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 91,
+    "fields": {
+      "resume": 47,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 92,
+    "fields": {
+      "resume": 47,
+      "name": "English",
+      "level": "4"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 48,
+    "fields": {
+      "username": "mobile_backend_developer_hani",
+      "email": "hani.mbd@example.com",
+      "phone": "+963933446699",
+      "location": "Damascus, Syria",
+      "github_link": "https://github.com/hanimbd",
+      "linkedin_link": "https://linkedin.com/in/hanimbd",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 48,
+    "fields": {
+      "user": 48,
+      "summary": "Mobile Backend Developer designing and implementing scalable APIs for mobile applications.",
+      "pdf_file": "resumes/hani_mobile_backend_resume.pdf",
+      "created_at": "2024-08-01T11:00:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 143,
+    "fields": {
+      "resume": 48,
+      "skill": "Firebase",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 144,
+    "fields": {
+      "resume": 48,
+      "skill": "AWS Amplify",
+      "level": "3",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 145,
+    "fields": {
+      "resume": 48,
+      "skill": "Node.js",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 48,
+    "fields": {
+      "resume": 48,
+      "job_title": "Mobile Backend Developer",
+      "company": "Damascus Mobile Backend",
+      "start_date": "2021-06",
+      "end_date": null,
+      "description": "Developed serverless backends and real-time databases for mobile apps."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 93,
+    "fields": {
+      "resume": 48,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 94,
+    "fields": {
+      "resume": 48,
+      "name": "English",
+      "level": "4"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 49,
+    "fields": {
+      "username": "education_tech_engineer_rana",
+      "email": "rana.edtech@example.com",
+      "phone": "+963944558800",
+      "location": "Aleppo, Syria",
+      "github_link": "https://github.com/ranaedtech",
+      "linkedin_link": "https://linkedin.com/in/ranaedtech",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 49,
+    "fields": {
+      "user": 49,
+      "summary": "EdTech Engineer developing educational platforms and e-learning solutions.",
+      "pdf_file": "resumes/rana_edtech_resume.pdf",
+      "created_at": "2024-08-02T09:00:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 146,
+    "fields": {
+      "resume": 49,
+      "skill": "LMS Development",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 147,
+    "fields": {
+      "resume": 49,
+      "skill": "Moodle",
+      "level": "3",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 148,
+    "fields": {
+      "resume": 49,
+      "skill": "E-learning Platforms",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 49,
+    "fields": {
+      "resume": 49,
+      "job_title": "EdTech Engineer",
+      "company": "Aleppo Learn Tech",
+      "start_date": "2021-04",
+      "end_date": null,
+      "description": "Developed and customized learning management systems for educational institutions."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 95,
+    "fields": {
+      "resume": 49,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 96,
+    "fields": {
+      "resume": 49,
+      "name": "English",
+      "level": "4"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 50,
+    "fields": {
+      "username": "healthcare_it_specialist_ali",
+      "email": "ali.health@example.com",
+      "phone": "+963955669911",
+      "location": "Homs, Syria",
+      "github_link": "https://github.com/alihealth",
+      "linkedin_link": "https://linkedin.com/in/alihealth",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 50,
+    "fields": {
+      "user": 50,
+      "summary": "Healthcare IT Specialist focusing on EHR systems and patient data management.",
+      "pdf_file": "resumes/ali_health_it_resume.pdf",
+      "created_at": "2024-08-03T10:15:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 149,
+    "fields": {
+      "resume": 50,
+      "skill": "EHR Systems",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 150,
+    "fields": {
+      "resume": 50,
+      "skill": "HIPAA Compliance",
+      "level": "3",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 151,
+    "fields": {
+      "resume": 50,
+      "skill": "Medical Data Security",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 50,
+    "fields": {
+      "resume": 50,
+      "job_title": "Healthcare IT Specialist",
+      "company": "Homs Medical Systems",
+      "start_date": "2020-09",
+      "end_date": null,
+      "description": "Managed and secured patient information systems for hospitals and clinics."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 97,
+    "fields": {
+      "resume": 50,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 98,
+    "fields": {
+      "resume": 50,
+      "name": "English",
+      "level": "4"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 51,
+    "fields": {
+      "username": "technical_writer_salam",
+      "email": "salam.tw@example.com",
+      "phone": "+963966770022",
+      "location": "Lattakia, Syria",
+      "github_link": "https://github.com/salamtw",
+      "linkedin_link": "https://linkedin.com/in/salamtw",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 51,
+    "fields": {
+      "user": 51,
+      "summary": "Technical Writer creating clear and comprehensive documentation for software products.",
+      "pdf_file": "resumes/salam_tech_writer_resume.pdf",
+      "created_at": "2024-08-04T11:00:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 152,
+    "fields": {
+      "resume": 51,
+      "skill": "Documentation",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 153,
+    "fields": {
+      "resume": 51,
+      "skill": "API Documentation",
+      "level": "3",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 154,
+    "fields": {
+      "resume": 51,
+      "skill": "Confluence",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 51,
+    "fields": {
+      "resume": 51,
+      "job_title": "Technical Writer",
+      "company": "Latakia Documentation Services",
+      "start_date": "2022-01",
+      "end_date": null,
+      "description": "Wrote and maintained technical documentation, user manuals, and API guides for software products."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 99,
+    "fields": {
+      "resume": 51,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 100,
+    "fields": {
+      "resume": 51,
+      "name": "English",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 52,
+    "fields": {
+      "username": "fullstack_eng_hussam",
+      "email": "hussam.fse@example.com",
+      "phone": "+963988114477",
+      "location": "Tartous, Syria",
+      "github_link": "https://github.com/hussamfse",
+      "linkedin_link": "https://linkedin.com/in/hussamfse",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 52,
+    "fields": {
+      "user": 52,
+      "summary": "Full-Stack Engineer with strong expertise in MERN stack, microservices, and CI/CD.",
+      "pdf_file": "resumes/hussam_fse_resume.pdf",
+      "created_at": "2024-08-05T10:00:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 155,
+    "fields": {
+      "resume": 52,
+      "skill": "MERN Stack",
+      "level": "5",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 156,
+    "fields": {
+      "resume": 52,
+      "skill": "Microservices",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 157,
+    "fields": {
+      "resume": 52,
+      "skill": "CI/CD Pipelines",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 52,
+    "fields": {
+      "resume": 52,
+      "job_title": "Full-Stack Engineer",
+      "company": "Tartous Tech Innovators",
+      "start_date": "2019-05",
+      "end_date": null,
+      "description": "Designed, developed, and deployed complex web applications end-to-end."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 101,
+    "fields": {
+      "resume": 52,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 102,
+    "fields": {
+      "resume": 52,
+      "name": "English",
+      "level": "4"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 53,
+    "fields": {
+      "username": "ml_ops_specialist_maya",
+      "email": "maya.mlo@example.com",
+      "phone": "+963933224499",
+      "location": "Damascus, Syria",
+      "github_link": "https://github.com/mayamlo",
+      "linkedin_link": "https://linkedin.com/in/mayamlo",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 53,
+    "fields": {
+      "user": 53,
+      "summary": "MLOps Specialist ensuring efficient deployment, monitoring, and management of ML models.",
+      "pdf_file": "resumes/maya_mlops_resume.pdf",
+      "created_at": "2024-08-06T11:30:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 158,
+    "fields": {
+      "resume": 53,
+      "skill": "MLOps",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 159,
+    "fields": {
+      "resume": 53,
+      "skill": "Kubeflow",
+      "level": "3",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 160,
+    "fields": {
+      "resume": 53,
+      "skill": "Model Monitoring",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 53,
+    "fields": {
+      "resume": 53,
+      "job_title": "MLOps Specialist",
+      "company": "Damascus AI Ops",
+      "start_date": "2021-07",
+      "end_date": null,
+      "description": "Developed and managed MLOps pipelines for various AI initiatives, improving model reliability."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 103,
+    "fields": {
+      "resume": 53,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 104,
+    "fields": {
+      "resume": 53,
+      "name": "English",
+      "level": "4"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 54,
+    "fields": {
+      "username": "cyber_education_trainer_sana",
+      "email": "sana.cet@example.com",
+      "phone": "+963944336677",
+      "location": "Aleppo, Syria",
+      "github_link": "https://github.com/sanacet",
+      "linkedin_link": "https://linkedin.com/in/sanacet",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 54,
+    "fields": {
+      "user": 54,
+      "summary": "Cybersecurity Education Trainer developing and delivering cyber awareness programs.",
+      "pdf_file": "resumes/sana_cyber_ed_resume.pdf",
+      "created_at": "2024-08-07T09:00:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 161,
+    "fields": {
+      "resume": 54,
+      "skill": "Cyber Awareness",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 162,
+    "fields": {
+      "resume": 54,
+      "skill": "Training Delivery",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 163,
+    "fields": {
+      "resume": 54,
+      "skill": "Curriculum Development",
+      "level": "3",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 54,
+    "fields": {
+      "resume": 54,
+      "job_title": "Cybersecurity Trainer",
+      "company": "Aleppo Cyber Education",
+      "start_date": "2021-03",
+      "end_date": null,
+      "description": "Delivered cybersecurity training to various audiences, enhancing their digital security posture."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 105,
+    "fields": {
+      "resume": 54,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 106,
+    "fields": {
+      "resume": 54,
+      "name": "English",
+      "level": "4"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 55,
+    "fields": {
+      "username": "fullstack_python_mazen",
+      "email": "mazen.fspy@example.com",
+      "phone": "+963955668811",
+      "location": "Homs, Syria",
+      "github_link": "https://github.com/mazenfspy",
+      "linkedin_link": "https://linkedin.com/in/mazenfspy",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 55,
+    "fields": {
+      "user": 55,
+      "summary": "Full-Stack Python Developer experienced in Django, DRF, and Vue.js.",
+      "pdf_file": "resumes/mazen_fullstack_python_resume.pdf",
+      "created_at": "2024-08-08T10:15:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 164,
+    "fields": {
+      "resume": 55,
+      "skill": "Django",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 165,
+    "fields": {
+      "resume": 55,
+      "skill": "Django Rest Framework",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 166,
+    "fields": {
+      "resume": 55,
+      "skill": "Vue.js",
+      "level": "3",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 55,
+    "fields": {
+      "resume": 55,
+      "job_title": "Full-Stack Python Developer",
+      "company": "Homs Code Hub",
+      "start_date": "2021-01",
+      "end_date": null,
+      "description": "Developed robust web applications with Python backend and modern JavaScript frontend frameworks."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 107,
+    "fields": {
+      "resume": 55,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 108,
+    "fields": {
+      "resume": 55,
+      "name": "English",
+      "level": "4"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 56,
+    "fields": {
+      "username": "frontend_design_rima",
+      "email": "rima.fd@example.com",
+      "phone": "+963966770033",
+      "location": "Lattakia, Syria",
+      "github_link": "https://github.com/rimafd",
+      "linkedin_link": "https://linkedin.com/in/rimafd",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 56,
+    "fields": {
+      "user": 56,
+      "summary": "Frontend Developer with a strong eye for design and expertise in SASS and animations.",
+      "pdf_file": "resumes/rima_frontend_design_resume.pdf",
+      "created_at": "2024-08-09T11:00:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 167,
+    "fields": {
+      "resume": 56,
+      "skill": "SASS/LESS",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 168,
+    "fields": {
+      "resume": 56,
+      "skill": "CSS Animations",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 169,
+    "fields": {
+      "resume": 56,
+      "skill": "UI Implementation",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 56,
+    "fields": {
+      "resume": 56,
+      "job_title": "Frontend Developer (Design-focused)",
+      "company": "Latakia Creative Digital",
+      "start_date": "2021-03",
+      "end_date": null,
+      "description": "Translated UI/UX designs into highly interactive and visually appealing web interfaces."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 109,
+    "fields": {
+      "resume": 56,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 110,
+    "fields": {
+      "resume": 56,
+      "name": "English",
+      "level": "4"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 57,
+    "fields": {
+      "username": "cyber_threat_intel_nidal",
+      "email": "nidal.cti@example.com",
+      "phone": "+963988115588",
+      "location": "Tartous, Syria",
+      "github_link": "https://github.com/nidalcti",
+      "linkedin_link": "https://linkedin.com/in/nidalcti",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 57,
+    "fields": {
+      "user": 57,
+      "summary": "Cyber Threat Intelligence Analyst identifying and analyzing emerging cyber threats.",
+      "pdf_file": "resumes/nidal_cti_resume.pdf",
+      "created_at": "2024-08-10T09:30:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 170,
+    "fields": {
+      "resume": 57,
+      "skill": "Threat Intelligence",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 171,
+    "fields": {
+      "resume": 57,
+      "skill": "OSINT",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 172,
+    "fields": {
+      "resume": 57,
+      "skill": "Vulnerability Analysis",
+      "level": "3",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 57,
+    "fields": {
+      "resume": 57,
+      "job_title": "Cyber Threat Intelligence Analyst",
+      "company": "Syria Threat Insight",
+      "start_date": "2021-06",
+      "end_date": null,
+      "description": "Monitored threat landscapes and provided actionable intelligence to security teams."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 111,
+    "fields": {
+      "resume": 57,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 112,
+    "fields": {
+      "resume": 57,
+      "name": "English",
+      "level": "4"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 58,
+    "fields": {
+      "username": "solution_architect_mazen",
+      "email": "mazen.sa@example.com",
+      "phone": "+963933557722",
+      "location": "Damascus, Syria",
+      "github_link": "https://github.com/mazensa",
+      "linkedin_link": "https://linkedin.com/in/mazensa",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 58,
+    "fields": {
+      "user": 58,
+      "summary": "Solution Architect translating business requirements into technical solutions.",
+      "pdf_file": "resumes/mazen_solution_arch_resume.pdf",
+      "created_at": "2024-08-11T12:00:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 173,
+    "fields": {
+      "resume": 58,
+      "skill": "Solution Design",
+      "level": "5",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 174,
+    "fields": {
+      "resume": 58,
+      "skill": "Enterprise Architecture",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 175,
+    "fields": {
+      "resume": 58,
+      "skill": "Technical Leadership",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 58,
+    "fields": {
+      "resume": 58,
+      "job_title": "Solution Architect",
+      "company": "Damascus Systems Integrators",
+      "start_date": "2019-01",
+      "end_date": null,
+      "description": "Designed and oversaw the integration of complex software systems for various clients."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 113,
+    "fields": {
+      "resume": 58,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 114,
+    "fields": {
+      "resume": 58,
+      "name": "English",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 59,
+    "fields": {
+      "username": "e_commerce_developer_sara",
+      "email": "sara.ec@example.com",
+      "phone": "+963944668833",
+      "location": "Aleppo, Syria",
+      "github_link": "https://github.com/saraec",
+      "linkedin_link": "https://linkedin.com/in/saraec",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 59,
+    "fields": {
+      "user": 59,
+      "summary": "E-commerce Developer specializing in Shopify, WooCommerce, and payment gateway integration.",
+      "pdf_file": "resumes/sara_ecommerce_resume.pdf",
+      "created_at": "2024-08-12T09:00:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 176,
+    "fields": {
+      "resume": 59,
+      "skill": "Shopify",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 177,
+    "fields": {
+      "resume": 59,
+      "skill": "WooCommerce",
+      "level": "3",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 178,
+    "fields": {
+      "resume": 59,
+      "skill": "Payment Gateways",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 59,
+    "fields": {
+      "resume": 59,
+      "job_title": "E-commerce Developer",
+      "company": "Aleppo E-shop",
+      "start_date": "2021-03",
+      "end_date": null,
+      "description": "Built and customized online stores, integrating various e-commerce functionalities."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 115,
+    "fields": {
+      "resume": 59,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 116,
+    "fields": {
+      "resume": 59,
+      "name": "English",
+      "level": "4"
+    }
+  },
+  {
+    "model": "devloper.User",
+    "pk": 60,
+    "fields": {
+      "username": "research_dev_ramy",
+      "email": "ramy.rd@example.com",
+      "phone": "+963955779944",
+      "location": "Homs, Syria",
+      "github_link": "https://github.com/ramyrd",
+      "linkedin_link": "https://linkedin.com/in/ramyrd",
+      "password": "pbkdf2_sha256$260000$YourRandomSalt$YourHashedPassword"
+    }
+  },
+  {
+    "model": "devloper.Resume",
+    "pk": 60,
+    "fields": {
+      "user": 60,
+      "summary": "Research & Development Engineer exploring new technologies and building proof-of-concept prototypes.",
+      "pdf_file": "resumes/ramy_rd_resume.pdf",
+      "created_at": "2024-08-13T10:15:00Z"
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 179,
+    "fields": {
+      "resume": 60,
+      "skill": "Prototyping",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 180,
+    "fields": {
+      "resume": 60,
+      "skill": "New Technology Evaluation",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Skill",
+    "pk": 181,
+    "fields": {
+      "resume": 60,
+      "skill": "Python",
+      "level": "4",
+      "is_inferred": false,
+      "source_skill": null
+    }
+  },
+  {
+    "model": "devloper.Experience",
+    "pk": 60,
+    "fields": {
+      "resume": 60,
+      "job_title": "R&D Engineer",
+      "company": "Homs Innovation Hub",
+      "start_date": "2020-05",
+      "end_date": null,
+      "description": "Investigated and developed proof-of-concept solutions for emerging technological challenges."
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 117,
+    "fields": {
+      "resume": 60,
+      "name": "Arabic",
+      "level": "5"
+    }
+  },
+  {
+    "model": "devloper.Language",
+    "pk": 118,
+    "fields": {
+      "resume": 60,
+      "name": "English",
+      "level": "4"
+    }
+  }
+]

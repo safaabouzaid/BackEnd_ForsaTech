@@ -1,29 +1,37 @@
 from django.db import models
 from devloper.models import User
+from django.contrib.postgres.fields import ArrayField
 
-class humanResources(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    company_name = models.CharField(max_length=100, blank=True, null=True)
-    location = models.CharField(max_length=40, blank=True, null=True)
+class SubscriptionPlan(models.Model):
+    
+    name = models.CharField(max_length=100,unique=True)
+    job_post_limit = models.IntegerField(null=True, blank=True)  
+    can_generate_tests = models.BooleanField(default=False)
+    can_schedule_interviews = models.BooleanField(default=False)
+    
+    candidate_suggestions = models.CharField(
+        max_length=50,
+        choices=[('none', 'No suggestions'), ('once', 'One time'), ('always', 'Always')],
+        default='none'
+    )
+    price = models.DecimalField(max_digits=8, decimal_places=2, null=True, blank=True)  
+
 
     def __str__(self):
-        return str(self.user)
-    
-    
-    
-    
-    
+        return self.name
+
 
 class Company(models.Model):
     name = models.CharField(max_length=255, null=True, blank=True)
-    logo = models.ImageField(upload_to="company_logos/", blank=True, null=True)
+    logo = models.URLField(blank=True, null=True)
     website = models.URLField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     email = models.EmailField(null=True, blank=True)
     address = models.CharField(max_length=255, null=True, blank=True)
     employees = models.PositiveIntegerField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
-
+    subscription_plan = models.ForeignKey(SubscriptionPlan, on_delete=models.SET_NULL, null=True, blank=True)
+    job_posts_this_month = models.IntegerField(default=0, null=True)  
 
     
     def __str__(self):
@@ -32,24 +40,49 @@ class Company(models.Model):
 
 
 
+class humanResources(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, null=True, blank=True)
+    location = models.CharField(max_length=40, blank=True, null=True)
+
+    def __str__(self):
+        return str(self.user)
+    
+
 
 class CompanyAd(models.Model):
     company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='ads')
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    ad_image = models.URLField(blank=True, null=True)
+      
     
 
     def __str__(self):
         return f"{self.company.name} - {self.title}"
 
 
+class OpportunityName(models.Model):
+    name = models.CharField(max_length=255,blank=True)
+    
+    def __str__(self):
+        return self.name
 
 
 class Opportunity(models.Model):
-    title = models.CharField(max_length=255)
+    EMPLOYMENT_TYPE_CHOICES = [
+        ('remote', 'Remote'),
+        ('on-site', 'On-site'),
+        ('hybrid', 'Hybrid'),
+        ('freelance', 'Freelance'),
+        ('internship', 'Internship'),
+        ('part-time', 'Part-time'),
+        ('full-time', 'Full-time'),
+    ]
+    opportunity_name = models.CharField(max_length=255, blank=True)
     description = models.TextField(null=True, blank=True)
-    employment_type = models.CharField(max_length=50,null=True, blank=True)
+    employment_type = models.CharField(max_length=50, choices=EMPLOYMENT_TYPE_CHOICES, null=True, blank=True)
     location = models.CharField(max_length=100,null=True, blank=True)
     salary_range = models.CharField(max_length=50,null=True, blank=True)
     currency = models.CharField(max_length=10,null=True, blank=True)
@@ -65,12 +98,25 @@ class Opportunity(models.Model):
     application_deadline = models.DateTimeField(blank=True, null=True)
     status = models.CharField(max_length=50)
     benefits = models.CharField(max_length=50,blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    embedding = ArrayField(models.FloatField(), size=384, null=True, blank=True)
+
     
     def __str__(self):
-        return self.title
+         return f"{self.opportunity_name} at {self.company.name}"
     
 
 
+class JobApplication(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    opportunity = models.ForeignKey(Opportunity, on_delete=models.CASCADE)
+    applied_at = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=50, choices=[('pending', 'Pending'), ('accepted', 'Accepted'), ('rejected', 'Rejected')])
+
+    def __str__(self):
+        return f"{self.user} applied for {self.opportunity.opportunity_name}"
+
+        
 
 class GenerateQuestion(models.Model):
     opportunity = models.ForeignKey(Opportunity, on_delete=models.CASCADE, related_name="questions")
@@ -81,3 +127,50 @@ class GenerateQuestion(models.Model):
         return f"Questions for {self.opportunity}"
     
 
+class Complaint(models.Model):
+    STATUS_CHOICES = [
+        ('new', 'New'),
+        ('resolved', 'Resolved'),
+    ]
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='new')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Complaint from {self.user.email} - {self.title}"
+
+
+
+
+
+class SubscriptionChangeRequest(models.Model):
+    STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('approved', 'Approved'),
+        ('rejected', 'Rejected'),
+    ]
+
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    requested_plan = models.ForeignKey(SubscriptionPlan, on_delete=models.CASCADE)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.company.name} - {self.requested_plan.name} ({self.status})"
+
+
+
+
+class InterviewSchedule(models.Model):
+    hr = models.ForeignKey(humanResources, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    opportunity = models.ForeignKey(Opportunity, on_delete=models.CASCADE)
+    date = models.DateField()
+    time = models.TimeField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.opportunity.opportunity_name} on {self.date} at {self.time}"

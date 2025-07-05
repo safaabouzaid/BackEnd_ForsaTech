@@ -13,7 +13,11 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from datetime import timedelta
 
 
+import os
 from pathlib import Path
+from decouple import config
+from corsheaders.defaults import default_headers
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,33 +29,63 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-^un3t(k@!2vyq@raoui&^+frmnp8$k51(k*b%%8$@*m3!nll-2'
 
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'devloper',
+    'devloper.apps.DevloperConfig',
     'human_resources.apps.HumanResourcesConfig',
-    'corsheaders',
     'rest_framework',
     'django_filters',
+    'Recommendation',
 
 
     
 
 ]
 
+JAZZMIN_SETTINGS = {
+    "site_title": " Dashboard",
+    "site_header": " Forsa Tech",
+    "site_brand": "Forsa Tech",    
+}
+
+
+#############Email settings 
+
+
+
+
+
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'abouzaidsafa@gmail.com'
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
+
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -59,9 +93,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',  
-
+    
 
 
 ]
@@ -87,25 +119,49 @@ CORS_ALLOWED_ORIGINS = [
      'http://localhost:3000', 
      'http://localhost:3001',
      'http://localhost:5173',
+     'https://admin-forsa-tech.netlify.app',
+     'https://forsatech.netlify.app',
+     'https://5e5b-169-150-196-103.ngrok-free.app',
+     'https://backend-forsatech.onrender.com',
+     
 
 ]
-CORS_ALLOW_HEADERS = [
-    'content-type',
-    'authorization', 
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    'ngrok-skip-browser-warning',
 ]
+
 
 WSGI_APPLICATION = 'forsa.wsgi.application'
 
 
+
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',
+    }
+}
+DATABASES = {
+    'default': dj_database_url.config(
+        default='postgresql://forsa_tech_user:vp7qNQlnJBOB4tWAkvDhb3vvbWmlSxOl@dpg-d1cfcnmuk2gs73almmu0-a.oregon-postgres.render.com/forsa_tech',
+        conn_max_age=600,
+        ssl_require=True,  
+    )
+}
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 #
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+
+#
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': BASE_DIR / 'db.sqlite3',
+#    }
+#}
 #
 #DATABASES = {
 #    'default': {
@@ -172,9 +228,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

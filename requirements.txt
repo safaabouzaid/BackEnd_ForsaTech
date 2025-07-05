@@ -1,11 +1,33 @@
+scipy>=1.9.3 --only-binary :all:
+
 asgiref==3.8.1
-Django==5.0.3
+dj-database-url==3.0.0
+Django==5.2.3
 django-cors-headers==4.7.0
+python-decouple
+packaging==25.0
+sqlparse==0.5.3
+typing_extensions==4.14.0
+tzdata==2025.2
 django-filter==25.1
 djangorestframework==3.14.0
 djangorestframework-simplejwt==5.3.1
 PyJWT==2.10.1
 pytz==2025.1
-rest-framework-simplejwt==0.0.2
-sqlparse==0.5.3
-tzdata==2025.1
+django-jazzmin
+python-dotenv
+Pillow
+nltk
+scikit-learn
+gensim==4.3.1
+fasttext-predict
+spacy
+sentence-transformers
+tenacity
+google-generativeai
+gunicorn
+psycopg2-binary
+whitenoise
+
+numpy<2
+torch --index-url https://download.pytorch.org/whl/cpu
