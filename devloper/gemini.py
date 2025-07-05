@@ -30,7 +30,7 @@ def get_inferred_skills(skill_name):
 
         print(f"Raw response from Gemini:\n{content}")
 
-        # تنظيف Markdown (البقية نفسها)
+
         if content.startswith("```json"):
             content = content.replace("```json", "", 1).replace("```", "").strip()
         elif content.startswith("```"):
@@ -38,13 +38,14 @@ def get_inferred_skills(skill_name):
 
         print(f" Cleaned response:\n{content}")
 
-        # محاولة تحليل الـ JSON
+
         return json.loads(content)
     except json.JSONDecodeError as e:
-        # إذا فشل تحليل الـ JSON
+
+
         print(f" Gemini error during JSON parsing for skill '{skill_name}': {e}. Raw response: '{content}'")
         return []
     except Exception as e:
-        # أي خطأ آخر غير ResourceExhausted (لأن @retry بتتعامل مع هذا النوع)
+
         print(f" An unexpected error occurred for skill '{skill_name}': {e}")
         return []

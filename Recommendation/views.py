@@ -1,11 +1,12 @@
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from .utils import recommend_opportunities,recommend_users_for_opportunity,suggest_additional_skills
 import time
 from human_resources.models import humanResources,Opportunity,JobApplication
 from django.http import JsonResponse
-from .tasks import generate_all_opportunity_embeddings
+from .tasks import generate_all_opportunity_embeddings,generate_all_resume_embeddings
+from .utils import *
+from devloper.models import Resume
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -181,4 +182,10 @@ def recommend_skills_view(request):
 
 def update_embeddings(request):
     generate_all_opportunity_embeddings()
+    return JsonResponse({"status": "done"})
+
+
+
+def update_resumes_embeddings(request):
+    generate_all_resume_embeddings()
     return JsonResponse({"status": "done"})
