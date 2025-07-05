@@ -12,7 +12,7 @@ admin.site.register(GenerateQuestion)
 admin.site.register(Complaint)
 admin.site.register(SubscriptionPlan)
 admin.site.register(SubscriptionChangeRequest)
-
+admin.site.register(InterviewSchedule)
 
 
 
