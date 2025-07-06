@@ -1,7 +1,6 @@
 venv 
 __pycache__/
 **/__pycache__/
-.env
 Recommendation/glove.6B.100d.txt
 Recommendation/wiki-news-300d-1M-subword.vec
 *.bin
@@ -11,3 +10,4 @@ staticfiles/
 /embed_opportunities.py
 /my_local_sbert
 my_local_sbert.zip
+.env

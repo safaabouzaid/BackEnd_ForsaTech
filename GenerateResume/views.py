@@ -14,7 +14,8 @@ import re
 
 User = get_user_model()
 
-genai.configure(api_key="AIzaSyAWfqk0NLuH3FV8BJgI1RtGQYoRxIR46sM")
+
+genai.configure(api_key=config("GOOGLE_API_KEY"))
 
 
 class ResumeAPIView(APIView):
