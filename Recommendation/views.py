@@ -146,16 +146,22 @@ def recommend_applicants_for_opportunity(request, opportunity_id):
     ]
     filtered_recommendations.sort(key=lambda x: x["ranking_score"], reverse=True)
     
+
+
+    
     top_applicants = []
     for item in filtered_recommendations[:5]:
         user = item["user"]
         resume = user.resumes.order_by('-created_at').first()
+        job_application = JobApplication.objects.filter(opportunity=opportunity, user=user).first()
         skills = []
         if resume:
             skills = list(resume.skills.values_list('skill', flat=True))
     
+    
         top_applicants.append({
-            "user_id": user.id,
+            
+            "application_id": job_application.id if job_application else None,
             "username": user.username,
             "email": user.email,
             "similarity_score": round(item["ranking_score"], 3),
