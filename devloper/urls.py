@@ -9,6 +9,7 @@ urlpatterns = [
     path('developer/update/', views.update_developer, name='update-developer'),
     path('developer/delete/', views.delete_developer, name='delete-developer'),
     path('resumes/', views.create_resume_from_parser),
+    path('update-fcm-token/', views.update_fcm_token),
      #
 ]
     # path('apply/<int:opportunity_id>/', views.apply_for_opportunity, name='apply-for-opportunity'),
