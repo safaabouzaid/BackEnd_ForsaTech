@@ -248,6 +248,7 @@ def suggest_additional_skills(user, opportunities):
         suggestions.append({
             "opportunity_id": opp.id,
             "opportunity_name": opp.opportunity_name,
+            "description": opp.description,
             "similarity_score": round(score, 3),
             "missing_skills": missing_skills
         })
