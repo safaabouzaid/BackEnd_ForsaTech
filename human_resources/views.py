@@ -407,7 +407,7 @@ def update_job_application_status(request):
             f"🎉 Congratulations! Your application for the position \"{job_title}\" at {company_name} has been accepted.✅ \n"
             f"Our team will contact you soon 📞.\n\n"
             f"Best regards,\n"
-            f"Forsa-Tech Team p"
+            f"Forsa-Tech Team "
         )
     else:
         subject = '❌ Your application has been rejected'
