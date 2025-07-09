@@ -18,7 +18,7 @@ from django.conf import settings
 from datetime import datetime, timedelta
 from django.db.models import Count
 from .models import SubscriptionChangeRequest
-
+from admin.serializers import CompanyDetailSerializer
 
 @api_view(['POST'])
 def loginHumanResource(request):
@@ -646,3 +646,24 @@ def get_interview_schedules(request):
     schedules = InterviewSchedule.objects.filter(hr=hr)
     serializer = InterviewScheduleSerializer(schedules, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+
+#===================================================company profile===============================================================#
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])  
+def get_hr_company_profile(request):
+    user = request.user
+
+    if not hasattr(user, 'humanresources'):
+        return Response({'error': 'This account is not authorized to access this endpoint'}, status=status.HTTP_403_FORBIDDEN)
+
+    hr_profile = user.humanresources
+    company = hr_profile.company
+
+    if not company:
+        return Response({'error': 'No company assigned to this HR'}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer = CompanyDetailSerializer(company)
+    return Response({'company': serializer.data}, status=status.HTTP_200_OK)
