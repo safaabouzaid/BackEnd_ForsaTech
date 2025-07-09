@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from devloper.models import User, Resume, Skill, Education, Project, Experience, TrainingCourse
+from devloper.models import Language, User, Resume, Skill, Education, Project, Experience, TrainingCourse
 
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
@@ -33,6 +33,11 @@ class TrainingCourseSerializer(serializers.ModelSerializer):
         model = TrainingCourse
         fields = ['title', 'institution', 'start_date', 'end_date', 'description']
 
+class LanguageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Language
+        fields = ['name', 'level']
+
 class ResumeSerializer(serializers.ModelSerializer):
     personal_details = UserSerializer(source='user',required=False)
     skills = SkillSerializer(many=True, read_only=True)
@@ -43,7 +48,7 @@ class ResumeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Resume
-        fields = ['id','personal_details', 'summary', 'skills', 'education', 'projects', 'experiences', 'trainings_courses','pdf_file']
+        fields = ['id','personal_details', 'summary', 'skills', 'education', 'projects', 'experiences', 'trainings_courses','languages','pdf_file']
 
 
 
