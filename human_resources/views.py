@@ -175,7 +175,7 @@ def opportunity_list(request):
 @api_view(['GET'])
 def opportunityById(request,pk ):
     opportunities = Opportunity.objects.get(pk=pk)
-    serializer = OpportunitySerializer(opportunities)
+    serializer = OpportunitySerializer1(opportunities)
     return Response(serializer.data)
     
     

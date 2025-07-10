@@ -10,6 +10,8 @@ urlpatterns = [
     path('developer/delete/', views.delete_developer, name='delete-developer'),
     path('resumes/', views.create_resume_from_parser),
     path('update-fcm-token/', views.update_fcm_token),
+    path('education/', views.education_list_create, name='education_list_create'),
+    path('experience/', views.experience_list_create, name='experience_list_create'),
      #
 ]
     # path('apply/<int:opportunity_id>/', views.apply_for_opportunity, name='apply-for-opportunity'),

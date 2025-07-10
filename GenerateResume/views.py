@@ -33,7 +33,6 @@ class ResumeAPIView(APIView):
                 "code": status.HTTP_400_BAD_REQUEST,
             })
 
-        # تعيين كلمة مرور إذا كان المستخدم جديدًا
         try:
             if created:
                 user.set_password(user_data.get("password", "default_password"))
@@ -45,7 +44,7 @@ class ResumeAPIView(APIView):
                 "code": status.HTTP_400_BAD_REQUEST,
             })
 
-        # إنشاء ملخص السيرة الذاتية
+      
         try:
             profile_summary = self.generate_summary(user_data)
             resume = Resume.objects.create(
@@ -59,7 +58,7 @@ class ResumeAPIView(APIView):
                 "code": status.HTTP_400_BAD_REQUEST,
             })
 
-        # إنشاء المهارات والتعليم
+       
         try:
             Skill.objects.bulk_create([
                 Skill(resume=resume, skill=skill["skill"], level=skill.get("level"))
@@ -76,10 +75,8 @@ class ResumeAPIView(APIView):
                 "message": "Couldn't create skills or education",
                 "code": status.HTTP_400_BAD_REQUEST,
             })
-
-        # إنشاء المشاريع، الخبرات، الدورات، اللغات
         try:
-            # حذف الحقول غير الضرورية من المشاريع
+           
             project_objects = []
             for proj in user_data.get("projects", []):
                 if isinstance(proj, dict):

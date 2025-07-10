@@ -24,7 +24,7 @@ class OpportunitySerializer(serializers.ModelSerializer):
         model = Opportunity
         fields = [
             'id' ,
-            # 'title',
+          ' opportunity_name',
             'company_logo',
             'experience_level',   # job level
             'years_of_experience',# experience

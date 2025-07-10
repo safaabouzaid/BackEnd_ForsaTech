@@ -74,3 +74,14 @@ class DeveloperSerializer(serializers.ModelSerializer):
     class Meta:
         model = Developer
         fields = ['gender', 'birth_date', 'profile_picture']            
+
+
+class EducationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Education
+        fields = ['id', 'resume', 'degree', 'institution', 'start_date', 'end_date', 'description']
+
+class ExperienceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Experience
+        fields = ['id', 'resume', 'job_title', 'company', 'start_date', 'end_date', 'description']
