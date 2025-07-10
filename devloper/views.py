@@ -13,7 +13,12 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
+from admin.serializers import ComplaintSerializer
 
+from django.shortcuts import redirect
+from social_django.utils import psa
+from social_django.utils import load_strategy, load_backend
+from social_core.exceptions import AuthException
 # from django.contrib.auth import get_user_model
 
 User = get_user_model()  
@@ -223,3 +228,50 @@ def update_fcm_token(request):
     user.save()
 
     return Response({"message": "FCM token updated successfully."}, status=status.HTTP_200_OK)
+#==============================================GitHub Auth ===========================================================================#
+
+@api_view(['POST'])
+def github_login(request):
+    access_token = request.data.get('access_token')
+    if not access_token:
+        return Response({'error': 'Access token required'}, status=400)
+
+    strategy = load_strategy(request)
+    backend = load_backend(strategy=strategy, name='github', redirect_uri=None)
+
+    try:
+        user = backend.do_auth(access_token)
+    except AuthException as e:
+        return Response({'error': str(e)}, status=400)
+
+    if user and user.is_active:
+        refresh = RefreshToken.for_user(user)
+        return Response({
+            'refresh': str(refresh),
+            'access': str(refresh.access_token),
+        })
+    else:
+        return Response({'error': 'Authentication Failed'}, status=400)
+
+
+
+#===================================================create complaint======================================================#
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def create_complaint(request):
+    if request.method == 'POST':
+
+        data = request.data.copy()
+        
+        data['user'] = request.user.id
+        
+        serializer = ComplaintSerializer(data=data)
+        
+        if serializer.is_valid():
+
+            complaint = serializer.save(user=request.user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
