@@ -27,7 +27,5 @@ urlpatterns = [
     path('company_ads/', views.company_ads_list, name='company_ads_list'),
     path('schedule-interview/', views.create_interview_schedule, name='create_interview'),
     path('get-interviews/',views.get_interview_schedules, name='get_interviews'),
-
-
-
+    path('company-profile/',views.get_hr_company_profile, name='get_hr_company_profile'),
 ]

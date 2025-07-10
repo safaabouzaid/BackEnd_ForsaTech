@@ -18,7 +18,7 @@ from django.conf import settings
 from datetime import datetime, timedelta
 from django.db.models import Count
 from .models import SubscriptionChangeRequest
-
+from admin.serializers import CompanyDetailSerializer
 
 @api_view(['POST'])
 def loginHumanResource(request):
@@ -447,7 +447,6 @@ def list_job_applications(request):
 
 
 #========================================CHeck status ==============================================#
-
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def check_application_status(request):
@@ -467,12 +466,22 @@ def check_application_status(request):
     except Opportunity.DoesNotExist:
         return Response({'error': 'Opportunity not found.'}, status=status.HTTP_404_NOT_FOUND)
 
+    # جيب الخطة الحالية للشركة
+    subscription_plan = None
+    if opportunity.company and opportunity.company.subscription_plan:
+        subscription_plan = opportunity.company.subscription_plan.name
+
     application = JobApplication.objects.filter(user=user, opportunity=opportunity).first()
     if application:
-        return Response({'status': application.status}, status=status.HTTP_200_OK)
+        return Response({
+            'status': application.status,
+            'subscription_plan': subscription_plan
+        }, status=status.HTTP_200_OK)
     else:
-        return Response({'status': 'not_applied'}, status=status.HTTP_200_OK)
-
+        return Response({
+            'status': 'not_applied',
+            'subscription_plan': subscription_plan
+        }, status=status.HTTP_200_OK)
 
 
 # ========================== HR Dashboard Stats ================================
@@ -529,9 +538,7 @@ def hr_dashboard_stats(request):
 
     return Response(data, status=status.HTTP_200_OK)
 
-
-
-#================================================= check subscription status======================================================#
+#================================================= check subscription status ======================================================#
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -539,14 +546,17 @@ def check_subscription_status(request):
     user = request.user
 
     if not hasattr(user, 'humanresources'):
-        return Response({'detail': 'You are not authorized as HR'}, status=status.HTTP_403_FORBIDDEN)
+        return Response({
+            'detail': 'You are not authorized as HR'
+        }, status=status.HTTP_403_FORBIDDEN)
 
     company = user.humanresources.company
 
     if not company:
         return Response({
             "status": "No Company",
-            "message": "Your account is not linked to any company. Please contact the admin."
+            "message": "Your account is not linked to any company. Please contact the admin.",
+            "current_plan": None
         }, status=status.HTTP_200_OK)
 
     current_plan = company.subscription_plan
@@ -556,35 +566,40 @@ def check_subscription_status(request):
     if not current_plan:
         return Response({
             "status": "No Plan",
-            "message": "You do not have any active subscription plan. We recommend subscribing to unlock more features!"
+            "message": "You do not have any active subscription plan. We recommend subscribing to unlock more features!",
+            "current_plan": None
         }, status=status.HTTP_200_OK)
 
     if sub_request:
         if sub_request.status == 'pending':
             return Response({
                 "status": f"Pending",
-                "message": "Your subscription change request is pending. Please wait, we will notify you once it's processed."
+                "message": "Your subscription change request is pending. Please wait, we will notify you once it's processed.",
+                "current_plan": current_plan.name
             }, status=status.HTTP_200_OK)
         
         elif sub_request.status == 'approved':
             return Response({
                 "status": f"approved",
-                "message": f"Your company is now subscribed to {current_plan.name}. Enjoy the features, and consider upgrading for more benefits!"
+                "message": f"Your company is now subscribed to {current_plan.name}. Enjoy the features, and consider upgrading for more benefits!",
+                "current_plan": current_plan.name
             }, status=status.HTTP_200_OK)
         
         elif sub_request.status == 'rejected':
             return Response({
                 "status": f"Rejected",
-                "message": "Your subscription change request was rejected. Please contact support or submit a new request."
+                "message": "Your subscription change request was rejected. Please contact support or submit a new request.",
+                "current_plan": current_plan.name
             }, status=status.HTTP_200_OK)
 
     return Response({
         "status": f"{current_plan.name}",
-        "message": f"Your company is subscribed to {current_plan.name}. Consider upgrading to a higher plan for more features."
+        "message": f"Your company is subscribed to {current_plan.name}. Consider upgrading to a higher plan for more features.",
+        "current_plan": current_plan.name
     }, status=status.HTTP_200_OK)
 
 
-## applay ads 
+#========================================== applay ads ============================================
 
 @api_view(['GET'])
 
@@ -646,3 +661,24 @@ def get_interview_schedules(request):
     schedules = InterviewSchedule.objects.filter(hr=hr)
     serializer = InterviewScheduleSerializer(schedules, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+
+#===================================================company profile===============================================================#
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])  
+def get_hr_company_profile(request):
+    user = request.user
+
+    if not hasattr(user, 'humanresources'):
+        return Response({'error': 'This account is not authorized to access this endpoint'}, status=status.HTTP_403_FORBIDDEN)
+
+    hr_profile = user.humanresources
+    company = hr_profile.company
+
+    if not company:
+        return Response({'error': 'No company assigned to this HR'}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer = CompanyDetailSerializer(company)
+    return Response({'company': serializer.data}, status=status.HTTP_200_OK)
