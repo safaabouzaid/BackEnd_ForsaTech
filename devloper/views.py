@@ -237,3 +237,93 @@ def update_fcm_token(request):
     user.save()
 
     return Response({"message": "FCM token updated successfully."}, status=status.HTTP_200_OK)
+
+
+
+@api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
+def experience_list_create(request):
+    user = request.user
+    resume, created = Resume.objects.get_or_create(user=user)
+
+    if request.method == 'GET':
+        experiences = Experience.objects.filter(resume=resume)
+        serializer = ExperienceSerializer(experiences, many=True)
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
+        experiences_data = request.data if isinstance(request.data, list) else [request.data]
+
+        existing_experiences = Experience.objects.filter(resume=resume)
+        added_experiences = []
+        errors = []
+
+        for exp_data in experiences_data:
+            exp_data['resume'] = resume.id
+
+            exists = existing_experiences.filter(
+                job_title=exp_data.get('job_title'),
+                company=exp_data.get('company'),
+                start_date=exp_data.get('start_date'),
+            ).exists()
+
+            if not exists:
+                serializer = ExperienceSerializer(data=exp_data)
+                if serializer.is_valid():
+                    serializer.save()
+                    added_experiences.append(serializer.data)
+                else:
+                    errors.append(serializer.errors)
+            else:
+               
+                pass
+
+        if errors:
+            return Response({'errors': errors}, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(added_experiences, status=status.HTTP_201_CREATED)
+    
+    
+@api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
+def education_list_create(request):
+    user = request.user
+    resume, created = Resume.objects.get_or_create(user=user)
+
+    if request.method == 'GET':
+        educations = Education.objects.filter(resume=resume)
+        serializer = EducationSerializer(educations, many=True)
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
+        educations_data = request.data if isinstance(request.data, list) else [request.data]
+
+        existing_educations = Education.objects.filter(resume=resume)
+        
+        added_educations = []
+        errors = []
+
+        for edu_data in educations_data:
+            edu_data['resume'] = resume.id
+
+            exists = existing_educations.filter(
+                degree=edu_data.get('degree'),
+                institution=edu_data.get('institution'),
+                start_date=edu_data.get('start_date'),
+            ).exists()
+
+            if not exists:
+                serializer = EducationSerializer(data=edu_data)
+                if serializer.is_valid():
+                    serializer.save()
+                    added_educations.append(serializer.data)
+                else:
+                    errors.append(serializer.errors)
+            else:
+                # يمكن إضافة منطق التحديث هنا إذا أردت
+                pass
+
+        if errors:
+            return Response({'errors': errors}, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(added_educations, status=status.HTTP_201_CREATED)
