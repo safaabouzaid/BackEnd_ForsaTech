@@ -28,4 +28,5 @@ urlpatterns = [
     path('schedule-interview/', views.create_interview_schedule, name='create_interview'),
     path('get-interviews/',views.get_interview_schedules, name='get_interviews'),
     path('company-profile/',views.get_hr_company_profile, name='get_hr_company_profile'),
-]
+    path('my-applications/', views.user_job_applications, name='user-job-applications'),
+]  

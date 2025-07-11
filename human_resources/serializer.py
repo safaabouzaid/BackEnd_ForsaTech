@@ -156,3 +156,41 @@ class InterviewScheduleSerializer(serializers.ModelSerializer):
     class Meta:
         model = InterviewSchedule
         fields = ['id', 'username', 'opportunity', 'date', 'time', 'created_at']
+
+
+
+#### job app 
+
+
+class OpportunitySerializer1000(serializers.ModelSerializer):
+    company_logo = serializers.SerializerMethodField()
+    company_name = serializers.SerializerMethodField()
+    job_type = serializers.CharField(source='employment_type')
+
+    class Meta:
+        model = Opportunity
+        fields = [
+            'id',
+            'opportunity_name',         # هذا حقل موجود أساساً في الموديل
+            'company_logo',
+            'experience_level',
+            'years_of_experience',
+            'location',
+            'company_name',
+            'posting_date',
+            'job_type',
+        ]
+
+    def get_company_logo(self, obj):
+        return obj.company.logo if obj.company and obj.company.logo else None
+
+    def get_company_name(self, obj):
+        return obj.company.name if obj.company else ""
+
+
+class JobApplicationSerializer1000(serializers.ModelSerializer):
+    opportunity = OpportunitySerializer1000()
+
+    class Meta:
+        model = JobApplication
+        fields = ['status', 'opportunity']

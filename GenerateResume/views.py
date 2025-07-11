@@ -136,61 +136,61 @@ class ResumeAPIView(APIView):
 
 
 
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
-from decouple import config
-import google.generativeai as genai
+# from rest_framework.views import APIView
+# from rest_framework.response import Response
+# from rest_framework import status
+# from decouple import config
+# import google.generativeai as genai
 
-genai.configure(api_key=config("GOOGLE_API_KEY"))
+# genai.configure(api_key=config("GOOGLE_API_KEY"))
 
-class ATSResumeConverterAPIView(APIView):
-    """
-    API to convert resume text to an ATS-friendly format,
-    with optional job description customization.
-    """
+# class ATSResumeConverterAPIView(APIView):
+#     """
+#     API to convert resume text to an ATS-friendly format,
+#     with optional job description customization.
+#     """
 
-    def post(self, request):
-        resume_text = request.data.get("resume_text")
-        job_description = request.data.get("job_description", None)
+#     def post(self, request):
+#         resume_text = request.data.get("resume_text")
+#         job_description = request.data.get("job_description", None)
 
-        if not resume_text:
-            return Response({
-                "status": "error",
-                "message": "The 'resume_text' field is required.",
-                "code": status.HTTP_400_BAD_REQUEST
-            }, status=status.HTTP_400_BAD_REQUEST)
+#         if not resume_text:
+#             return Response({
+#                 "status": "error",
+#                 "message": "The 'resume_text' field is required.",
+#                 "code": status.HTTP_400_BAD_REQUEST
+#             }, status=status.HTTP_400_BAD_REQUEST)
 
-        try:
-            prompt = f"""
-            I want you to act as a professional resume optimizer specialized in ATS-compliant resumes.
+#         try:
+#             prompt = f"""
+#             I want you to act as a professional resume optimizer specialized in ATS-compliant resumes.
 
-            Given this resume:
-            ---
-            {resume_text}
-            ---
+#             Given this resume:
+#             ---
+#             {resume_text}
+#             ---
 
-            {"Additionally, customize the resume to match the following job description:\n" + job_description if job_description else ""}
+#             {"Additionally, customize the resume to match the following job description:\n" + job_description if job_description else ""}
 
-            Please return:
-            - A structured resume optimized for ATS filters.
-            - Plain text format only.
-            - Use clear section titles like Summary, Skills, Education, Experience.
-            - Use bullet points when relevant.
-            - Avoid any design elements that ATS may not recognize.
-            """
+#             Please return:
+#             - A structured resume optimized for ATS filters.
+#             - Plain text format only.
+#             - Use clear section titles like Summary, Skills, Education, Experience.
+#             - Use bullet points when relevant.
+#             - Avoid any design elements that ATS may not recognize.
+#             """
 
-            model = genai.GenerativeModel("gemini-1.5-flash")
-            response = model.generate_content([prompt])
+#             model = genai.GenerativeModel("gemini-1.5-flash")
+#             response = model.generate_content([prompt])
 
-            return Response({
-                "status": "success",
-                "optimized_resume": response.text.strip()
-            }, status=status.HTTP_200_OK)
+#             return Response({
+#                 "status": "success",
+#                 "optimized_resume": response.text.strip()
+#             }, status=status.HTTP_200_OK)
 
-        except Exception as e:
-            return Response({
-                "status": "error",
-                "message": f"Failed to convert resume: {str(e)}",
-                "code": status.HTTP_500_INTERNAL_SERVER_ERROR
-            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+#         except Exception as e:
+#             return Response({
+#                 "status": "error",
+#                 "message": f"Failed to convert resume: {str(e)}",
+#                 "code": status.HTTP_500_INTERNAL_SERVER_ERROR
+#             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

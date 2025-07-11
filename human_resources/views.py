@@ -682,3 +682,19 @@ def get_hr_company_profile(request):
 
     serializer = CompanyDetailSerializer(company)
     return Response({'company': serializer.data}, status=status.HTTP_200_OK)
+
+
+##job app
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def user_job_applications(request):
+    user = request.user
+    applications = JobApplication.objects.filter(user=user).select_related('opportunity', 'opportunity__company')
+
+    # اختيارياً: فلترة حسب status
+    status = request.GET.get('status')
+    if status:
+        applications = applications.filter(status=status.lower())
+
+    serializer = JobApplicationSerializer1000(applications, many=True)
+    return Response(serializer.data)
