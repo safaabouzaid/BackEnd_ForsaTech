@@ -18,6 +18,7 @@ urlpatterns = [
     path('plans/delete/<int:plan_id>/', views.delete_subscription_plan,name='plan-delete'), 
     path('list-subscription/', views.list_subscription_requests, name='list_subscription'),
     path('handle-subscription/', views.handle_subscription_request, name='handle_subscription'),
+    path('request-registration/', views.request_company_registration, name='request_company_registration'),
 
 ]
 
