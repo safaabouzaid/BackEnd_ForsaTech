@@ -136,61 +136,66 @@ class ResumeAPIView(APIView):
 
 
 
-# from rest_framework.views import APIView
-# from rest_framework.response import Response
-# from rest_framework import status
-# from decouple import config
-# import google.generativeai as genai
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.parsers import MultiPartParser, FormParser
+import google.generativeai as genai
+from decouple import config
+import pdfplumber
+import docx
 
-# genai.configure(api_key=config("GOOGLE_API_KEY"))
+genai.configure(api_key=config("GOOGLE_API_KEY"))
 
-# class ATSResumeConverterAPIView(APIView):
-#     """
-#     API to convert resume text to an ATS-friendly format,
-#     with optional job description customization.
-#     """
+class ATSResumeFromFileAPIView(APIView):
+    parser_classes = (MultiPartParser, FormParser)
 
-#     def post(self, request):
-#         resume_text = request.data.get("resume_text")
-#         job_description = request.data.get("job_description", None)
+    def post(self, request):
+        file = request.FILES.get("resume_file")
+        job_description = request.data.get("job_description", "")
 
-#         if not resume_text:
-#             return Response({
-#                 "status": "error",
-#                 "message": "The 'resume_text' field is required.",
-#                 "code": status.HTTP_400_BAD_REQUEST
-#             }, status=status.HTTP_400_BAD_REQUEST)
+        if not file:
+            return Response({"message": "Resume file is required."}, status=400)
 
-#         try:
-#             prompt = f"""
-#             I want you to act as a professional resume optimizer specialized in ATS-compliant resumes.
+        try:
+            if file.name.endswith(".pdf"):
+                resume_text = self.extract_text_from_pdf(file)
+            elif file.name.endswith(".docx"):
+                resume_text = self.extract_text_from_docx(file)
+            else:
+                return Response({"message": "Unsupported file format. Use PDF or DOCX."}, status=400)
+        except Exception as e:
+            return Response({"message": f"Error extracting text: {str(e)}"}, status=500)
 
-#             Given this resume:
-#             ---
-#             {resume_text}
-#             ---
+        try:
+            ats_resume = self.generate_ats_resume(resume_text, job_description)
+        except Exception as e:
+            return Response({"message": f"Error generating ATS resume: {str(e)}"}, status=500)
 
-#             {"Additionally, customize the resume to match the following job description:\n" + job_description if job_description else ""}
+        return Response({
+            "status": "success",
+            "message": "ATS resume generated successfully",
+            "ats_resume": ats_resume
+        }, status=200)
 
-#             Please return:
-#             - A structured resume optimized for ATS filters.
-#             - Plain text format only.
-#             - Use clear section titles like Summary, Skills, Education, Experience.
-#             - Use bullet points when relevant.
-#             - Avoid any design elements that ATS may not recognize.
-#             """
+    def extract_text_from_pdf(self, file):
+        with pdfplumber.open(file) as pdf:
+            return "\n".join(page.extract_text() for page in pdf.pages if page.extract_text())
 
-#             model = genai.GenerativeModel("gemini-1.5-flash")
-#             response = model.generate_content([prompt])
+    def extract_text_from_docx(self, file):
+        doc = docx.Document(file)
+        return "\n".join(paragraph.text for paragraph in doc.paragraphs)
 
-#             return Response({
-#                 "status": "success",
-#                 "optimized_resume": response.text.strip()
-#             }, status=status.HTTP_200_OK)
+    def generate_ats_resume(self, resume_text, job_description=""):
+        prompt = f"""
+You are an expert in resume optimization. Convert the following resume into an ATS-friendly format:
+- Focus on clear formatting, relevant keywords, and tailoring to job description (if any).
+- Resume Text:
+{resume_text}
 
-#         except Exception as e:
-#             return Response({
-#                 "status": "error",
-#                 "message": f"Failed to convert resume: {str(e)}",
-#                 "code": status.HTTP_500_INTERNAL_SERVER_ERROR
-#             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+Job Description:
+{job_description}
+        """
+        model = genai.GenerativeModel("gemini-1.5-flash")
+        response = model.generate_content(prompt)
+        return response.text.strip()
