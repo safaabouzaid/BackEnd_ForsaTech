@@ -20,6 +20,7 @@ import random
 import string
 from human_resources.serializer import SubscriptionPlanSerializer,SubscriptionChangeRequestSerializer
 from django.db.models import Q
+
 def generate_password(length=8):
     characters = string.ascii_letters + string.digits
     return ''.join(random.choices(characters, k=length))
@@ -380,4 +381,25 @@ def handle_subscription_request(request):
 
     sub_request.save()
     return Response({"message": f"Request {action}d successfully."})
+
+
+#=========================================company registration================================================#
+
+@api_view(['POST'])
+def request_company_registration(request):
+    company_name = request.data.get('company_name')
+    contact_email = request.data.get('contact_email')
+
+    if not company_name or not contact_email:
+        return Response({'error': 'Missing data'}, status=400)
+
+    # Send email to admin
+    send_mail(
+        subject='New Company Registration Request',
+        message=f'Company Name: {company_name}\nContact Email: {contact_email}',
+        from_email='noreply@yourplatform.com',
+        recipient_list=['abouzaidsafa@gmail.com'],
+    )
+
+    return Response({'message': 'Request sent successfully'})
 
