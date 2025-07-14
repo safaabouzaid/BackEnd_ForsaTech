@@ -19,6 +19,8 @@ from datetime import datetime, timedelta
 from django.db.models import Count
 from .models import SubscriptionChangeRequest
 from admin.serializers import CompanyDetailSerializer
+#from .utils import send_push_notification
+
 
 @api_view(['POST'])
 def loginHumanResource(request):
@@ -698,3 +700,32 @@ def user_job_applications(request):
 
     serializer = JobApplicationSerializer1000(applications, many=True)
     return Response(serializer.data)
+
+#======================================================#
+#@api_view(['POST'])
+#@permission_classes([IsAuthenticated])
+#def update_device_token(request):
+#    token = request.data.get('device_token')
+#    if not token:
+#        return Response({'error': 'Device token is required'}, status=400)
+
+#    user = request.user
+#    user.fcm_token = token
+#    user.save()
+#    return Response({'message': 'Device token updated successfully'})
+
+#@api_view(['POST'])
+#@permission_classes([IsAuthenticated])
+#def do_something(request):
+#    user = request.user  
+#    if user.fcm_token:
+#        try:
+#            send_push_notification(
+#                token=user.fcm_token,
+#                title=' title',
+#                body=' body'
+#            )
+#            return Response({'message': 'Notification sent successfully'})
+#        except Exception as e:
+#            return Response({'error': str(e)}, status=500)
+#    return Response({'error': 'User has no device token'}, status=400)

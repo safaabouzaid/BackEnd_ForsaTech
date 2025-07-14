@@ -32,7 +32,7 @@ class Company(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     subscription_plan = models.ForeignKey(SubscriptionPlan, on_delete=models.SET_NULL, null=True, blank=True)
     job_posts_this_month = models.IntegerField(default=0, null=True)  
-
+    used_candidate_suggestion = models.BooleanField(default=False)
     
     def __str__(self):
         return self.name if self.name else "Unnamed Company"
@@ -51,16 +51,17 @@ class humanResources(models.Model):
 
 
 class CompanyAd(models.Model):
-    company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='ads')
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, null=True,blank=True, related_name='ads')
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     ad_image = models.URLField(blank=True, null=True)
+    is_active = models.BooleanField(default=True)
       
     
 
     def __str__(self):
-        return f"{self.company.name} - {self.title}"
+        return f"{self.title}"
 
 
 class OpportunityName(models.Model):

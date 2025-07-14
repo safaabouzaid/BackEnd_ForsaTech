@@ -65,6 +65,22 @@ def recommend_users_view(request):
     except humanResources.DoesNotExist:
         return Response({"error": "You are not an HR user."}, status=403)
 
+    company = hr.company
+    plan = company.subscription_plan
+
+    if not plan:
+        return Response({"error": "No subscription plan assigned."}, status=403)
+
+    if plan.candidate_suggestions == 'none':
+        return Response({"error": "Your plan does not allow candidate suggestions."}, status=403)
+
+    if plan.candidate_suggestions == 'once' and company.used_candidate_suggestion:
+        return Response({"error": "You have already used your candidate suggestion."}, status=403)
+
+    if plan.candidate_suggestions == 'once' and not company.used_candidate_suggestion:
+        company.used_candidate_suggestion = True
+        company.save()
+
     opportunities = Opportunity.objects.filter(company=hr.company)
     result = []
 

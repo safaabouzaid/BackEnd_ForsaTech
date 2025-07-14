@@ -21,6 +21,8 @@ import string
 from human_resources.serializer import SubscriptionPlanSerializer,SubscriptionChangeRequestSerializer
 from django.db.models import Q
 
+
+
 def generate_password(length=8):
     characters = string.ascii_letters + string.digits
     return ''.join(random.choices(characters, k=length))
@@ -144,14 +146,45 @@ def list_create_ads(request):
             return Response({"message": "Company ad created successfully", "data": serializer.data}, status=status.HTTP_201_CREATED)
         return Response({"error": "Failed to create company ad", "details": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
-
-@api_view(['DELETE'])
+@api_view(['POST'])
 @permission_classes([IsAdminUser])
-def delete_ad(request, ad_id):
+def suspend_ad(request, ad_id):
     ad = get_object_or_404(CompanyAd, pk=ad_id)
-    ad.delete()
-    return Response({"message": "Company ad deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
 
+    if not ad.is_active:
+        return Response({"message": "Ad is already suspended."}, status=status.HTTP_400_BAD_REQUEST)
+
+    ad.is_active = False
+    ad.save()
+
+    company_email = ad.company.email
+    if not company_email:
+        return Response({"error": "Company does not have an email address."}, status=status.HTTP_400_BAD_REQUEST)
+
+    subject = f"Your advertisement '{ad.title}' has been suspended"
+    message = f"""
+Hello {ad.company.name} 🌟,
+
+Your advertisement titled '{ad.title}' has been suspended by the administration.
+
+Please contact the security team to understand the reason for this suspension.
+
+Regards,
+Forsa-Tech Team
+    """
+
+    try:
+        send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [company_email], fail_silently=False)
+    except Exception as e:
+        return Response(
+            {"error": f"Ad suspended but failed to send email notification. Error: {str(e)}"},
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
+
+    return Response(
+        {"message": f"Ad '{ad.title}' suspended and notification email sent to {company_email}."},
+        status=status.HTTP_200_OK
+    )
 
 #===================================   Company Details  ==================================#
 
