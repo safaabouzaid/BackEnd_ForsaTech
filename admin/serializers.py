@@ -12,32 +12,28 @@ class CompanySerializer(serializers.ModelSerializer):
 
 
 class CompanyAdSerializer(serializers.ModelSerializer):
-    company_name = serializers.CharField(write_only=True)
+    #company_name = serializers.CharField(write_only=True)
     company_logo = serializers.URLField(source='company.logo', read_only=True)
     company = serializers.CharField(source='company.name', read_only=True)
     ad_image = serializers.URLField(required=False)
+    is_active = serializers.BooleanField(read_only=True)
+
 
     class Meta:
         model = CompanyAd
-        fields = ['id', 'title', 'description', 'created_at', 'company', 'company_logo', 'company_name','ad_image']
+        fields = ['id', 'title', 'description', 'created_at', 'company', 'company_logo','ad_image','is_active',]
+
 
     def create(self, validated_data):
         company_name = validated_data.pop('company_name', None)
-        try:
-            company = Company.objects.get(name=company_name)
-        except Company.DoesNotExist:
-            raise serializers.ValidationError({"company_name": "Company not found"})
-        
+        company = None
+        if company_name:
+            try:
+                company = Company.objects.get(name=company_name)
+            except Company.DoesNotExist:
+                raise serializers.ValidationError({"company_name": "Company not found"})
         return CompanyAd.objects.create(company=company, **validated_data)
 
-    def create(self, validated_data):
-        company_name = validated_data.pop('company_name')
-        try:
-            company = Company.objects.get(name=company_name)
-        except Company.DoesNotExist:
-            raise serializers.ValidationError(f"Company with name '{company_name}' does not exist.")
-        validated_data['company'] = company
-        return super().create(validated_data)
 
 class SubscriptionPlanSerializer(serializers.ModelSerializer):
     class Meta:
