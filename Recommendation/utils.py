@@ -193,23 +193,33 @@ def recommend_users_for_opportunity(opportunity):
     user_resume_map = {resume.user_id: resume for resume in resumes}
 
     all_users = User.objects.filter(id__in=user_resume_map.keys()).distinct()
-    scores = []
-
+    valid_users = []
+    user_vectors = []
+    
     for user in all_users:
         resume = user_resume_map.get(user.id)
         if not resume or not resume.embedding:
-            continue  
-
+            continue
+    
         user_vector = np.array(resume.embedding)
         if np.linalg.norm(user_vector) == 0:
             continue
-
+    
         user_location = (user.location or "").strip().lower()
         if opp_type in ['on-site', 'hybrid'] and opp_location and user_location and opp_location != user_location:
             continue
-
-        sim = cosine_similarity([opp_vector], [user_vector])[0][0]
-        scores.append({"user": user, "similarity": sim})
+    
+        valid_users.append(user)
+        user_vectors.append(user_vector)
+    
+    if not user_vectors:
+        return []
+    
+    user_matrix = np.vstack(user_vectors)  # مصفوفة كل الـ vectors
+    similarities = cosine_similarity([opp_vector], user_matrix)[0]  # دفعة وحدة!
+    
+    scores = [{"user": u, "similarity": s} for u, s in zip(valid_users, similarities)]
+    
 
     if scores:
         sims = np.array([s["similarity"] for s in scores]).reshape(-1, 1)
