@@ -37,3 +37,4 @@ python-social-auth
 pdfplumber==0.10.2
 python-docx==1.2.0
 firebase_admin
+fitz

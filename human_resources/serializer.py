@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from devloper.models import User,Resume
-from .models import Opportunity,JobApplication,CompanyAd,OpportunityName,Company,SubscriptionPlan,SubscriptionChangeRequest,InterviewSchedule
+from .models import Opportunity,JobApplication,CompanyAd,OpportunityName,Company,SubscriptionPlan,SubscriptionChangeRequest,InterviewSchedule,humanResources
 from devloper.serializer import ResumeSerializer
 
 class HumanResourcesSerializer(serializers.ModelSerializer):
@@ -122,9 +122,24 @@ class CompanyAdSerializer(serializers.ModelSerializer):
 
 
 class SubscriptionPlanSerializer(serializers.ModelSerializer):
+    is_active_for_company = serializers.SerializerMethodField()
+
     class Meta:
         model = SubscriptionPlan
         fields = '__all__'
+
+    def get_is_active_for_company(self, obj):
+        request = self.context.get('request', None)
+        if request is None or not request.user.is_authenticated:
+            return False
+
+        try:
+            hr = humanResources.objects.get(user=request.user)
+            company = hr.company
+            return company and company.subscription_plan_id == obj.id
+        except humanResources.DoesNotExist:
+            return False
+
 
 
 
@@ -194,3 +209,9 @@ class JobApplicationSerializer1000(serializers.ModelSerializer):
     class Meta:
         model = JobApplication
         fields = ['status', 'opportunity']
+
+
+class CompanyUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Company
+        fields = ['logo', 'description']

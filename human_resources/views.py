@@ -9,7 +9,7 @@ from human_resources.models import Company, Opportunity
 from human_resources.serializer import *
 from rest_framework.permissions import IsAuthenticated
 from django.views.decorators.csrf import csrf_exempt
-from .models import User  ,humanResources,OpportunityName,Opportunity, JobApplication,InterviewSchedule
+from .models import User  ,humanResources,OpportunityName,Opportunity, JobApplication,InterviewSchedule,PasswordResetCode,PasswordResetCode
 from django.utils import timezone
 from devloper.models import User, Resume, Education, Experience, Language
 from devloper.serializer import ResumeSerializer
@@ -20,6 +20,9 @@ from django.db.models import Count
 from .models import SubscriptionChangeRequest
 from admin.serializers import CompanyDetailSerializer
 from .utils import send_push_notification
+
+import random
+import string
 
 
 @api_view(['POST'])
@@ -729,3 +732,108 @@ def do_something(request):
         except Exception as e:
             return Response({'error': str(e)}, status=500)
     return Response({'error': 'User has no device token'}, status=400)
+
+
+
+#===========================================================================================#
+
+def generate_reset_code(length=6):
+    return ''.join(random.choices(string.ascii_uppercase + string.digits, k=length))
+
+@api_view(['POST'])
+def request_password_reset(request):
+    email = request.data.get('email')
+
+    try:
+        user = User.objects.get(email=email)
+    except User.DoesNotExist:
+        return Response({"error": "Email not found."}, status=status.HTTP_404_NOT_FOUND)
+
+    active_code = PasswordResetCode.objects.filter(user=user, expires_at__gt=timezone.now()).first()
+    if active_code:
+        return Response({"message": "A code is already active. Please check your email."}, status=status.HTTP_200_OK)
+
+    code = generate_reset_code()
+    expires_at = timezone.now() + timedelta(minutes=10)  
+
+    PasswordResetCode.objects.create(user=user, code=code, expires_at=expires_at)
+
+    subject = "Password Reset Request"
+    message = f"""
+    Hello,
+
+    You requested to reset your password.
+    Here is your verification code: {code}
+
+    This code will expire in 10 minutes.
+
+    Regards,
+    Forsa-Tech Team
+    """
+
+    send_mail(subject, message, 'noreply@forsa-tech.com', [email])
+
+    return Response({"message": "Password reset code sent to your email."}, status=status.HTTP_200_OK)
+
+#===============================================================================================#
+
+
+@api_view(['POST'])
+def confirm_password_reset(request):
+    email = request.data.get('email')
+    code = request.data.get('code')
+    new_password = request.data.get('new_password')
+
+    try:
+        user = User.objects.get(email=email)
+    except User.DoesNotExist:
+        return Response({"error": "Invalid email."}, status=status.HTTP_404_NOT_FOUND)
+
+    try:
+        reset_code = PasswordResetCode.objects.get(user=user, code=code)
+    except PasswordResetCode.DoesNotExist:
+        return Response({"error": "Invalid code."}, status=status.HTTP_400_BAD_REQUEST)
+
+    if reset_code.is_expired():
+        return Response({"error": "Code has expired."}, status=status.HTTP_400_BAD_REQUEST)
+
+    user.set_password(new_password)
+    user.save()
+
+    reset_code.delete()
+
+    return Response({"message": "Password has been reset successfully."}, status=status.HTTP_200_OK)
+
+
+
+
+#==============================================================================================#
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def list_subscription_plans(request):
+    plans = SubscriptionPlan.objects.all()
+    serializer = SubscriptionPlanSerializer(plans, many=True, context={'request': request})
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+#================================================================================================#
+
+
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def update_company_info(request):
+    try:
+        hr = humanResources.objects.get(user=request.user)
+    except humanResources.DoesNotExist:
+        return Response({"error": "HR not found."}, status=status.HTTP_404_NOT_FOUND)
+
+    company = hr.company
+    if not company:
+        return Response({"error": "No company assigned to this HR."}, status=status.HTTP_400_BAD_REQUEST)
+
+    serializer = CompanyUpdateSerializer(company, data=request.data, partial=True)
+    if serializer.is_valid():
+        serializer.save()
+        return Response({"message": "Company info updated successfully.", "data": serializer.data}, status=status.HTTP_200_OK)
+    else:
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

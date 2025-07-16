@@ -30,5 +30,8 @@ urlpatterns = [
     path('company-profile/',views.get_hr_company_profile, name='get_hr_company_profile'),
     path('my-applications/', views.user_job_applications, name='user-job-applications'),
     path('update-device-token/', views.update_device_token, name='update-device-token'),
-
+    path('auth/request-reset/',views.request_password_reset, name='request-reset'),
+    path('auth/confirm-reset/',views.confirm_password_reset, name='confirm-reset'),
+    path('plans/',views.list_subscription_plans, name='update-company-info'),
+    path('company/update/', views.update_company_info, name='update_company_info'),
 ]  
