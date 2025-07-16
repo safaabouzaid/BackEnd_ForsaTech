@@ -70,10 +70,19 @@ class ResumeSerializer(serializers.ModelSerializer):
             
             
             
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email'] 
+
 class DeveloperSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True) 
     class Meta:
         model = Developer
-        fields = ['gender', 'birth_date', 'profile_picture']            
+        fields = ['id', 'gender', 'birth_date', 'bio', 'profile_picture', 'user']
+        extra_kwargs = {
+            'profile_picture': {'required': False}
+        }
 
 
 class EducationSerializer(serializers.ModelSerializer):

@@ -123,48 +123,40 @@ def save_languages(request):
 
 ## add  profile 
 
-
-
-@api_view(['POST'])
+@api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def add_developer(request):
+def get_developer(request):
     user = request.user
-
-    if hasattr(user, 'developer_profile'):
+    try:
         developer_profile = user.developer_profile
-        serializer = DeveloperSerializer(developer_profile, data=request.data, partial=True)
-        if serializer.is_valid():
-            serializer.save()
-            return Response({'detail': 'Developer profile updated successfully.', 'data': serializer.data}, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    
-    serializer = DeveloperSerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save(user=user)
-        return Response({'detail': 'Developer profile created successfully.', 'data': serializer.data}, status=status.HTTP_201_CREATED)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        serializer = DeveloperSerializer(developer_profile)
+        return Response({'detail': 'Developer profile retrieved successfully.', 'data': serializer.data}, status=status.HTTP_200_OK)
+    except Developer.DoesNotExist:
+        return Response({'detail': 'Developer profile not found.', 'data': None}, status=status.HTTP_200_OK)
 
 
 
-### modfy forfile
- 
 @api_view(['PUT', 'PATCH'])
 @permission_classes([IsAuthenticated])
 def update_developer(request):
-    try:
-        developer = request.user.developer_profile
-    except Developer.DoesNotExist:
-        return Response({'detail': 'Developer profile not found.'}, status=404)
-
+    user = request.user
     partial = request.method == 'PATCH'
-    serializer = DeveloperSerializer(developer, data=request.data, partial=partial)
+
+    try:
+        developer_profile = user.developer_profile
+        serializer = DeveloperSerializer(developer_profile, data=request.data, partial=partial)
+    except Developer.DoesNotExist:
+        serializer = DeveloperSerializer(data=request.data)
+
     if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data, status=200)
-    return Response(serializer.errors, status=400)
-
-
+        if hasattr(user, 'developer_profile'):
+            serializer.save()
+            return Response({'detail': 'Developer profile updated successfully.', 'data': serializer.data}, status=status.HTTP_200_OK)
+        else:
+            serializer.save(user=user)
+            return Response({'detail': 'Developer profile created successfully.', 'data': serializer.data}, status=status.HTTP_201_CREATED)
+    
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 ### delet profile 
 
