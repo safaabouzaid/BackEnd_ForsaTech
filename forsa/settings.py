@@ -57,7 +57,7 @@ INSTALLED_APPS = [
     'Recommendation',
     'social_django',
     'ConvertResume',
-    
+    'GenerateResume',
 
 
     
