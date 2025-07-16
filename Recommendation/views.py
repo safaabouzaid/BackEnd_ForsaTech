@@ -71,15 +71,14 @@ def recommend_users_view(request):
     if not plan:
         return Response({"error": "No subscription plan assigned."}, status=403)
 
-    if plan.candidate_suggestions == 'none':
+    if plan.max_candidate_suggestions == 0 or plan.candidate_suggestions == 'none':
         return Response({"error": "Your plan does not allow candidate suggestions."}, status=403)
 
-    if plan.candidate_suggestions == 'once' and company.used_candidate_suggestion:
-        return Response({"error": "You have already used your candidate suggestion."}, status=403)
+    if plan.max_candidate_suggestions and company.used_candidate_suggestions_count >= plan.max_candidate_suggestions:
+        return Response({"error": "You have used all your allowed candidate suggestions."}, status=403)
 
-    if plan.candidate_suggestions == 'once' and not company.used_candidate_suggestion:
-        company.used_candidate_suggestion = True
-        company.save()
+    company.used_candidate_suggestions_count += 1
+    company.save()
 
     opportunities = Opportunity.objects.filter(company=hr.company)
     result = []
@@ -87,13 +86,13 @@ def recommend_users_view(request):
     for opportunity in opportunities:
         recommendations = recommend_users_for_opportunity(opportunity)
 
-        # المتقدمين بس
+        # المتقدمين فقط
         applied_user_ids = set(
             JobApplication.objects.filter(opportunity=opportunity)
             .values_list('user__id', flat=True)
         )
 
-        # أفضل 5  قدموا
+        # أفضل 5 من الذين قدموا
         filtered_recommendations = [
             item for item in recommendations if item["user"].id in applied_user_ids
         ]
@@ -114,16 +113,13 @@ def recommend_users_view(request):
                 "similarity_score": round(item["ranking_score"], 3),
                 "skills": skills
             })
-        
-            if len(top_candidates) == 5:
-                break
 
         result.append({
             "opportunity_id": opportunity.id,
             "opportunity_name": opportunity.opportunity_name,
             "description": opportunity.description,
-            "posting_date":opportunity.posting_date,
-            "application_deadline":opportunity.application_deadline,
+            "posting_date": opportunity.posting_date,
+            "application_deadline": opportunity.application_deadline,
             "salary_range": opportunity.salary_range,
             "location": opportunity.location,
             "experience_level": opportunity.experience_level,
@@ -132,9 +128,6 @@ def recommend_users_view(request):
         })
 
     return Response(result)
-
-
-
 
 
 @api_view(['GET'])

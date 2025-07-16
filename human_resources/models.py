@@ -14,7 +14,8 @@ class SubscriptionPlan(models.Model):
         choices=[('none', 'No suggestions'), ('once', 'One time'), ('always', 'Always')],
         default='none'
     )
-    price = models.DecimalField(max_digits=8, decimal_places=2, null=True, blank=True)  
+    price = models.DecimalField(max_digits=8, decimal_places=2, null=True, blank=True) 
+    max_candidate_suggestions = models.IntegerField(null=True, blank=True)
 
 
     def __str__(self):
@@ -32,7 +33,7 @@ class Company(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     subscription_plan = models.ForeignKey(SubscriptionPlan, on_delete=models.SET_NULL, null=True, blank=True)
     job_posts_this_month = models.IntegerField(default=0, null=True)  
-    used_candidate_suggestion = models.BooleanField(default=False)
+    used_candidate_suggestions_count = models.IntegerField(default=0)
     
     def __str__(self):
         return self.name if self.name else "Unnamed Company"
