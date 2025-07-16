@@ -5,7 +5,6 @@ from rest_framework import status
 from rest_framework.parsers import MultiPartParser, FormParser
 from devloper.models import Education, Project, Experience, TrainingCourse, Resume, Skill
 from devloper.serializer import ResumeSerializer
-import fitz  # PyMuPDF
 import json
 import re
 import google.generativeai as genai
@@ -54,6 +53,7 @@ class ConvertResumeAPIView(APIView):
         return Response(ats_resume, status=status.HTTP_201_CREATED)
 
     def extract_text_from_pdf(self, pdf_data):
+        import fitz
         try:
             doc = fitz.open(stream=pdf_data, filetype="pdf")
             text = "\n".join(page.get_text("text") for page in doc)
