@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'django_filters',
     'Recommendation',
     'social_django',
+    'GenerateResume',
 
 
     

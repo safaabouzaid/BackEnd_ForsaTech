@@ -28,8 +28,8 @@ google-generativeai
 gunicorn
 psycopg2-binary
 whitenoise
-
 numpy<2
+PyMuPDF
 torch --index-url https://download.pytorch.org/whl/cpu
 
 social-auth-app-django 
