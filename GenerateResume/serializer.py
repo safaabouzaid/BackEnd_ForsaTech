@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from GenerateResume.models import ResumeEvaluation
 from devloper.models import Language, User, Resume, Skill, Education, Project, Experience, TrainingCourse
 
 class UserSerializer(serializers.ModelSerializer):
@@ -49,6 +50,16 @@ class ResumeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Resume
         fields = ['id','personal_details', 'summary', 'skills', 'education', 'projects', 'experiences', 'trainings_courses','languages','pdf_file']
+
+
+
+
+class ResumeEvaluationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ResumeEvaluation
+        fields = ['match_percentage','missing_keywords',]
+
+
 
 
 
