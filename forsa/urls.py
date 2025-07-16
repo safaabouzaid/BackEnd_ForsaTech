@@ -14,6 +14,7 @@ urlpatterns = [
     path('admin-dash/', include('admin.urls')),
     path('recommend/', include('Recommendation.urls')),
     path('resume/', include('GenerateResume.urls')),
+    path('resume/', include('ConvertResume.urls')),
     path('github-auth/', include('social_django.urls', namespace='social')),
 ]
 
