@@ -50,13 +50,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'devloper.apps.DevloperConfig',
+    # 'devloper.apps.DevloperConfig',
     'human_resources.apps.HumanResourcesConfig',
     'rest_framework',
     'django_filters',
     'Recommendation',
     'social_django',
     'ConvertResume',
+    'devloper',
     
 
 
