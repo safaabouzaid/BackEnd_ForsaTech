@@ -29,6 +29,6 @@ urlpatterns = [
     path('get-interviews/',views.get_interview_schedules, name='get_interviews'),
     path('company-profile/',views.get_hr_company_profile, name='get_hr_company_profile'),
     path('my-applications/', views.user_job_applications, name='user-job-applications'),
-    #path('update-device-token/', views.update_device_token, name='update-device-token'),
+    path('update-device-token/', views.update_device_token, name='update-device-token'),
 
 ]  

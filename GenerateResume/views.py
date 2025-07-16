@@ -12,6 +12,11 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.decorators import api_view, permission_classes
+
+import json
+from .utils import extract_json
+from human_resources.models import Opportunity
 
 class ResumeAPIView(APIView):
     permission_classes = [IsAuthenticated]  # ⬅️ مهم لاستخدام التوكن
@@ -91,7 +96,7 @@ class ResumeAPIView(APIView):
             "data": serializer.data,
         }, status=status.HTTP_201_CREATED)
 
-    def generate_summary(self, user_data):
+    def generate_summary(self, user_data): 
         skills = ", ".join([s.get("skill", "") for s in user_data.get("skills", []) if "skill" in s])
         education = "; ".join([
             f"{e.get('degree')} at {e.get('institution')} ({e.get('start_date')} - {e.get('end_date')})"
@@ -174,3 +179,97 @@ Job Description:
         model = genai.GenerativeModel("gemini-1.5-flash")
         response = model.generate_content(prompt)
         return response.text.strip()
+
+
+
+
+#========================================Generate Question===============================================#
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def generate_opportunity_questions(request):
+    title = request.data.get("title")
+    required_skills = request.data.get("required_skills")
+    description = request.data.get("description")
+
+    if not title or not required_skills or not description:
+        return Response(
+            {"error": "title, required_skills, and description are required"},
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+    opportunity = None
+    try:
+        opportunity = Opportunity.objects.get(
+            opportunity_name=title,
+            description=description,
+            required_skills=required_skills
+        )
+    except Opportunity.DoesNotExist:
+        pass  
+
+    input_prompt = f'''
+    You are an AI assistant specializing in job interview preparation. Generate exactly 5 multiple-choice questions (MCQs) 
+    for a job interview based on the following job title, description, and required skills.
+    
+    The questions should:
+    - Reflect real-world job interview scenarios.
+    - Test problem-solving, debugging, and practical experience.
+    - Include technical questions with real-world applications.
+    - Contain at least one question that involves analyzing code.
+
+    Job Title: {title}
+    Job Description: {description}
+    Required Skills: {required_skills}
+
+    Each MCQ should have:
+    - A question string.
+    - Four options in an array, where each option is a string.
+    - The correct answer as the index of the correct option (starting from 0).
+
+    Strictly follow this format:
+    {{
+        "questions": [
+            {{
+                "question": "What is ...?",
+                "options": ["Option A", "Option B", "Option C", "Option D"],
+                "correct_answer": 0
+            }},
+            {{
+                "question": "Which of the following ...?",
+                "options": ["Option A", "Option B", "Option C", "Option D"],
+                "correct_answer": 2
+            }}
+        ]
+    }}
+    '''
+
+    model = genai.GenerativeModel('gemini-1.5-flash')
+    response = model.generate_content([input_prompt])
+
+    if not response or not response.text.strip():
+        return Response(
+            {"error": "No valid response received from the model"},
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
+
+    json_text = extract_json(response.text.strip())
+
+    try:
+        questions = json.loads(json_text) if json_text else None
+    except json.JSONDecodeError:
+        questions = None
+
+    if not questions:
+        return Response(
+            {"error": "Invalid JSON format received from the model"},
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
+
+    return Response(
+        {
+            "opportunity_id": opportunity.id if opportunity else None,
+            "questions": questions["questions"]
+        },
+        status=status.HTTP_200_OK
+    )
