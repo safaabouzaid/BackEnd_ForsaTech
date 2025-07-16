@@ -332,3 +332,44 @@ def education_list_create(request):
             return Response({'errors': errors}, status=status.HTTP_400_BAD_REQUEST)
 
         return Response(added_educations, status=status.HTTP_201_CREATED)
+
+
+
+# views.py
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
+
+from .models import Resume
+
+
+
+class LatestResumeAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        try:
+            latest_resume = Resume.objects.filter(user=request.user).last()
+            if not latest_resume:
+                return Response({
+                    "status": "Empty",
+                    "message": "No resume found",
+                    "code": 200,
+                    "data": {}
+                })
+
+            serializer = ResumeSerializer1(latest_resume)
+            return Response({
+                "status": "Success",
+                "message": "Resume fetched successfully",
+                "code": 200,
+                "data": serializer.data
+            }, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response({
+                "status": "Failed",
+                "message": f"Couldn't fetch resume: {str(e)}",
+                "code": 400
+            }, status=status.HTTP_400_BAD_REQUEST)

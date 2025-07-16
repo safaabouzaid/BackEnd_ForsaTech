@@ -12,6 +12,7 @@ urlpatterns = [
     path('update-fcm-token/', views.update_fcm_token),
     path('education/', views.education_list_create, name='education_list_create'),
     path('experience/', views.experience_list_create, name='experience_list_create'),
+    path("get-latest-resume/", views.LatestResumeAPIView.as_view()),
      #
 ]
     # path('apply/<int:opportunity_id>/', views.apply_for_opportunity, name='apply-for-opportunity'),
