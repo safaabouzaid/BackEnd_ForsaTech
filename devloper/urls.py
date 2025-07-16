@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from . import ResumeSerializer1
 
 urlpatterns = [
     path('SignUp/',views.register,name='register'),

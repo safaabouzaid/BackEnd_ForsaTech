@@ -11,3 +11,4 @@ staticfiles/
 /my_local_sbert
 my_local_sbert.zip
 .env
+firebase_credentials.json

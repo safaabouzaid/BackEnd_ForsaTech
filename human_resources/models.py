@@ -1,6 +1,8 @@
 from django.db import models
 from devloper.models import User
 from django.contrib.postgres.fields import ArrayField
+from django.utils import timezone
+from datetime import timedelta
 
 class SubscriptionPlan(models.Model):
     
@@ -176,3 +178,15 @@ class InterviewSchedule(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.opportunity.opportunity_name} on {self.date} at {self.time}"
+
+
+
+
+class PasswordResetCode(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    code = models.CharField(max_length=10)
+    created_at = models.DateTimeField(auto_now_add=True)
+    expires_at = models.DateTimeField()
+
+    def is_expired(self):
+        return timezone.now() > self.expires_at

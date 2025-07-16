@@ -28,8 +28,8 @@ google-generativeai
 gunicorn
 psycopg2-binary
 whitenoise
-
 numpy<2
+PyMuPDF
 torch --index-url https://download.pytorch.org/whl/cpu
 
 social-auth-app-django 
@@ -37,3 +37,4 @@ python-social-auth
 pdfplumber==0.10.2
 python-docx==1.2.0
 firebase_admin
+PyMuPDF

@@ -1,0 +1,153 @@
+[33ma17ffb9[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m HEAD@{0}: reset: moving to HEAD~
+[33mc2694da[m HEAD@{1}: reset: moving to HEAD~
+[33m3032d71[m HEAD@{2}: commit: fixResumeEvaluation
+[33mc2694da[m HEAD@{3}: reset: moving to HEAD~
+[33m1b40537[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{4}: pull: Fast-forward
+[33ma17ffb9[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m HEAD@{5}: reset: moving to HEAD~
+[33m09b908f[m HEAD@{6}: commit: Add/reset password
+[33ma17ffb9[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m HEAD@{7}: pull: Fast-forward
+[33m2a5fc99[m HEAD@{8}: commit: generate questions
+[33mfce077e[m HEAD@{9}: commit: edit/limit
+[33m067982d[m HEAD@{10}: commit: recommendation limit
+[33m48247cd[m HEAD@{11}: commit: fix python docx
+[33m6715ef6[m HEAD@{12}: pull: Fast-forward
+[33m454b56d[m HEAD@{13}: reset: moving to HEAD~
+[33m826f3ce[m HEAD@{14}: commit: fix python docx
+[33m454b56d[m HEAD@{15}: commit (merge): Merge branch 'main' of https://github.com/safaabouzaid/BackEnd_ForsaTech
+[33mf16f935[m HEAD@{16}: commit: fix
+[33mf4ab10f[m HEAD@{17}: commit: fixes
+[33m0e4a8f7[m HEAD@{18}: reset: moving to HEAD~
+[33mf8a8fd3[m HEAD@{19}: commit: fixes
+[33m0e4a8f7[m HEAD@{20}: reset: moving to HEAD~
+[33m79eab0d[m HEAD@{21}: commit: fixes
+[33m0e4a8f7[m HEAD@{22}: commit: company reg.
+[33m376900a[m HEAD@{23}: pull: Fast-forward
+[33maaa2042[m HEAD@{24}: reset: moving to HEAD~
+[33m56644c2[m HEAD@{25}: commit: company reg.
+[33maaa2042[m HEAD@{26}: pull: Fast-forward
+[33m645c861[m HEAD@{27}: commit: Add/GitHub Auth
+[33m65934d0[m HEAD@{28}: commit: fix/check status
+[33mf5e07e0[m HEAD@{29}: commit: Add/Company profile for HR
+[33m7eba33e[m HEAD@{30}: reset: moving to HEAD~
+[33m9745352[m HEAD@{31}: commit: Add/Company profile for HR
+[33m7eba33e[m HEAD@{32}: reset: moving to HEAD~
+[33mede95bb[m HEAD@{33}: commit: Add/Company profile for HR
+[33m7eba33e[m HEAD@{34}: pull: Fast-forward
+[33m39ac6b1[m HEAD@{35}: reset: moving to HEAD~
+[33meda2a4a[m HEAD@{36}: commit: Add/Company profile for HR
+[33m39ac6b1[m HEAD@{37}: commit: fix/email
+[33mf1ad1b5[m HEAD@{38}: pull: Fast-forward
+[33m82c080b[m HEAD@{39}: commit: fix/applicantid
+[33me65d9e8[m HEAD@{40}: commit: Add/description to Rec.skill
+[33m99cbe95[m HEAD@{41}: commit: .
+[33m7b22eaa[m HEAD@{42}: commit: fix
+[33mdf14a8b[m HEAD@{43}: commit: Add/GenerateResume
+[33mbf2d63d[m HEAD@{44}: pull: Fast-forward
+[33m57bc72d[m HEAD@{45}: reset: moving to HEAD~
+[33m4cde081[m HEAD@{46}: commit: Add/GenerateResume
+[33m57bc72d[m HEAD@{47}: pull: Fast-forward
+[33m7f0957f[m HEAD@{48}: commit: fix/sign up
+[33m9f3016d[m HEAD@{49}: pull: Fast-forward
+[33macdb85a[m HEAD@{50}: commit: remove/send email
+[33m847ac53[m HEAD@{51}: commit: add/ email interview
+[33m78bd129[m HEAD@{52}: commit: fix/update resume embeddings
+[33m0b23013[m HEAD@{53}: commit: Add/Interview Schedule
+[33me2ad06e[m HEAD@{54}: pull: Fast-forward
+[33me599ef9[m HEAD@{55}: commit: add/ posting date
+[33mb431da4[m HEAD@{56}: commit: .
+[33m425d32c[m HEAD@{57}: commit: edit/procfile
+[33m5f67c6b[m HEAD@{58}: commit: .
+[33md6a5677[m HEAD@{59}: commit: edit/task
+[33m9d6e116[m HEAD@{60}: commit: fix/out of memory
+[33mae023e6[m HEAD@{61}: commit: schedule emb.
+[33m913f410[m HEAD@{62}: commit: update embeddings
+[33m681c978[m HEAD@{63}: commit: fix/opp. embedding
+[33mff2837d[m HEAD@{64}: pull: Fast-forward
+[33m90d6c18[m HEAD@{65}: reset: moving to HEAD~
+[33m57eaaca[m HEAD@{66}: commit: fix/opp. embedding
+[33m90d6c18[m HEAD@{67}: commit: fix/ads
+[33mfa51e9e[m HEAD@{68}: commit: debug
+[33m2c6c1eb[m HEAD@{69}: pull: Fast-forward
+[33m9802383[m HEAD@{70}: reset: moving to HEAD~
+[33m2ec1f00[m HEAD@{71}: commit: debug
+[33m9802383[m HEAD@{72}: commit: fix/create opp.
+[33mdbf3872[m HEAD@{73}: commit: debug
+[33m039c033[m HEAD@{74}: pull: Fast-forward
+[33m06d17cc[m HEAD@{75}: reset: moving to HEAD~
+[33m9c2cfbc[m HEAD@{76}: commit: debug
+[33m06d17cc[m HEAD@{77}: commit: recommended skills
+[33m5282c51[m HEAD@{78}: commit: .
+[33mf11220f[m HEAD@{79}: commit: .
+[33m15a2dc7[m HEAD@{80}: commit: .
+[33m8854815[m HEAD@{81}: reset: moving to HEAD~
+[33mc869a43[m HEAD@{82}: reset: moving to HEAD~
+[33m3737c3e[m HEAD@{83}: reset: moving to HEAD~
+[33m722dace[m HEAD@{84}: reset: moving to HEAD~
+[33ma0a4119[m HEAD@{85}: commit: .
+[33m722dace[m HEAD@{86}: commit: fix/Loading
+[33m3737c3e[m HEAD@{87}: commit: Add SBERT with LFS
+[33mc869a43[m HEAD@{88}: commit: Add local SBERT model
+[33m8854815[m HEAD@{89}: commit: fix:torch cpu only
+[33ma25393f[m HEAD@{90}: commit: req.
+[33m2c0af33[m HEAD@{91}: commit: .
+[33m9577e49[m HEAD@{92}: commit: .
+[33m9dd78e1[m HEAD@{93}: commit: fix
+[33m9aa794f[m HEAD@{94}: commit: fix/recommendation
+[33mcb55dd3[m HEAD@{95}: commit: .
+[33m51f7bc1[m HEAD@{96}: commit: fix/timeout
+[33mbab15c4[m HEAD@{97}: commit: Add/check subscription status
+[33mf1bb921[m HEAD@{98}: commit: Add/ HR Dashboard Stats
+[33m14cbf42[m HEAD@{99}: commit: fix/Premium Members
+[33m2193c4d[m HEAD@{100}: commit: edit/allowed CORS
+[33m85d7106[m HEAD@{101}: commit: edit loaddata
+[33m5bdc88f[m HEAD@{102}: commit: .
+[33m2a6b7c1[m HEAD@{103}: commit: .
+[33mc6a0670[m HEAD@{104}: commit: .
+[33m33f2605[m HEAD@{105}: commit: fix
+[33me41d204[m HEAD@{106}: commit: fix
+[33md02d3af[m HEAD@{107}: commit: .
+[33m88f4a4c[m HEAD@{108}: commit: .
+[33madbf419[m HEAD@{109}: commit: fix: corrected django-decouple version
+[33m431ca90[m HEAD@{110}: commit: .
+[33mf1f8c7c[m HEAD@{111}: commit: .
+[33mfdbeb00[m HEAD@{112}: commit: scipy
+[33m1313ae9[m HEAD@{113}: commit: req.
+[33mca70bef[m HEAD@{114}: commit: .
+[33m1b9d616[m HEAD@{115}: commit: runtime file
+[33mcfcc25a[m HEAD@{116}: commit: fix/requirements file
+[33m7bdea8e[m HEAD@{117}: commit: Render settings
+[33m3db5176[m HEAD@{118}: commit: Seeding data +CHeck status
+[33mf4250e6[m HEAD@{119}: commit: send email accept/reject
+[33m5ff107d[m HEAD@{120}: commit: .
+[33mab81a76[m HEAD@{121}: commit: update status /job application
+[33ma899148[m HEAD@{122}: commit: delete plan/imge to AD
+[33mfe8e6b3[m HEAD@{123}: commit: Manage job applicatons
+[33ma7e17ee[m HEAD@{124}: commit: Some updates
+[33md1ece58[m HEAD@{125}: commit: Recommendation for one opportunity
+[33m1f83a80[m HEAD@{126}: commit: edit inferred skills +OPP. details
+[33m6165631[m HEAD@{127}: commit: add/manage plan + fix/responses
+[33m4279c0f[m HEAD@{128}: commit: edit/Company Ad
+[33m9b59026[m HEAD@{129}: commit: fix
+[33md4d783d[m HEAD@{130}: commit: merge
+[33m2afd997[m HEAD@{131}: commit (merge): Merge branch 'main' of https://github.com/safaabouzaid/BackEnd_ForsaTech
+[33m3769e2d[m HEAD@{132}: commit: Add recommendation system & managing subscription plans+ fetch opportunities for HR's own company
+[33m08f25b5[m HEAD@{133}: commit: fix create opp.
+[33m9921fd5[m HEAD@{134}: commit: edit create opp.
+[33me3d6bb5[m HEAD@{135}: commit: refactor: remove FK from Opportunity to OpportunityName and use choices instead + edit response for HRlogin to send company details
+[33m74d83fe[m HEAD@{136}: commit: hr/create ad and user-resume details
+[33md6a3f8e[m HEAD@{137}: commit: get applicants for opportunity + edit create opportunity api
+[33m85c9391[m HEAD@{138}: commit: Add subscription plan
+[33m506cd2e[m HEAD@{139}: commit: Add subscription plan
+[33mfb4c0bd[m HEAD@{140}: commit: add Jazzmin dashboard theme
+[33mf1d7806[m HEAD@{141}: commit: Add/inferred skills
+[33m791cbf3[m HEAD@{142}: pull: Fast-forward
+[33m2a97993[m HEAD@{143}: commit: .
+[33meaf3fb4[m HEAD@{144}: commit: Add ngrok to allowed CORS
+[33m86fbc93[m HEAD@{145}: commit: edit/create company
+[33m39b0259[m HEAD@{146}: commit: Complete statistics + create a company account
+[33mca91f75[m HEAD@{147}: commit: Add/opportunity name model
+[33m20ff7a6[m HEAD@{148}: commit: .
+[33m1762b65[m HEAD@{149}: commit: ignore sqlite
+[33ma41841a[m HEAD@{150}: commit: fix/ Login
+[33mbe35340[m HEAD@{151}: commit: Add/Complaint
+[33m7c9e5e
