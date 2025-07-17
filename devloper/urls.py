@@ -14,7 +14,11 @@ urlpatterns = [
     path("get-latest-resume/", views.LatestResumeAPIView.as_view()),
     path('languages/', views.language_list_create, name='language-list-create'),
     path('experiences/', views.experience_list_create, name='experience-list-create'),
-     #
+  
+
+
+    path('complaints/', views.submit_complaint, name='submit_complaint'),
+
 ]
     # path('apply/<int:opportunity_id>/', views.apply_for_opportunity, name='apply-for-opportunity'),
 
