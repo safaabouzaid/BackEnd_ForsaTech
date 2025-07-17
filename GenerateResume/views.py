@@ -1,4 +1,3 @@
-import fitz
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -282,6 +281,7 @@ def generate_opportunity_questions(request):
 class PDFProcessor:
     @staticmethod
     def extract_text_from_pdf(pdf_data):
+        import fitz 
         try:
             doc = fitz.open(stream=pdf_data, filetype="pdf")
             text = "\n".join(page.get_text("text") for page in doc)
