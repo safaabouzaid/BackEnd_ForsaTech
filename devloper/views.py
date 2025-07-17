@@ -92,7 +92,6 @@ def login(request):
 def language_list_create(request):
     user = request.user
 
-    # نحاول الحصول على أول سيرة ذاتية أو ننشئ واحدة إن لم توجد
     resume = Resume.objects.filter(user=user).first()
     if not resume:
         resume = Resume.objects.create(user=user)
@@ -261,7 +260,10 @@ def update_fcm_token(request):
 @permission_classes([IsAuthenticated])
 def experience_list_create(request):
     user = request.user
-    resume, created = Resume.objects.get_or_create(user=user)
+    resume = Resume.objects.filter(user=user).last()  # أو .first() حسب الحاجة
+
+    if not resume:
+        return Response({'error': 'No resume found for this user.'}, status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
         experiences = Experience.objects.filter(resume=resume)
@@ -292,13 +294,14 @@ def experience_list_create(request):
                 else:
                     errors.append(serializer.errors)
             else:
-               
+                # يمكنك تجاهل التكرار أو تعديله هنا
                 pass
 
         if errors:
             return Response({'errors': errors}, status=status.HTTP_400_BAD_REQUEST)
 
         return Response(added_experiences, status=status.HTTP_201_CREATED)
+
     
     
 @api_view(['GET', 'POST'])
