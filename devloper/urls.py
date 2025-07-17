@@ -1,14 +1,12 @@
 from django.urls import path
 from . import views
-# from . import ResumeSerializer1
 
 urlpatterns = [
     path('SignUp/',views.register,name='register'),
     path('LogIn/',views.login,name='register'),
-    # path('languages/save/', views.save_languages, name='save_languages'),
-    # path('developer/add/', views.add_developer, name='add-developer'),
-    # path('developer/update/', views.update_developer, name='update-developer'),
-    # path('developer/delete/', views.delete_developer, name='delete-developer'),
+  #  path('languages/save/', views.save_languages, name='save_languages'),
+    path('developer/get/', views.get_developer, name='get-developer'),
+    path('developer/update/', views.update_developer, name='update-developer'),
     path('resumes/', views.create_resume_from_parser),
     path('update-fcm-token/', views.update_fcm_token),
     path('education/', views.education_list_create, name='education_list_create'),

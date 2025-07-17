@@ -16,6 +16,8 @@ urlpatterns = [
     path('resume/', include('GenerateResume.urls')),
     path('resume/', include('ConvertResume.urls')),
     path('github-auth/', include('social_django.urls', namespace='social')),
+    path('evaluation/', include('EvaluationResume.urls')),
+
 ]
 
 
