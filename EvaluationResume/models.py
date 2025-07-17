@@ -8,6 +8,7 @@ class ResumeEvaluation(models.Model):
     job_description = models.TextField()
     match_percentage = models.FloatField()
     missing_keywords = models.JSONField(default=list)
+    improvement_tips = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
