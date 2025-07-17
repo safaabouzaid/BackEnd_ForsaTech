@@ -58,7 +58,7 @@ INSTALLED_APPS = [
     'social_django',
     'ConvertResume',
     'devloper',
-    
+    'EvaluationResume',
     'GenerateResume',
 
 
