@@ -58,7 +58,7 @@ INSTALLED_APPS = [
     'social_django',
     'ConvertResume',
     'devloper',
-    
+    'EvaluationResume',
     'GenerateResume',
 
 
@@ -132,6 +132,7 @@ CORS_ALLOWED_ORIGINS = [
      'https://forsatech.netlify.app',
      'https://5e5b-169-150-196-103.ngrok-free.app',
      'https://backend-forsatech.onrender.com',
+     'https://5c1b694b8e9c.ngrok-free.app',
      
 
 ]
@@ -175,7 +176,7 @@ DATABASES = {
 #DATABASES = {
 #    'default': {
 #        'ENGINE': 'django.db.backends.postgresql',
-#        'NAME': 'forsa_tech',
+#        'NAME': 'Forsa-Tech',
 #        'USER': 'postgres',
 #        'PASSWORD': '1234',
 #        'HOST': 'localhost',
