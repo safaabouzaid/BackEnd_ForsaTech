@@ -86,7 +86,6 @@ class ResumeEvaluationView(APIView):
         {{
             "match_percentage": 0.0,
             "missing_keywords": [],
-            "improvement_tips": ""
         }}
         '''
         try:
@@ -98,5 +97,4 @@ class ResumeEvaluationView(APIView):
             return {
                 "match_percentage": 0.0,
                 "missing_keywords": [],
-                "improvement_tips": "Invalid JSON format received from the model"
             }
