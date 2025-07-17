@@ -329,6 +329,7 @@ def get_opportunities_for_hr_company(request):
 
 
 
+
 #======================================== OPP. details ==============================================#
 @api_view(['GET'])
 def opportunity_details_view(request):
@@ -850,3 +851,6 @@ def update_company_info(request):
         return Response({"message": "Company info updated successfully.", "data": serializer.data}, status=status.HTTP_200_OK)
     else:
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+

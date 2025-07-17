@@ -133,6 +133,7 @@ CORS_ALLOWED_ORIGINS = [
      'https://5e5b-169-150-196-103.ngrok-free.app',
      'https://backend-forsatech.onrender.com',
      'https://5c1b694b8e9c.ngrok-free.app',
+     'https://6fd8ae0449e6.ngrok-free.app',
      
 
 ]
@@ -159,7 +160,7 @@ DATABASES = {
         default='postgresql://forsa_tech_user:vp7qNQlnJBOB4tWAkvDhb3vvbWmlSxOl@dpg-d1cfcnmuk2gs73almmu0-a.oregon-postgres.render.com/forsa_tech',
         conn_max_age=600,
         ssl_require=True,  
-    )
+   )
 }
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
