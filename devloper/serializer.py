@@ -95,7 +95,10 @@ class ExperienceSerializer(serializers.ModelSerializer):
         model = Experience
         fields = ['id', 'resume', 'job_title', 'company', 'start_date', 'end_date', 'description']
         
-        
+class LanguageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Language
+        fields = '__all__'        
         
 # serializers.py
 from rest_framework import serializers

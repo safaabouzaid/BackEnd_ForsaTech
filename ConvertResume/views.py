@@ -38,13 +38,17 @@ class ConvertResumeAPIView(APIView):
         resume = self.generate_ats_resume(parsed_data)
 
         ats_resume = {
-            "name": parsed_data.get("name", ""),
-            "phone": parsed_data.get("phone", ""),
-            "email": parsed_data.get("email", ""),
-            "location": parsed_data.get("location", ""),
+            "personal_details": {
+                "name": parsed_data.get("name", ""),
+                "phone": parsed_data.get("phone", ""),
+                "email": parsed_data.get("email", ""),
+                "location": parsed_data.get("location", ""),
+                "github_link": parsed_data.get("github_link", ""),
+                "linkedin_link": parsed_data.get("linkedin_link", ""),
+            },
             "summary": self.generate_summary(parsed_data),
-            "skills": self.structure_skills(parsed_data.get("skills", [])),  # ✅ التعديل هنا
-            "education": parsed_data.get("education", []),
+            "skills": self.structure_skills(parsed_data.get("skills", [])),
+            "education": self.structure_education(parsed_data.get("education", [])),
             "projects": parsed_data.get("projects", []),
             "experiences": parsed_data.get("experiences", []),
             "trainings_courses": parsed_data.get("trainings_courses", []),
@@ -75,7 +79,6 @@ class ConvertResumeAPIView(APIView):
         try:
             model = genai.GenerativeModel("gemini-1.5-flash")
             response = model.generate_content([prompt])
-
             response_text = re.sub(r"```json|```", "", response.text.strip()).strip()
             return json.loads(response_text) if response_text.startswith("{") and response_text.endswith("}") else {}
         except Exception as e:
@@ -87,7 +90,6 @@ class ConvertResumeAPIView(APIView):
             summary=self.generate_summary(parsed_data)
         )
 
-        # 🛠️ إن أردت تخزين المستوى أيضًا، يجب تعديل نموذج Skill
         Skill.objects.bulk_create([
             Skill(resume=resume, skill=s if isinstance(s, str) else s.get("skill", ""))
             for s in parsed_data.get("skills", [])
@@ -97,9 +99,9 @@ class ConvertResumeAPIView(APIView):
             Education(
                 resume=resume,
                 degree=edu.get("degree", "Unknown"),
-                institution=edu.get("institution", "Unknown"),
-                start_date=edu.get("start_date", ""),
-                end_date=edu.get("end_date", "")
+                institution=edu.get("university", "Unknown"),
+                start_date=self.extract_date_range(edu.get("dates", ""))[0],
+                end_date=self.extract_date_range(edu.get("dates", ""))[1]
             ) for edu in parsed_data.get("education", []) if isinstance(edu, dict)
         ])
 
@@ -117,8 +119,8 @@ class ConvertResumeAPIView(APIView):
                 resume=resume,
                 job_title=exp.get("title", "Unknown"),
                 company=exp.get("location", "Unknown"),
-                start_date=exp.get("years", "").split("-")[0] if "years" in exp else "",
-                end_date=exp.get("years", "").split("-")[1] if "years" in exp else "",
+                start_date=exp.get("years", "").split("-")[0].strip() if "years" in exp else "",
+                end_date=exp.get("years", "").split("-")[1].strip() if "years" in exp else "",
                 description=exp.get("description", "")
             ) for exp in parsed_data.get("experiences", []) if isinstance(exp, dict)
         ])
@@ -134,12 +136,22 @@ class ConvertResumeAPIView(APIView):
 
         return resume
 
+    def extract_date_range(self, date_string):
+        if "-" in date_string:
+            parts = date_string.split("-")
+            return parts[0].strip(), parts[1].strip()
+        return "", ""
+
     def generate_summary(self, parsed_data):
-        skills_text = ", ".join(parsed_data.get("skills", [])) if isinstance(parsed_data.get("skills", []), list) else ""
-        education_text = "; ".join(
-            [f"{edu.get('degree', 'N/A')} at {edu.get('institution', 'N/A')} ({edu.get('start_date', 'N/A')} - {edu.get('end_date', 'N/A')})"
-             for edu in parsed_data.get("education", [])]
-        )
+        skills = parsed_data.get("skills", [])
+        skill_names = [s.get("skill", "") if isinstance(s, dict) else str(s) for s in skills]
+        skills_text = ", ".join(skill_names)
+
+        education = parsed_data.get("education", [])
+        education_text = "; ".join([
+            f"{edu.get('degree', '')} at {edu.get('university', '')} ({edu.get('dates', '')})"
+            for edu in education if isinstance(edu, dict)
+        ])
 
         prompt = f"""
         Generate a professional and ATS-optimized resume summary based on:
@@ -169,4 +181,18 @@ class ConvertResumeAPIView(APIView):
                     })
             elif isinstance(skill, dict):
                 structured.append(skill)
+        return structured
+
+    def structure_education(self, education_list):
+        structured = []
+        for edu in education_list:
+            if isinstance(edu, dict):
+                start, end = self.extract_date_range(edu.get("dates", ""))
+                structured.append({
+                    "degree": edu.get("degree", ""),
+                    "institution": edu.get("university", ""),
+                    "start_date": start,
+                    "end_date": end,
+                    "description": edu.get("description", "")
+                })
         return structured

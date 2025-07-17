@@ -87,37 +87,56 @@ def login(request):
 
 
 
-@api_view(['POST'])
+@api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
-def save_languages(request):
-    resume = Resume.objects.filter(user=request.user).order_by('created_at').first()
+def language_list_create(request):
+    user = request.user
 
+    # نحاول الحصول على أول سيرة ذاتية أو ننشئ واحدة إن لم توجد
+    resume = Resume.objects.filter(user=user).first()
     if not resume:
-        return Response({"error": "No resume found for the user."}, status=status.HTTP_404_NOT_FOUND)
+        resume = Resume.objects.create(user=user)
 
-    languages_data = request.data  
+    if request.method == 'GET':
+        languages = Language.objects.filter(resume=resume)
+        serializer = LanguageSerializer(languages, many=True)
+        return Response(serializer.data)
 
-  
-    for item in languages_data:
-        serializer = LanguageSerializer(data=item)
-        if serializer.is_valid():
-            name = serializer.validated_data['name']
-            level = serializer.validated_data['level']
+    elif request.method == 'POST':
+        languages_data = request.data if isinstance(request.data, list) else [request.data]
 
-           
-            language_obj, created = Language.objects.get_or_create(
-                resume=resume,
-                name=name,
-                defaults={'level': level}
-            )
+        existing_languages = Language.objects.filter(resume=resume)
+        added_languages = []
+        errors = []
 
-            if not created:
-                language_obj.level = level
-                language_obj.save()
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        for lang_data in languages_data:
+            lang_data['resume'] = resume.id
 
-    return Response({"message": "Languages saved/updated successfully."}, status=status.HTTP_200_OK)
+            exists = existing_languages.filter(
+                name=lang_data.get('name')
+            ).exists()
+
+            if not exists:
+                serializer = LanguageSerializer(data=lang_data)
+                if serializer.is_valid():
+                    serializer.save()
+                    added_languages.append(serializer.data)
+                else:
+                    errors.append(serializer.errors)
+            else:
+                # تحديث اللغة الموجودة
+                language_obj = existing_languages.get(name=lang_data.get('name'))
+                serializer = LanguageSerializer(language_obj, data=lang_data, partial=True)
+                if serializer.is_valid():
+                    serializer.save()
+                    added_languages.append(serializer.data)
+                else:
+                    errors.append(serializer.errors)
+
+        if errors:
+            return Response({'errors': errors}, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(added_languages, status=status.HTTP_201_CREATED)
 
 
 
@@ -286,7 +305,11 @@ def experience_list_create(request):
 @permission_classes([IsAuthenticated])
 def education_list_create(request):
     user = request.user
-    resume, created = Resume.objects.get_or_create(user=user)
+    resume = Resume.objects.filter(user=user).first()
+    
+    # إذا لم يوجد Resume، أنشئ واحدًا
+    if not resume:
+        resume = Resume.objects.create(user=user)
 
     if request.method == 'GET':
         educations = Education.objects.filter(resume=resume)
@@ -297,7 +320,6 @@ def education_list_create(request):
         educations_data = request.data if isinstance(request.data, list) else [request.data]
 
         existing_educations = Education.objects.filter(resume=resume)
-        
         added_educations = []
         errors = []
 
@@ -317,15 +339,11 @@ def education_list_create(request):
                     added_educations.append(serializer.data)
                 else:
                     errors.append(serializer.errors)
-            else:
-                # يمكن إضافة منطق التحديث هنا إذا أردت
-                pass
 
         if errors:
             return Response({'errors': errors}, status=status.HTTP_400_BAD_REQUEST)
 
         return Response(added_educations, status=status.HTTP_201_CREATED)
-
 
 
 # views.py
@@ -366,3 +384,8 @@ class LatestResumeAPIView(APIView):
                 "message": f"Couldn't fetch resume: {str(e)}",
                 "code": 400
             }, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
+
