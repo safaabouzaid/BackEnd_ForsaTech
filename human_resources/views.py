@@ -854,3 +854,17 @@ def update_company_info(request):
 
 
 
+#=======================================================================================#
+
+@api_view(['GET'])
+def get_opportunities_by_company_id(request, company_id):
+
+    try:
+        company = Company.objects.get(id=company_id)
+    except Company.DoesNotExist:
+        return Response({'error': 'Company not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    opportunities = Opportunity.objects.filter(company=company)
+    serializer = OpportunitySerializer1(opportunities, many=True)
+
+    return Response({'opportunities': serializer.data}, status=status.HTTP_200_OK)

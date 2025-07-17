@@ -34,4 +34,6 @@ urlpatterns = [
     path('auth/confirm-reset/',views.confirm_password_reset, name='confirm-reset'),
     path('plans/',views.list_subscription_plans, name='update-company-info'),
     path('company/update/', views.update_company_info, name='update_company_info'),
+    path('companies/<int:company_id>/opportunities/', views.get_opportunities_by_company_id)
+
 ]  
