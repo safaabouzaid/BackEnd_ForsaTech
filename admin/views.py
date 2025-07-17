@@ -22,7 +22,6 @@ from human_resources.serializer import SubscriptionPlanSerializer,SubscriptionCh
 from django.db.models import Q
 
 
-
 def generate_password(length=8):
     characters = string.ascii_letters + string.digits
     return ''.join(random.choices(characters, k=length))
@@ -436,3 +435,24 @@ def request_company_registration(request):
 
     return Response({'message': 'Request sent successfully'})
 
+
+
+#=============================================================================================#
+
+
+@api_view(['POST'])
+@permission_classes([IsAdminUser])
+def companies_by_opportunity(request):
+    opportunity_name = request.data.get('opportunity_name')
+    if not opportunity_name:
+        return Response({"error": "Missing opportunity_name"}, status=400)
+
+    opportunities = Opportunity.objects.filter(opportunity_name=opportunity_name)
+
+    if not opportunities.exists():
+        return Response({"error": "No opportunities found for this name"}, status=404)
+
+    companies = Company.objects.filter(opportunity__in=opportunities).distinct()
+
+    serializer = CompanySerializer(companies, many=True)
+    return Response(serializer.data)

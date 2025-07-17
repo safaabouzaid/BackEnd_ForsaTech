@@ -20,7 +20,7 @@ from django.db.models import Count
 from .models import SubscriptionChangeRequest
 from admin.serializers import CompanyDetailSerializer
 from .utils import send_push_notification
-
+from firebase_admin import messaging
 import random
 import string
 
@@ -221,6 +221,19 @@ def apply_for_opportunity(request, opportunity_id):
         opportunity=opportunity,
         status='pending'
     )
+
+    company_hr = getattr(opportunity.company, 'hr_user', None) or getattr(opportunity.company, 'humanresources', None)
+    if company_hr:
+
+        hr_user = getattr(company_hr, 'user', company_hr)  
+        hr_token = getattr(hr_user, 'device_token', None)  
+
+        if hr_token:
+            send_push_notification(
+                token=hr_token,
+                title="📢  New job Application ",
+                body=f"{user.username} Apply for : {opportunity.title}"
+            )
 
     return Response({
         "message": "Application submitted successfully.",

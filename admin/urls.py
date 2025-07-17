@@ -19,6 +19,7 @@ urlpatterns = [
     path('list-subscription/', views.list_subscription_requests, name='list_subscription'),
     path('handle-subscription/', views.handle_subscription_request, name='handle_subscription'),
     path('request-registration/', views.request_company_registration, name='request_company_registration'),
+    path('companies/by-opportunity/', views.companies_by_opportunity, name='companies_by_opportunity'),
 
 ]
 
