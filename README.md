@@ -49,5 +49,5 @@ The backend is built with **Django REST Framework (DRF)** and serves multiple ro
 ### 📥 Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/forsa-tech-backend.git
+git clone https://github.com/safaabouzaid/BackEnd_ForsaTech
 cd forsa-tech-backend
